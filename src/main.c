@@ -27,6 +27,7 @@ static char    *get_line()
 
 static void analyze_line(char *line, t_cmd *builtins)
 {
+    
     builtins->args = ft_split(line, ' ');
     builtins->cmd = builtins->args[0];
     // char **splitted;
@@ -47,6 +48,14 @@ static void analyze_line(char *line, t_cmd *builtins)
     // }
     // free(splitted[i]); liberar con whhile -- crear funcion
     // free(builtins->args);
+}
+
+void    have_pipes(char *line)
+{   
+    while()
+    {
+        if ()
+    }
 }
 
 void    exec_cmd(t_cmd *builtins)

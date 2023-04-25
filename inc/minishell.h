@@ -25,7 +25,13 @@ typedef struct s_cmd
     char **args;
     char **env;
     int    n_args;
+    struct s_cmd *next;
 }   t_cmd;
+
+typedef struct s_pipes
+{
+    t_cmd *node;
+}       t_pipes;
 
 //line
 void    exec_cmd();

@@ -29,11 +29,18 @@ static void analyze_line(char *line, t_cmd *builtins)
 {
     char **splitted;
     int i;
+    int count;
 
     i = 1;
+    count = 0;
     splitted = ft_split(line, ' ');
+    while(*splitted[count] != '\0' && **splitted != '\0')
+    {
+        printf("%d\n", count);
+        count++;
+    }
     builtins->cmd = splitted[0];
-    builtins->args = malloc(sizeof(char *) * 3);
+    builtins->args = malloc(sizeof(char *) * count);
     while(splitted[i] && *splitted)
     {
         // printf("holaaaa\n");

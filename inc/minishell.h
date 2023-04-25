@@ -27,4 +27,7 @@ typedef struct s_cmd
     int    n_args;
 }   t_cmd;
 
+//line
+void    exec_cmd();
+
 #endif

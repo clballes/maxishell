@@ -22,36 +22,51 @@ static char    *get_line()
     if (!line)
         exit(0); //funcion de error
     return (line);
-    free(line);
 }
 
 static void analyze_line(char *line, t_cmd *builtins)
 {
-    char **splitted;
-    int i;
-    int count;
+    // char **splitted;
+    // int i;
+    // int count;
 
-    i = 1;
-    count = 0;
-    splitted = ft_split(line, ' ');
-    while(*splitted[count] != '\0' && **splitted != '\0')
-    {
-        printf("%d\n", count);
-        count++;
-    }
-    builtins->cmd = splitted[0];
-    builtins->args = malloc(sizeof(char *) * count);
-    while(splitted[i] && *splitted)
-    {
-        // printf("holaaaa\n");
-        builtins->args[i - 1] = splitted[i];
-        printf("%s\n", builtins->args[i - 1]);
-        i++;
-    }
-    // free(splitted[i]);
+    // i = 1;
+    // count = 0;
+    builtins->args = ft_split(line, ' ');
+    builtins->cmd = builtins->args[0];
+
+    // printf("%s\n", builtins->args[1]);
+    // while(splitted[count] != NULL)
+    //     count++;
+    // builtins->args = malloc(sizeof(char *) * (count - 1));
+    // while(splitted[i] && *splitted)
+    // {
+    //     builtins->args[i - 1] = splitted[i];
+    //     // printf("%s\n", builtins->args[i - 1]);
+    //     i++;
+    // }
+    // free(splitted[i]); liberar con whhile -- crear funcion
     // free(builtins->args);
 }
 
+void    exec_cmd(t_cmd *builtins)
+{
+    printf("%s\n", builtins->cmd);
+    // if (builtins->cmd == "echo")
+    //     printf("he entradoooo ECHOOO \n");
+    // else if (builtins->cmd == "cd")
+    //     printf("he entradoooo CD\n");
+    // else if (builtins->cmd == "pwd")
+    //     printf("he entradoooo PWD \n");
+    // else if (builtins->cmd == "export")
+    //     printf("he entradoooo EXPORT \n");
+    // else if (builtins->cmd == "unset")
+    //     printf("he entradoooo UNSET \n");
+    // else if (builtins->cmd == "env")
+    //     printf("he entradoooo ENV \n");
+    // else if (builtins->cmd == "exit")
+    //     printf("he entradoooo EXIT\n");
+}
 
 int main(int argc, char **argv, char **env)
 {
@@ -69,6 +84,8 @@ int main(int argc, char **argv, char **env)
     {
         line = get_line();
         analyze_line(line, builtins);
+        exec_cmd(builtins);
+        free(line);
     }
     return (0);
 }

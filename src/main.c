@@ -10,3 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
+
+int main()
+{
+    char *line;
+    const char *prompt;
+    
+    while (1)
+    {
+        prompt = "Bienvenid@ a Maxishell: ";
+        line = readline(prompt);
+        free(line);
+    }
+    return (0);
+}

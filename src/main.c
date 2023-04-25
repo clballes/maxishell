@@ -12,16 +12,56 @@
 
 #include "../inc/minishell.h"
 
-int main()
+static char    *get_line()
 {
     char *line;
     const char *prompt;
-    
+
+    prompt = "Bienvenid@ a Maxishell: ";
+    line = readline(prompt);
+    if (!line)
+        exit(0); //funcion de error
+    return (line);
+    free(line);
+}
+
+static void analyze_line(char *line, t_cmd *builtins)
+{
+    char **splitted;
+    int i;
+
+    i = 1;
+    splitted = ft_split(line, ' ');
+    builtins->cmd = splitted[0];
+    builtins->args = malloc(sizeof(char *) * 3);
+    while(splitted[i] && *splitted)
+    {
+        // printf("holaaaa\n");
+        builtins->args[i - 1] = splitted[i];
+        printf("%s\n", builtins->args[i - 1]);
+        i++;
+    }
+    // free(splitted[i]);
+    // free(builtins->args);
+}
+
+
+int main(int argc, char **argv, char **env)
+{
+    (void)argc;
+    (void)argv;
+    char *line;
+    t_cmd *builtins;
+
+    line = NULL;
+    builtins = malloc(sizeof(t_cmd));
+    if(!builtins)
+        exit(0);
+    builtins->env = env;
     while (1)
     {
-        prompt = "Bienvenid@ a Maxishell: ";
-        line = readline(prompt);
-        free(line);
+        line = get_line();
+        analyze_line(line, builtins);
     }
     return (0);
 }

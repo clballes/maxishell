@@ -25,6 +25,8 @@ int	ft_count_words(char	const *s, char c)
 			n_word++;
 		count++;
 	}
+
+	// printf("los words son %d\n", n_word);
 	return (n_word);
 }
 

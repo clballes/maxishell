@@ -26,15 +26,14 @@ static char    *get_line()
 
 static void analyze_line(char *line, t_cmd *builtins)
 {
+    builtins->args = ft_split(line, ' ');
+    builtins->cmd = builtins->args[0];
     // char **splitted;
     // int i;
     // int count;
 
     // i = 1;
     // count = 0;
-    builtins->args = ft_split(line, ' ');
-    builtins->cmd = builtins->args[0];
-
     // printf("%s\n", builtins->args[1]);
     // while(splitted[count] != NULL)
     //     count++;
@@ -52,6 +51,7 @@ static void analyze_line(char *line, t_cmd *builtins)
 void    exec_cmd(t_cmd *builtins)
 {
     printf("%s\n", builtins->cmd);
+    //strcompare
     // if (builtins->cmd == "echo")
     //     printf("he entradoooo ECHOOO \n");
     // else if (builtins->cmd == "cd")

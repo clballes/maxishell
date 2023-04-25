@@ -21,6 +21,7 @@ static char    *get_line()
     line = readline(prompt);
     if (!line)
         exit(0); //funcion de error
+    //limpiar
     return (line);
 }
 
@@ -50,22 +51,22 @@ static void analyze_line(char *line, t_cmd *builtins)
 
 void    exec_cmd(t_cmd *builtins)
 {
-    printf("%s\n", builtins->cmd);
-    //strcompare
-    // if (builtins->cmd == "echo")
-    //     printf("he entradoooo ECHOOO \n");
-    // else if (builtins->cmd == "cd")
-    //     printf("he entradoooo CD\n");
-    // else if (builtins->cmd == "pwd")
-    //     printf("he entradoooo PWD \n");
-    // else if (builtins->cmd == "export")
-    //     printf("he entradoooo EXPORT \n");
-    // else if (builtins->cmd == "unset")
-    //     printf("he entradoooo UNSET \n");
-    // else if (builtins->cmd == "env")
-    //     printf("he entradoooo ENV \n");
-    // else if (builtins->cmd == "exit")
-    //     printf("he entradoooo EXIT\n");
+    if (ft_strncmp(builtins->cmd, "echo", 4) == 0)
+        printf("he entradoooo ECHOOO \n");
+    else if (ft_strncmp(builtins->cmd, "cd", 2) == 0)
+        printf("he entradoooo CD\n");
+    else if (ft_strncmp(builtins->cmd, "pwd", 3) == 0)
+        printf("he entradoooo PWD \n");
+    else if (ft_strncmp(builtins->cmd, "export", 6) == 0)
+        printf("he entradoooo EXPORT \n");
+    else if (ft_strncmp(builtins->cmd, "unset", 5) == 0)
+        printf("he entradoooo UNSET \n");
+    else if (ft_strncmp(builtins->cmd, "env", 3) == 0)
+        printf("he entradoooo ENV \n");
+    else if (ft_strncmp(builtins->cmd, "exit", 4) == 0)
+        printf("he entradoooo EXIT \n");
+    else
+        printf("hemos d eencontar el path de los otros\n");
 }
 
 int main(int argc, char **argv, char **env)

@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/25 11:03:38 by clballes         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:01:59 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int   have_pipes(char *line)
+{   
+    int i;
+    int count;
+    
+    i = 0;
+    count = 0;
+    while(line[i] != '\0')
+    {
+        if (line[i] == '|')
+            count++;
+        i++;
+    }
+    return(count);
+}
 
 static char    *get_line()
 {
@@ -25,17 +41,34 @@ static char    *get_line()
     return (line);
 }
 
-static void analyze_line(char *line, t_cmd *builtins)
+static void analyze_line(char *line, t_cmd *builtins, t_pipes *pipes)
 {
+    int res;
+
+    res = 0;
+    res = have_pipes(line);
+    printf("Tengo %d pipes\n",res);
+
+
+
     
-    builtins->args = ft_split(line, ' ');
-    builtins->cmd = builtins->args[0];
-    // char **splitted;
-    // int i;
+     char **splitted;
+    int i;
     // int count;
 
-    // i = 1;
+    i = 0;
     // count = 0;
+    
+    splitted = ft_split(line, '|');
+    // pipes->node = builtins;
+    pipes->node = malloc(sizeof (t_cmd) * (res + 1));
+    while (i < res + 1)
+    {
+        pipes->node = lst_new(splitted[i]);
+        lst_add_back(&builtins, pipes->node);
+        printf("dentro del while%s\n",pipes->node->cmd);
+        i++;
+    }
     // printf("%s\n", builtins->args[1]);
     // while(splitted[count] != NULL)
     //     count++;
@@ -48,15 +81,15 @@ static void analyze_line(char *line, t_cmd *builtins)
     // }
     // free(splitted[i]); liberar con whhile -- crear funcion
     // free(builtins->args);
+
+
+
+
+    
+    builtins->args = ft_split(line, ' ');
+    builtins->cmd = builtins->args[0];
 }
 
-void    have_pipes(char *line)
-{   
-    while()
-    {
-        if ()
-    }
-}
 
 void    exec_cmd(t_cmd *builtins)
 {
@@ -84,16 +117,20 @@ int main(int argc, char **argv, char **env)
     (void)argv;
     char *line;
     t_cmd *builtins;
-
+    t_pipes *pipes;
+    
     line = NULL;
     builtins = malloc(sizeof(t_cmd));
     if(!builtins)
+        exit(0);
+    pipes = malloc(sizeof(t_pipes));
+    if(!pipes)
         exit(0);
     builtins->env = env;
     while (1)
     {
         line = get_line();
-        analyze_line(line, builtins);
+        analyze_line(line, builtins, pipes);
         exec_cmd(builtins);
         free(line);
     }

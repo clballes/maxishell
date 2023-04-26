@@ -37,7 +37,6 @@ static char    *get_line()
     line = readline(prompt);
     if (!line)
         exit(0); //funcion de error
-    //limpiar
     return (line);
 }
 
@@ -50,6 +49,7 @@ static void analyze_line(char *all_line, t_all *pipes)
     i = 0;
     res = have_pipes(all_line);
     splitted = ft_split(all_line, '|');
+    // clean_args(splitted); //doblepuntero
     while (i < (res + 1) && splitted[i])
     {
         pipes->node = lst_new(splitted[i]);

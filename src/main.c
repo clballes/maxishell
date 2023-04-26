@@ -41,55 +41,27 @@ static char    *get_line()
     return (line);
 }
 
-static void analyze_line(char *line, t_cmd *builtins, t_pipes *pipes)
+static void analyze_line(char *all_line, t_all *pipes)
 {
     int res;
-
-    res = 0;
-    res = have_pipes(line);
-    printf("Tengo %d pipes\n",res);
-
-
-
-    
-     char **splitted;
     int i;
-    // int count;
+    char **splitted;
 
     i = 0;
-    // count = 0;
-    
-    splitted = ft_split(line, '|');
-    // pipes->node = builtins;
-    pipes->node = malloc(sizeof (t_cmd) * (res + 1));
-    while (i < res + 1)
+    res = have_pipes(all_line);
+    splitted = ft_split(all_line, '|');
+    while (i < (res + 1) && splitted[i])
     {
         pipes->node = lst_new(splitted[i]);
-        lst_add_back(&builtins, pipes->node);
-        printf("dentro del while%s\n",pipes->node->cmd);
+        lst_add_back(&pipes->node, pipes->node);
+        pipes->node->args = ft_split(splitted[i], ' ');
+        pipes->node->cmd = pipes->node->args[0];
+        pipes->node = pipes->node->next;
         i++;
     }
-    // printf("%s\n", builtins->args[1]);
-    // while(splitted[count] != NULL)
-    //     count++;
-    // builtins->args = malloc(sizeof(char *) * (count - 1));
-    // while(splitted[i] && *splitted)
-    // {
-    //     builtins->args[i - 1] = splitted[i];
-    //     // printf("%s\n", builtins->args[i - 1]);
-    //     i++;
-    // }
-    // free(splitted[i]); liberar con whhile -- crear funcion
-    // free(builtins->args);
-
-
-
-
-    
-    builtins->args = ft_split(line, ' ');
-    builtins->cmd = builtins->args[0];
+    //free (splitted) while 
+    //free (pipes node args) while
 }
-
 
 void    exec_cmd(t_cmd *builtins)
 {
@@ -116,23 +88,19 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     char *line;
-    t_cmd *builtins;
-    t_pipes *pipes;
+    t_all *all_cmd;
     
     line = NULL;
-    builtins = malloc(sizeof(t_cmd));
-    if(!builtins)
+    all_cmd = malloc(sizeof(t_all));
+    if(!all_cmd)
         exit(0);
-    pipes = malloc(sizeof(t_pipes));
-    if(!pipes)
-        exit(0);
-    builtins->env = env;
+    all_cmd->env = env;
     while (1)
     {
         line = get_line();
-        analyze_line(line, builtins, pipes);
-        exec_cmd(builtins);
-        free(line);
+        analyze_line(line, all_cmd);
+        exec_cmd(all_cmd->node);
+        free(line); //readline hace malloc
     }
     return (0);
 }

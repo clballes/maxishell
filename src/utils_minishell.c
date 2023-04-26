@@ -11,16 +11,15 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-t_cmd	*lst_new(char *comand)
+t_cmd	*lst_new(char *line)
 {
 	t_cmd	*new;
 
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (0);
-	new->cmd = comand;
+	new->line = line;
 	new->next = NULL;
-	// new->previous = NULL;
 	return (new);
 }
 
@@ -42,6 +41,5 @@ void	lst_add_back(t_cmd **first, t_cmd *new_el)
 	{
 		temp = lst_last(*first);
 		temp->next = new_el;
-		// new_el->previous = temp;
 	}
 }

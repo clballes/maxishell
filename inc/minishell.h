@@ -19,20 +19,20 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-
 typedef struct s_cmd 
 {
     char *cmd;
     char **args;
-    char **env;
+    char   *line;
     int    n_args;
     struct s_cmd *next;
 }   t_cmd;
 
-typedef struct s_pipes
+typedef struct s_all
 {
     t_cmd *node;
-}       t_pipes;
+    char **env;
+}       t_all;
 
 //line
 void    exec_cmd();
@@ -40,6 +40,5 @@ void    exec_cmd();
 t_cmd	*lst_new(char* comand);
 t_cmd	*lst_last(t_cmd *lst);
 void	lst_add_back(t_cmd **first, t_cmd *new_el);
-
 
 #endif

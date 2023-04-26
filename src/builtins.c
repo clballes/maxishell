@@ -13,26 +13,17 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-int    exec_option(t_cmd *builtins)
+int    exec_option(char *args)
 {
     int i;
-    int j;
 
-    j = 2;
-    i = 1;
-    while(builtins->args[i])
+    i = 2;
+    while(args[i] && args[i] != 32)
     {
-        while(builtins->args[i][j] && builtins->args[i][j] != 32)
-        {
-            if (builtins->args[i][j] != 'n')
-                return (1);
-            j++;
-        }
+        if (args[i] != 'n')
+            return (1);
         i++;
     }
-    // if (ft_strncmp(builtins->args[i], "-n", 2) == 0)
-    //     exec_option(builtins);
-    // // printf("surtooo\n");
     return (0);
 }
 
@@ -40,12 +31,21 @@ int    exec_option(t_cmd *builtins)
 void    exec_echo(t_cmd *builtins)
 {
     int i;
+    int res;
     int len;
 
     i = 1;
-    if (ft_strncmp(builtins->args[i], "-n", 2) == 0)
-        if(exec_option(builtins) != 1)
+    res = 0;
+    while (ft_strncmp(builtins->args[i], "-n", 2) == 0)
+    {
+        if(exec_option(builtins->args[i]) != 1)
+        {
+            res = 1;
             i++;
+        }
+        else
+            break;
+    }
     while (builtins->args[i])
     {
         len = ft_strlen(builtins->args[i]);
@@ -54,6 +54,6 @@ void    exec_echo(t_cmd *builtins)
             write(1, " " , 1);
         i++;
     }
-    if (ft_strncmp(builtins->args[1], "-n", 2) != 0)
+    if (res == 0)
         write(1, "\n", 1);
 }

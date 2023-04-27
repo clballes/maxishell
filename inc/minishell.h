@@ -42,7 +42,7 @@ typedef struct s_all
 	char		**env;
 }				t_all;
 //line
-void	exec_cmd(void);
+void	exec_cmd(t_all *all);
 //free
 void	lstfree(t_cmd **lst);
 void	free_arr(char **array);

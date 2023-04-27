@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include "../inc/builtins.h"
 
 int   have_pipes(char *line)
 {   
@@ -66,7 +67,7 @@ static void analyze_line(char *all_line, t_all *pipes)
 void    exec_cmd(t_cmd *builtins)
 {
     if (ft_strncmp(builtins->cmd, "echo", 4) == 0)
-        printf("he entradoooo ECHOOO \n");
+        exec_echo(builtins);
     else if (ft_strncmp(builtins->cmd, "cd", 2) == 0)
         printf("he entradoooo CD\n");
     else if (ft_strncmp(builtins->cmd, "pwd", 3) == 0)

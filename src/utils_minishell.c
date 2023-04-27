@@ -43,3 +43,16 @@ void	lst_add_back(t_cmd **first, t_cmd *new_el)
 		temp->next = new_el;
 	}
 }
+
+t_env	*lst_new_env(char *name, char *content)
+{
+	t_env	*new;
+
+	new = malloc(sizeof(t_env));
+	if (!new)
+		return (0);
+	new->name = name;
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}

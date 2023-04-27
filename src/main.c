@@ -94,9 +94,11 @@ int main(int argc, char **argv, char **env)
     
     line = NULL;
     all = malloc(sizeof(t_all));
+    
     if(!all)
         exit(0);
     all->env = env;
+    env_list(all);
     while (1)
     {
         // get_env();

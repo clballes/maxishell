@@ -41,7 +41,6 @@ typedef struct s_env
     struct s_env *next;
 }       t_env;
 
-
 //line
 void    exec_cmd();
 t_cmd	*lst_new(char* comand);

@@ -14,5 +14,5 @@
 # define BUILTINS_H
 
 void    exec_echo();
-void    get_env();
+void    env_list(t_all *all);
 #endif

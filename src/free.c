@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 12:53:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/26 12:53:22 by clballes         ###   ########.fr       */
+/*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
+/*   Updated: 2023/04/27 11:45:50 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "../inc/minishell.h"
+#include "../inc/builtins.h"
 
-void    exec_echo();
-void    get_env();
-#endif
+void	lstfree(t_cmd **lst)
+{
+	t_cmd	*temp;
+
+	while (*lst != NULL)
+	{
+		temp = *lst;
+		while (temp != NULL)
+		{
+			free (temp);
+			temp = temp->next;
+		}
+		*lst = NULL;
+	}
+}

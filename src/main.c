@@ -71,15 +71,15 @@ void	exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
 		printf("he entradoooo CD\n");
 	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
-		printf("he entradoooo PWD \n");
+		exec_pwd();
 	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
-		printf("he entradoooo EXPORT \n");
+		exec_export(&all->list_env);
 	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
 		printf("he entradoooo UNSET \n");
 	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
 		exec_env(&all->list_env);
 	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
-		printf("he entradoooo EXIT \n");
+		exec_exit(all->node);
 	else
 		printf("hemos d eencontar el path de los otros\n");
 }

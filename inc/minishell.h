@@ -32,7 +32,9 @@ typedef struct s_env
 {
 	char			*name;
 	char			*content;
+	int				index;
 	struct s_env	*next;
+	struct s_env	*previous;
 }					t_env;
 
 typedef struct s_all

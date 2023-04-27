@@ -16,5 +16,8 @@
 void	exec_echo(t_cmd *builtins);
 void	exec_env(t_env **list_env);
 void	env_list(t_all *all);
-
+int     exec_pwd(void);
+void    exec_exit(t_cmd *builtins);
+void	exec_export(t_env **list_env);
+void	swap(t_env **env, char c);
 #endif

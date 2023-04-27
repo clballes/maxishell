@@ -6,30 +6,65 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/04/27 13:12:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:48:13 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int have_open_close_quotes(char *cmd_line, char quote)
+// int have_open_close_quotes(char *cmd_line, char quote)
+// {
+//     int i;
+//     int has_quote;
+
+
+//     i = 0;
+//     has_quote = 0;
+   
+//     while(cmd_line[i] != '\0')
+//     {
+//         if(cmd_line[i] == quote)
+//         {
+//             has_quote++;
+//         }
+//         i++;
+//     }
+//     if(has_quote % 2 != 0)
+//     {
+//         printf("> you should close the quoting\n");
+//         return(1);
+//     }
+//     return(0);
+// }
+
+int have_open_close_quotes(char *cmd_line)
 {
     int i;
-    int has_quote;
-
+    int has_double_quote;
+    int has_single_quote;
+    char found;
 
     i = 0;
-    has_quote= 0;
+    has_single_quote = 0;
+    has_double_quote = 0;
    
     while(cmd_line[i] != '\0')
     {
-        if(cmd_line[i] == quote)
+        if(cmd_line[i] == '\"' || cmd_line[i] == '\'')
         {
-            has_quote++;
+            found = cmd_line[i];
+            has_double_quote = 1;
+			
+            while(has_double_quote)
+            {
+                i++;
+            if(cmd_line[i]=='\"')
+                has_double_quote = 0;
+            }
         }
         i++;
     }
-    if(has_quote % 2 != 0)
+    if(has_double_quote  == 1)
     {
         printf("> you should close the quoting\n");
         return(1);
@@ -37,12 +72,11 @@ int have_open_close_quotes(char *cmd_line, char quote)
     return(0);
 }
 
-
 int clean_all_line(char *all_line)
 {
-    if (have_open_close_quotes(all_line, 34) != 0)
+    if (have_open_close_quotes(all_line) != 0)
         return(1);
-    if (have_open_close_quotes(all_line, 39) != 0)
+    if (have_open_close_quotes(all_line) != 0)
         return(1); 
     return (0);      
 }

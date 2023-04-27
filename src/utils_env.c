@@ -1,46 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_minishell.c                                  :+:      :+:    :+:   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 13:30:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:51:20 by clballes         ###   ########.fr       */
+/*   Created: 2023/04/27 16:50:58 by clballes          #+#    #+#             */
+/*   Updated: 2023/04/27 16:51:00 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include "../inc/builtins.h"
 
-t_cmd	*lst_new(char *line)
+t_env	*lst_new_env(char *name, char *content)
 {
-	t_cmd	*new;
+	t_env	*new;
 
-	new = malloc(sizeof(t_cmd));
+	new = malloc(sizeof(t_env));
 	if (!new)
 		return (0);
-	new->line = line;
+	new->name = name;
+	new->content = content;
 	new->next = NULL;
 	return (new);
 }
 
-t_cmd	*lst_last(t_cmd *lst)
+void	lst_add_back_env(t_env **first, t_env *new_el)
 {
-	if (lst != NULL)
-		while (lst->next != NULL)
-			lst = lst->next;
-	return (lst);
-}
-
-void	lst_add_back(t_cmd **first, t_cmd *new_el)
-{
-	t_cmd	*temp;
+	t_env	*temp;
 
 	if (*first == NULL)
 		*first = new_el;
 	else
 	{
-		temp = lst_last(*first);
+		temp = lst_last_env(*first);
 		temp->next = new_el;
 	}
+}
+
+t_env	*lst_last_env(t_env *lst)
+{
+	if (lst != NULL)
+		while (lst->next != NULL)
+			lst = lst->next;
+	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 11:45:50 by clballes         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:46:32 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,21 @@ void	lstfree(t_cmd **lst)
 		}
 		*lst = NULL;
 	}
+}
+
+void	free_arr(char **array)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (array[len])
+		len++;
+	while (i < len)
+	{
+		free (array[i]);
+		i++;
+	}
+	free (array);
 }

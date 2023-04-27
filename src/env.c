@@ -6,46 +6,42 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:35:30 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 11:35:31 by clballes         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:49:08 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-// void    get_env()
-// {
-//    printf("PATH : %s\n", getenv("PATH"));
-//    printf("HOME : %s\n", getenv("HOME"));
-//    printf("ROOT : %s\n", getenv("ROOT"));
-//    printf("USER : %s\n", getenv("USER"));
-//    printf("PWD : %s\n", getenv("PWD"));
-
-// }
-
-void    env_list(t_all *all)
+void	env_list(t_all *all)
 {
-   t_env *list_env;
-   t_env *temp;
-   char *pos;
-   int   i;
+	t_env	*temp;
+	char	**cont_name;
+	int		i;
 
-   i = 0;
-   printf("el %s\n", all->env[0]);
-   while(all->env[i])
-   {
-      printf("holaaaaaa\n");
-      // pos = ft_strchr(all->env[i], '=');
-      // pos = ft_strtrim(pos, "=");
-      // temp->content = pos;
-      temp = lst_new_env(NULL, NULL);
-      lst_add_back(&list_env, temp);
-      temp = temp->next;
-      i++;
-      // printf("la psition es %s\n", temp->content);
-      // // temp = lst_new();
-      // free(pos);
-      // temp = temp->next;
-      i++;
-   }
+	i = 0;
+	all->list_env = NULL;
+	while (all->env[i])
+	{
+		cont_name = ft_split(all->env[i], '=');
+		temp = lst_new_env(cont_name[0], cont_name[1]);
+		lst_add_back_env(&all->list_env, temp);
+		free(cont_name);
+		temp = temp->next;
+		i++;
+	}
+}
+
+void	exec_env(t_env **list_env)
+{
+	t_env	*temp;
+	int		i;
+
+	i = 0;
+	temp = *list_env;
+	while (temp)
+	{
+		printf("%s=%s\n", temp->name, temp->content);
+		temp = temp->next;
+	}
 }

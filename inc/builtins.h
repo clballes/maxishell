@@ -13,8 +13,8 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-void	exec_echo();
-void	exec_env();
+void	exec_echo(void);
+void	exec_env(void);
 void	env_list(t_all *all);
 
 #endif

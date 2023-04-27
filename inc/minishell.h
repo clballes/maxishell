@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/25 16:59:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:38:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_all
 }       t_all;
 
 //line
-void    exec_cmd();
+
 
 t_cmd	*lst_new(char* comand);
 t_cmd	*lst_last(t_cmd *lst);

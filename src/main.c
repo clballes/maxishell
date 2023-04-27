@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/25 17:01:59 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:12:00 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char    *get_line()
     return (line);
 }
 
-static void analyze_line(char *all_line, t_all *pipes)
+static int analyze_line(char *all_line, t_all *pipes)
 {
     int res;
     int i;
@@ -49,6 +49,9 @@ static void analyze_line(char *all_line, t_all *pipes)
 
     i = 0;
     res = have_pipes(all_line);
+    // printf("all_line %s\n", all_line);
+    if(clean_all_line(all_line) != 0)
+        return(1);
     splitted = ft_split(all_line, '|');
     // clean_args(splitted); //doblepuntero
     while (i < (res + 1) && splitted[i])
@@ -60,6 +63,7 @@ static void analyze_line(char *all_line, t_all *pipes)
         pipes->node = pipes->node->next;
         i++;
     }
+    return(0);
     //free (splitted) while 
     //free (pipes node args) while
 }
@@ -89,10 +93,10 @@ int main(int argc, char **argv, char **env)
 {
     (void)argc;
     (void)argv;
-    char *line;
+ 
     t_all *all;
     
-    line = NULL;
+    // line = NULL;
     all = malloc(sizeof(t_all));
     if(!all)
         exit(0);
@@ -100,10 +104,12 @@ int main(int argc, char **argv, char **env)
     while (1)
     {
         // get_env();
-        line = get_line();
-        analyze_line(line, all);
-        exec_cmd(all);
-        free(line); //readline hace malloc
+        all->all_line = get_line();
+        if(analyze_line(all->all_line, all) == 0)
+        {
+            exec_cmd(all);
+            free(all->all_line); //readline hace malloc
+        }
     }
     return (0);
 }

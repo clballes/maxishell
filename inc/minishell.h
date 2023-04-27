@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 12:30:52 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/27 12:58:57 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
+#include "parsing.h"
 
 typedef struct s_cmd 
 {
@@ -32,6 +33,7 @@ typedef struct s_all
 {
     t_cmd *node;
     char **env;
+    char *all_line;
 }       t_all;
 
 typedef struct s_env

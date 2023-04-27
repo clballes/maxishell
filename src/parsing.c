@@ -40,31 +40,31 @@
 int have_open_close_quotes(char *cmd_line)
 {
     int i;
-    int has_double_quote;
-    int has_single_quote;
+    int has_quote;
     char found;
 
     i = 0;
-    has_single_quote = 0;
-    has_double_quote = 0;
-   
+    has_quote = 0;
     while(cmd_line[i] != '\0')
     {
         if(cmd_line[i] == '\"' || cmd_line[i] == '\'')
         {
             found = cmd_line[i];
-            has_double_quote = 1;
-			
-            while(has_double_quote)
+            has_quote = 1;
+        }
+        while(has_quote && cmd_line[i])
+        {
+            if(cmd_line[i+1] == found)
             {
+                has_quote = 0;
                 i++;
-            if(cmd_line[i]=='\"')
-                has_double_quote = 0;
+                break;
             }
+            i++;
         }
         i++;
     }
-    if(has_double_quote  == 1)
+    if(has_quote  == 1)
     {
         printf("> you should close the quoting\n");
         return(1);
@@ -76,8 +76,8 @@ int clean_all_line(char *all_line)
 {
     if (have_open_close_quotes(all_line) != 0)
         return(1);
-    if (have_open_close_quotes(all_line) != 0)
-        return(1); 
+    // if (have_open_close_quotes(all_line) != 0)
+    //     return(1); 
     return (0);      
 }
 

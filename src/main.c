@@ -64,21 +64,22 @@ static void analyze_line(char *all_line, t_all *pipes)
     //free (pipes node args) while
 }
 
-void    exec_cmd(t_cmd *builtins)
+void    exec_cmd(t_all *all)
 {
-    if (ft_strncmp(builtins->cmd, "echo", 4) == 0)
-        exec_echo(builtins);
-    else if (ft_strncmp(builtins->cmd, "cd", 2) == 0)
+    if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
+        exec_echo(all->node);
+    else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
         printf("he entradoooo CD\n");
-    else if (ft_strncmp(builtins->cmd, "pwd", 3) == 0)
+    else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
         printf("he entradoooo PWD \n");
-    else if (ft_strncmp(builtins->cmd, "export", 6) == 0)
+    else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
         printf("he entradoooo EXPORT \n");
-    else if (ft_strncmp(builtins->cmd, "unset", 5) == 0)
+    else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
         printf("he entradoooo UNSET \n");
-    else if (ft_strncmp(builtins->cmd, "env", 3) == 0)
+    else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
         printf("he entradoooo ENV \n");
-    else if (ft_strncmp(builtins->cmd, "exit", 4) == 0)
+        // exec_env(all->env);
+    else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
         printf("he entradoooo EXIT \n");
     else
         printf("hemos d eencontar el path de los otros\n");
@@ -89,18 +90,19 @@ int main(int argc, char **argv, char **env)
     (void)argc;
     (void)argv;
     char *line;
-    t_all *all_cmd;
+    t_all *all;
     
     line = NULL;
-    all_cmd = malloc(sizeof(t_all));
-    if(!all_cmd)
+    all = malloc(sizeof(t_all));
+    if(!all)
         exit(0);
-    all_cmd->env = env;
+    all->env = env;
     while (1)
     {
+        // get_env();
         line = get_line();
-        analyze_line(line, all_cmd);
-        exec_cmd(all_cmd->node);
+        analyze_line(line, all);
+        exec_cmd(all);
         free(line); //readline hace malloc
     }
     return (0);

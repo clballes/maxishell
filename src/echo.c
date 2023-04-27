@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -32,7 +32,6 @@ void    exec_echo(t_cmd *builtins)
 {
     int i;
     int res;
-    // int len;
 
     i = 1;
     res = 0;
@@ -49,8 +48,6 @@ void    exec_echo(t_cmd *builtins)
     while (builtins->args[i])
     {
         printf("%s", builtins->args[i]);
-        // len = ft_strlen(builtins->args[i]);
-        // write(1, builtins->args[i] , len);
         if (builtins->args[i + 1] != NULL )
             printf(" ");
         i++;

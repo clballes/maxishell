@@ -9,7 +9,7 @@ SRC_DIR = src/
 RM = rm -f
 #FSANITIZE	:= -fsanitize=addresmas -g3
 
-SRC_FILES	= main utils_minishell builtins
+SRC_FILES	= main utils_minishell echo
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

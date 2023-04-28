@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 13:06:46 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:52:02 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_env
 
 typedef struct s_all
 {
-	t_quo *quotes;
+	t_quo quotes;
     t_cmd *node;
     char **env;
     char *all_line;

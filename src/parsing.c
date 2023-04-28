@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/04/28 13:02:21 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:55:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int have_open_close_quotes(char *cmd_line, t_quo *quotes)
 {
-    
     quotes->index = 0;
     quotes->has_quote = 0;
     while(cmd_line[quotes->index] != '\0')

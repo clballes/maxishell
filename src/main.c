@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 13:06:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:54:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int analyze_line(char *all_line, t_all *all)
     i = 0;
     res = have_pipes(all_line);
     // printf("all_line %s\n", all_line);
-    if(clean_all_line(all_line, all->quotes) != 0)
+    if(clean_all_line(all_line, &all->quotes) != 0)
         return(1);
     splitted = ft_split(all_line, '|');
     // clean_args(splitted); //doblepuntero

@@ -31,7 +31,7 @@ bonus:
 -include $(DEPS)
 $(NAME) : $(LIBFT_DIR)/libft.a $(OBJ) Makefile
 		make -sC $(LIBFT_DIR)
-		$(CC) $(CFLAGS) -lreadline $(FSANITIZE) $(LIBFT_DIR)/libft.a $(OBJ) -o $(NAME)
+		$(CC) $(CFLAGS) -lreadline $(FSANITIZE) $(OBJ) -o $(NAME) $(LIBFT_DIR)/libft.a
 
 clean:
 		$(RM) -r $(OBJ_DIR) $(DEPS)

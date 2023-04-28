@@ -6,65 +6,38 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/04/27 16:48:13 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:02:21 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include "../inc/parsing.h"
 
-// int have_open_close_quotes(char *cmd_line, char quote)
-// {
-//     int i;
-//     int has_quote;
-
-
-//     i = 0;
-//     has_quote = 0;
-   
-//     while(cmd_line[i] != '\0')
-//     {
-//         if(cmd_line[i] == quote)
-//         {
-//             has_quote++;
-//         }
-//         i++;
-//     }
-//     if(has_quote % 2 != 0)
-//     {
-//         printf("> you should close the quoting\n");
-//         return(1);
-//     }
-//     return(0);
-// }
-
-int have_open_close_quotes(char *cmd_line)
+int have_open_close_quotes(char *cmd_line, t_quo *quotes)
 {
-    int i;
-    int has_quote;
-    char found;
-
-    i = 0;
-    has_quote = 0;
-    while(cmd_line[i] != '\0')
+    
+    quotes->index = 0;
+    quotes->has_quote = 0;
+    while(cmd_line[quotes->index] != '\0')
     {
-        if(cmd_line[i] == '\"' || cmd_line[i] == '\'')
+        if(cmd_line[quotes->index] == '\"' || cmd_line[quotes->index] == '\'')
         {
-            found = cmd_line[i];
-            has_quote = 1;
+            quotes->found = cmd_line[quotes->index];
+            quotes->has_quote = 1;
         }
-        while(has_quote && cmd_line[i])
+        while(quotes->has_quote && cmd_line[quotes->index])
         {
-            if(cmd_line[i+1] == found)
+            if(cmd_line[quotes->index + 1] == quotes->found)
             {
-                has_quote = 0;
-                i++;
+                quotes->has_quote = 0;
+                quotes->index++;
                 break;
             }
-            i++;
+            quotes->index++;
         }
-        i++;
+        quotes->index++;
     }
-    if(has_quote  == 1)
+    if(quotes->has_quote  == 1)
     {
         printf("> you should close the quoting\n");
         return(1);
@@ -72,22 +45,12 @@ int have_open_close_quotes(char *cmd_line)
     return(0);
 }
 
-int clean_all_line(char *all_line)
+int clean_all_line(char *all_line, t_quo *quotes)
 {
-    if (have_open_close_quotes(all_line) != 0)
+    if (have_open_close_quotes(all_line, quotes) != 0)
         return(1);
-    // if (have_open_close_quotes(all_line) != 0)
-    //     return(1); 
+    
     return (0);      
 }
 
-// void clean_args(char **command_line)
-// {
-//     int i;
 
-//     i = 0;
-//     while(command_line)
-//     {
-//         have_open_close_quotes(command_line[i]);
-//     }
-// }

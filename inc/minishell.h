@@ -25,7 +25,6 @@ typedef struct s_cmd
 	char			**args;
 	char			*line;
 	int				n_args;
-	int				exit;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -43,6 +42,7 @@ typedef struct s_all
 	t_env		*list_env;
 	t_cmd		*node;
 	char		**env;
+	int			exit;
 }				t_all;
 //line
 void	exec_cmd(t_all *all);

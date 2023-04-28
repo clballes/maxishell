@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-int	check_digit_args(char **args, t_cmd *builtins)
+int	check_digit_args(char **args, t_all *all)
 {
 	int	i;
 	int	j;
@@ -35,9 +35,9 @@ int	check_digit_args(char **args, t_cmd *builtins)
 		}
 		i++;
 	}
-	builtins->exit = ft_atoi(args[1]);
-	if (builtins->exit > 255)
-		builtins->exit = 0;
+	all->exit = ft_atoi(args[1]);
+	all->exit = all->exit % 256;
+	printf("el all exit isssss %d\n", all->exit);
 	return (0);
 }
 
@@ -56,24 +56,24 @@ int	check_num_args(int i)
 	}
 }
 
-void	exec_exit(t_cmd *builtins)
+void	exec_exit(t_all *all)
 {
 	int	i;
 
 	i = 0;
-	builtins->exit = 0;
-	while (builtins->args[i])
+	all->exit = 0;
+	while (all->node->args[i])
 		i++;
-	if (check_digit_args(builtins->args, builtins) == 0)
+	if (check_digit_args(all->node->args, all) == 0)
 	{
 		if (check_num_args(i) == 0)
 		{
-			printf("el exit es %d\n", builtins->exit);
-			exit(builtins->exit); //salida por el exit status
+			printf("el exit es %d\n", all->exit);
+			exit(all->exit); //salida por el exit status
 		}
 		else
 			return ;
 	}
 	else
-		exit(0); //numeric argument exit 2 general error
+		exit(all->exit); //numeric argument exit 2 general error
 }

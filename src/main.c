@@ -79,7 +79,7 @@ void	exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
 		exec_env(&all->list_env);
 	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
-		exec_exit(all->node);
+		exec_exit(all);
 	else
 		printf("hemos d eencontar el path de los otros\n");
 }

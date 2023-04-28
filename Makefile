@@ -17,7 +17,7 @@ DEPS 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)
-		$(CC) -I $(INC_DIR)  -c $(CFLAGS) -MMD $< -o $@
+		$(CC)   -c $(CFLAGS) -I $(INC_DIR) -MMD $< -o $@
 
 all: makelibft
 	 @$(MAKE) $(NAME)

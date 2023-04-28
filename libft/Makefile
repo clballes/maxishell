@@ -20,10 +20,10 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME) : $(OBJ) $(HEADER)
-	ar -rcs $(NAME) $(OBJ)
+	 ar -rcs $(NAME) $(OBJ) 
 
 %.o: %.c $(HEADER)
-	$(CC) -I $(HEADER) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS -I $(HEADER)) $< -o $@
 
 bonus: $(OBJ) $(OBJ_BONUS) $(HEADER)
 	ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)

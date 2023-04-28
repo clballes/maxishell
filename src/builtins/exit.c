@@ -1,7 +1,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-int    check_args(char **args)
+int    check_digit_args(char **args, t_cmd *builtins)
 {
     int i;
     int j;
@@ -23,7 +23,25 @@ int    check_args(char **args)
         }
         i++;
     }
+    builtins->exit = ft_atoi(args[1]);
+    if(builtins->exit > 255)
+        builtins->exit = 0;
     return (0);
+}
+
+int   check_num_args(int i)
+{
+    if (i > 2)
+    {
+        printf("exit\n");
+        printf("bash: exit: too many arguments\n");
+        return (1);
+    }
+    else
+    {
+        printf("exit\n");
+        return (0);
+    }
 }
 
 void    exec_exit(t_cmd *builtins)
@@ -31,19 +49,16 @@ void    exec_exit(t_cmd *builtins)
     int i;
 
     i = 0;
+    builtins->exit = 0;
     while(builtins->args[i])
         i++;
-    if(check_args(builtins->args) == 0)
+    if(check_digit_args(builtins->args, builtins) == 0)
     {
-        if (i > 2)
-        {
-            printf("exit\n");
-            printf("bash: exit: too many arguments\n");
-        }
+        if(check_num_args(i) == 0)
+            exit(builtins->exit); //salida por el exit status
         else
-            printf("exit\n");
-            exit(0);
+            return ;
     }
     else
-        exit(0);
+        exit(0); //numeric argument exit 2 general error
 }

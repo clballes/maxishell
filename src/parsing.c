@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/04/28 13:55:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:56:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int have_open_close_quotes(char *cmd_line, t_quo *quotes)
         }
         quotes = find_second_quote(quotes, cmd_line);
         quotes->index++;
+        // if(!quotes->has_quote && cmd_line[quotes->index]== 32) para que me cuente el numero de argumentos
+                // n_args++;           
     }
     if(quotes->has_quote  == 1)
     {
@@ -51,6 +53,8 @@ int have_open_close_quotes(char *cmd_line, t_quo *quotes)
     }
     return(0);
 }
+//funcion que haga i++ desde que encuentra una quote hasta que termina esa misma quote
+
 // limpia la linea y analiza si es correcta
 int clean_all_line(char *all_line, t_quo *quotes)
 {

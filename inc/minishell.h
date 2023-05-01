@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 13:52:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:54:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 #include <stdbool.h>
 
 
-// desgrana cada linea de comando en tokens
-typedef struct s_token{
-    char *tkn_content;
-    bool single_quote;
-    bool double_quote;
-    struct s_token *next;
-}t_token;
+// // desgrana cada linea de comando en tokens
+// typedef struct s_token{
+//     char *tkn_content;
+//     bool single_quote;
+//     bool double_quote;
+//     struct s_token *next;
+// }t_token;
 //Guarda cada linea de comando 
 typedef struct s_cmd 
 {
     char *cmd;
-    t_token *args;
-    // char **args;
+    // t_token *args;
+    char **args;
     char   *line;
     int    n_args;
     struct s_cmd *next;
@@ -59,6 +59,7 @@ typedef struct s_all
     t_cmd *node;
     char **env;
     char *all_line;
+    int n_pipes;
 }       t_all;
 
 //line

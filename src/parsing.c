@@ -13,6 +13,20 @@
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 
+t_quo *find_second_quote(t_quo *quotes, char *cmd_line)
+{
+    while(quotes->has_quote && cmd_line[quotes->index])
+        {
+            if(cmd_line[quotes->index + 1] == quotes->found)
+            {
+                quotes->has_quote = 0;
+                quotes->index++;
+                break;
+            }
+            quotes->index++;
+        }
+    return (quotes);
+}
 int have_open_close_quotes(char *cmd_line, t_quo *quotes)
 {
     quotes->index = 0;
@@ -24,16 +38,7 @@ int have_open_close_quotes(char *cmd_line, t_quo *quotes)
             quotes->found = cmd_line[quotes->index];
             quotes->has_quote = 1;
         }
-        while(quotes->has_quote && cmd_line[quotes->index])
-        {
-            if(cmd_line[quotes->index + 1] == quotes->found)
-            {
-                quotes->has_quote = 0;
-                quotes->index++;
-                break;
-            }
-            quotes->index++;
-        }
+        quotes = find_second_quote(quotes, cmd_line);
         quotes->index++;
     }
     if(quotes->has_quote  == 1)
@@ -48,6 +53,7 @@ int clean_all_line(char *all_line, t_quo *quotes)
 {
     if (have_open_close_quotes(all_line, quotes) != 0)
         return(1);
+    
     
     return (0);      
 }

@@ -13,20 +13,34 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
+#include <stdbool.h>
 
 int   have_pipes(char *line)
 {   
     int i;
     int count;
-    
+    bool active_quotes;
+
     i = 0;
     count = 0;
-    while(line[i] != '\0')
+    active_quotes = false;
+    while (line[i] != '\0')
     {
-        if (line[i] == '|')
+        if (line[i] == '\"' || line[i] == '\'')
+        {
+            if (!active_quotes)
+                active_quotes = true;
+            else if (active_quotes)
+                active_quotes = false;
+        }
+        if (line[i] == '|' && !active_quotes)
+        {
             count++;
+
+        }
         i++;
     }
+    printf("numpipes is:%d\n ", count);
     return(count);
 }
 

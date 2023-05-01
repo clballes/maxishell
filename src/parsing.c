@@ -13,6 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 
+//Una vez que ya hemos encontrado la quote de inicio busca la de cierre
 t_quo *find_second_quote(t_quo *quotes, char *cmd_line)
 {
     while(quotes->has_quote && cmd_line[quotes->index])
@@ -27,6 +28,8 @@ t_quo *find_second_quote(t_quo *quotes, char *cmd_line)
         }
     return (quotes);
 }
+
+//Comprueba que todas las quotes están bien cerradas
 int have_open_close_quotes(char *cmd_line, t_quo *quotes)
 {
     quotes->index = 0;
@@ -48,7 +51,7 @@ int have_open_close_quotes(char *cmd_line, t_quo *quotes)
     }
     return(0);
 }
-
+// limpia la linea y analiza si es correcta
 int clean_all_line(char *all_line, t_quo *quotes)
 {
     if (have_open_close_quotes(all_line, quotes) != 0)

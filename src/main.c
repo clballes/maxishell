@@ -15,6 +15,9 @@
 #include "../inc/parsing.h"
 #include <stdbool.h>
 
+
+// Cuenta los pipes reales que hay, si hay pipes entre comillas no lo cuenta.
+// Con el numero de pipes sabremos el numero de t_cmd que necesitamos para el malloc.
 int   have_pipes(char *line)
 {   
     int i;
@@ -43,7 +46,7 @@ int   have_pipes(char *line)
     printf("numpipes is:%d\n ", count);
     return(count);
 }
-
+//Lee la linea del promps si algo falla sale y sino la devuelve para empezar a analizarla
 static char    *get_line()
 {
     char *line;

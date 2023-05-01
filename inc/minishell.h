@@ -18,12 +18,22 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+#include <stdbool.h>
 
 
+// desgrana cada linea de comando en tokens
+typedef struct s_token{
+    char *tkn_content;
+    bool single_quote;
+    bool double_quote;
+    struct s_token *next;
+}t_token;
+//Guarda cada linea de comando 
 typedef struct s_cmd 
 {
     char *cmd;
-    char **args;
+    t_token *args;
+    // char **args;
     char   *line;
     int    n_args;
     struct s_cmd *next;

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/25 16:59:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/02 09:38:27 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,33 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+#include <stdbool.h>
 
-typedef struct s_cmd
+
+// // desgrana cada linea de comando en tokens
+// typedef struct s_token{
+//     char *tkn_content;
+//     bool single_quote;
+//     bool double_quote;
+//     struct s_token *next;
+// }t_token;
+//Guarda cada linea de comando 
+typedef struct s_cmd 
 {
-	char			*cmd;
-	char			**args;
-	char			*line;
-	int				n_args;
-	struct s_cmd	*next;
-}					t_cmd;
+    char *cmd;
+    // t_token *args;
+    char **args;
+    char   *line;
+    int    n_args;
+    struct s_cmd *next;
+}   t_cmd;
+
+typedef struct s_quo
+{
+	char 	found;
+	int		index;
+	int		has_quote;
+} t_quo;
 
 typedef struct s_env
 {
@@ -39,11 +57,16 @@ typedef struct s_env
 
 typedef struct s_all
 {
+	t_quo quotes;
+    t_cmd *node;
 	t_env		*list_env;
-	t_cmd		*node;
-	char		**env;
+    char **env;
+    char *all_line;
 	int			exit;
-}				t_all;
+    int n_pipes;
+}       t_all;
+
+
 //line
 void	exec_cmd(t_all *all);
 //free

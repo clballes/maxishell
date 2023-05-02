@@ -23,6 +23,7 @@ t_env	*lst_new_env(char *name, char *content)
 	new->name = name;
 	new->content = content;
 	new->next = NULL;
+	new->previous = NULL;
 	return (new);
 }
 
@@ -36,6 +37,7 @@ void	lst_add_back_env(t_env **first, t_env *new_el)
 	{
 		temp = lst_last_env(*first);
 		temp->next = new_el;
+		new_el->previous = temp;
 	}
 }
 

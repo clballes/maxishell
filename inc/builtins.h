@@ -19,5 +19,5 @@ void	env_list(t_all *all);
 int     exec_pwd(void);
 void    exec_exit(t_all *all);
 void	exec_export(t_env **list_env);
-void	swap(t_env **env);
+void	swap(t_env **temp1);
 #endif

@@ -54,7 +54,7 @@ int   number_of_pipes(char *line)
         }
         i++;
     }
-    printf("numpipes is:%d\n ", count);
+    // printf("numpipes is:%d\n ", count);
     return(count);
 }
 
@@ -78,7 +78,7 @@ static int analyze_line(char *all_line, t_all *all)
         else
             all->node = lst_new(content_list(all_line, false, all));
         lst_add_back(&all->node, all->node);
-        printf("el contenido del nodo es:%s\n", all->node->line);
+        // printf("el contenido del nodo es:%s\n", all->node->line);
         all->node->args = ft_split(splitted[i], ' ');//aquí va la función que me va a separar los argumentos 
         all->node->cmd = all->node->args[0];
         all->node = all->node->next;
@@ -121,9 +121,9 @@ int	main(int argc, char **argv, char **env)
     if(!all)
         exit(0);
     all->env = env;
+	env_list(all);
     while (1)
     {
-        // get_env();
         all->all_line = get_line();
         if(analyze_line(all->all_line, all) == 0)
         {

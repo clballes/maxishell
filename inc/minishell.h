@@ -57,14 +57,14 @@ typedef struct s_env
 
 typedef struct s_all
 {
-	t_quo quotes;
-    t_cmd *node;
+	t_quo		quotes;
+    t_cmd		*node;
 	t_env		*list_env;
-    char **env;
-    char *all_line;
+    char		**env;
+    char		*all_line;
 	int			exit;
-    int n_pipes;
-}       t_all;
+    int			n_pipes;
+}				t_all;
 
 
 //line

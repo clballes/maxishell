@@ -13,78 +13,53 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	set_index(t_env **list_env)
+void	print_list (t_env **list_a)
 {
-	t_env	*temp;
-	char	*alphabet;
-	int		j;
+	t_env *temp_a;
 
-	j = 0;
-	temp = *list_env;
-	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-	temp->index = 0;
-	while (temp)
+	temp_a = *list_a;
+	while (temp_a)
 	{
-		if (temp->name[0] == alphabet[j])
-		{
-			temp->index = j;
-			printf("el indice es %d\n", temp->index);
-			temp = temp->next;
-			j = 0;
-		}
-		else
-			j++;
+		printf("valor en lista:%s\n",temp_a->name);
+		temp_a = temp_a->next;
 	}
-	//el total de nodos es 42 para hacer el solve con el push swap
 }
-
-// int	*sort_int_tab(int *tab, unsigned int size)
-// {
-// 	unsigned int i;
-// 	int swap;
-	
-// 	swap = 0;
-// 	while (sort_tab(tab, size))
-// 	{
-// 		i = 0;
-// 		while (i < size - 1)
-// 		{
-// 			if (tab[i] > tab[i + 1])
-// 			{
-// 				swap = tab[i];
-// 				tab[i] = tab[i + 1];
-// 				tab[i + 1] = swap;
-// 			}
-// 			i++;
-// 		}
-// 	}
-// 	return (tab);
-// }
-
-void	order_num(t_env **list_env)
+void	sort_list(t_env **list_env)
 {
-	t_env	*temp;
-	t_env	*temp2;
-	int		j;
-
-	j = 0;
+	int	i;
+	t_env *temp;
+	t_env *temp2;
+	
+	i = 0;
 	temp = *list_env;
-	temp2 = *list_env;
-	while (temp)
+	temp2 = temp->next;
+	printf("el temp ANTES DE ENTRAR EN EL IF %s\n", temp->name);
+
+	while(temp)
 	{
-		if (temp2->index > temp->next->index)
+		if (ft_strncmp(temp->name, temp2->name, ft_strlen(temp->name)) > 0) //no estan ordenados
 		{
-			swap(list_env);
+			// printf("el temp name %s\n", temp->name);
+			// printf("el temp name next %s\n", temp2->name);
+			swap(&temp);
+			temp = *list_env;
+			temp2 = temp->next;
+			
+			// printf("el temp IGUAL %s\n", temp->next->name);
+		}
+		if (ft_strncmp(temp->name, temp2->name, ft_strlen(temp->name)) < 0) //si estas ordenado
+		{
+			// printf("holaaaa\n");
+			temp = temp->next;	
 			temp2 = temp2->next;
 		}
-		// order_same_num();
-		temp = temp->next;
 	}
 }
+
+
 
 void	exec_export(t_env **list_env)
 {
-	set_index(list_env);
-	order_num(list_env);
-    // num_compare(list_env);
+	sort_list(list_env);
+	print_list(list_env);
 }

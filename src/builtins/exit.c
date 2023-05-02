@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:21:56 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 12:21:58 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/02 10:41:26 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	check_digit_args(char **args)
 				if (i > 1)
 					return (1);
 				else
-					printf("exit\nbash: exit: %s: numeric argument required\n", args[i]);
+					printf("exit\nbash:\
+					exit: %s:numeric argument required\n", args[i]);
 				return (0);
 			}
 			else
@@ -82,7 +83,7 @@ void	exec_exit(t_all *all)
 	else if (check_digit_args(all->node->args) == 1)
 	{
 		if (check_num_args(i) == 0)
-			exit(all->exit); //salida por el exit status	
+			exit(all->exit);
 		return ;
 	}
 	else

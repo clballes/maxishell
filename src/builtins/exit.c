@@ -15,13 +15,12 @@
 
 int	digit_max_min(int c, char *arg)
 {
-	if (ft_strncmp(arg, "9223372036854775807", 19) > 0 && (c >= '0' && c <= '9'))
-		return (0);
-	if (arg[0] == '-' && (ft_strncmp(arg, "-9223372036854775807", 20) > 0)&& (c >= '0' && c <= '9'))
-		return (0);
 	if (!(c >= '0' && c <= '9'))
 		return (0);
-	
+	if (ft_strncmp(arg, "9223372036854775807", 19) > 0)
+		return (0);
+	if (arg[0] == '-' && (ft_strncmp(arg, "-9223372036854775807", 20) > 0))
+		return (0);
 	return (1);
 }
 

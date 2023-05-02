@@ -10,7 +10,7 @@ BUILTINS_DIR = builtins/
 RM = rm -f
 #FSANITIZE	:= -fsanitize=addresmas -g3
 
-SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export $(BUILTINS_DIR)utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit
+SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export $(BUILTINS_DIR)utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

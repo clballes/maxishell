@@ -38,6 +38,29 @@ void	set_index(t_env **list_env)
 	//el total de nodos es 42 para hacer el solve con el push swap
 }
 
+// int	*sort_int_tab(int *tab, unsigned int size)
+// {
+// 	unsigned int i;
+// 	int swap;
+	
+// 	swap = 0;
+// 	while (sort_tab(tab, size))
+// 	{
+// 		i = 0;
+// 		while (i < size - 1)
+// 		{
+// 			if (tab[i] > tab[i + 1])
+// 			{
+// 				swap = tab[i];
+// 				tab[i] = tab[i + 1];
+// 				tab[i + 1] = swap;
+// 			}
+// 			i++;
+// 		}
+// 	}
+// 	return (tab);
+// }
+
 void	order_num(t_env **list_env)
 {
 	t_env	*temp;
@@ -50,7 +73,10 @@ void	order_num(t_env **list_env)
 	while (temp)
 	{
 		if (temp2->index > temp->next->index)
-			swap(list_env, 'a');
+		{
+			swap(list_env);
+			temp2 = temp2->next;
+		}
 		// order_same_num();
 		temp = temp->next;
 	}

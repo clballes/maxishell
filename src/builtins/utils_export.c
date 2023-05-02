@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	swap(t_env **env, char c)
+void	swap(t_env **env)
 {
 	t_env	*first;
 	t_env	*second;
@@ -29,5 +29,5 @@ void	swap(t_env **env, char c)
 	second->next = first;
 	second->previous = NULL;
 	*env = second;
-	printf("s%c\n", c);
+	// printf("s%c\n", c);
 }

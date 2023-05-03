@@ -7,3 +7,4 @@ FET
 echo
 env
 exit
+export

@@ -20,46 +20,43 @@ void	print_list (t_env **list_a)
 	temp_a = *list_a;
 	while (temp_a)
 	{
-		printf("valor en lista:%s\n",temp_a->name);
+		printf("declare -x %s=\"%s\"\n",temp_a->name, temp_a->content);
 		temp_a = temp_a->next;
 	}
 }
 void	sort_list(t_env **list_env)
 {
-	int	i;
-	t_env *temp;
-	t_env *temp2;
+	int		i;
+	t_env	*temp;
+	t_env	*temp2;
+	t_env	*temp3;
 	
 	i = 0;
-	temp = *list_env;
+	temp3 = *list_env;
+	temp = *list_env;	
 	temp2 = temp->next;
-	printf("el temp ANTES DE ENTRAR EN EL IF %s\n", temp->name);
-
-	while(temp)
+	while(temp && temp->next)
 	{
 		if (ft_strncmp(temp->name, temp2->name, ft_strlen(temp->name)) > 0) //no estan ordenados
 		{
-			// printf("el temp name %s\n", temp->name);
-			// printf("el temp name next %s\n", temp2->name);
 			swap(&temp);
+			if (temp2->previous == 0)
+				*list_env = temp2;
 			temp = *list_env;
 			temp2 = temp->next;
-			
-			// printf("el temp IGUAL %s\n", temp->next->name);
 		}
-		if (ft_strncmp(temp->name, temp2->name, ft_strlen(temp->name)) < 0) //si estas ordenado
+		else
 		{
-			// printf("holaaaa\n");
-			temp = temp->next;	
-			temp2 = temp2->next;
+			temp = temp->next;
+			if (temp2)
+				temp2 = temp2->next;
 		}
 	}
 }
 
-
-
 void	exec_export(t_env **list_env)
 {
+	// print_list(list_env);
 	sort_list(list_env);
 	print_list(list_env);
 }

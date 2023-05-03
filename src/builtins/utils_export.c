@@ -18,7 +18,7 @@ void	swap(t_env **temp)
 	t_env	*first;
 	t_env	*second;
 
-	first = *temp1;
+	first = *temp;
 	second = first->next;
 	if (first->next == 0)
 		return ;

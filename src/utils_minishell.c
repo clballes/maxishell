@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:30:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:51:20 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:42:30 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*lst_new(char *line)
 {
 	t_cmd	*new;
 
-	new = malloc(sizeof(t_cmd));
+	new = ft_calloc(1,sizeof(t_cmd));
 	if (!new)
 		return (0);
 	new->line = line;
@@ -43,4 +43,17 @@ void	lst_add_back(t_cmd **first, t_cmd *new_el)
 		temp = lst_last(*first);
 		temp->next = new_el;
 	}
+}
+
+int	lst_size(t_cmd *lst)
+{
+	int	i;
+	
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst -> next;
+		i++;
+	}
+	return (i);
 }

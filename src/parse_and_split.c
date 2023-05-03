@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   parse_and_split.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/03 12:38:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:56:01 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minishell.h"
+#include "../inc/parsing.h"
 
-static int	ft_count_words(char	const *s, char c)
+static int	ft_count_words(char	const *s, char c, t_all *all)
 {
 	int	count;
 	int	n_word;
@@ -21,7 +22,7 @@ static int	ft_count_words(char	const *s, char c)
 	n_word = 0;
 	while (s[count])
 	{
-		if (s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0'))
+		if (s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0')&& !is_inside_quotting(s,all,count))
 			n_word++;
 		count++;
 	}
@@ -39,7 +40,7 @@ static char	**ft_free(char **result, int n_word)
 	return (0);
 }
 
-static char	**ft_findposition_cutstring(char	const *s, char c, char **result)
+static char	**ft_findposition_cutstring(char const *s, char c, char **result, t_all *all)
 {
 	int		n_word;
 	int		count;
@@ -51,9 +52,10 @@ static char	**ft_findposition_cutstring(char	const *s, char c, char **result)
 	{
 		if (count == 0 && s[count] != c)
 			start = count;
-		if (count > 0 && s[count] != c && s[count -1] == c)
+		if (count > 0 && s[count] != c && s[count -1] == c /*&& !is_inside_quotting(s,all,count)*/)
 			start = count;
-		if (s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0'))
+		printf("esta dentro:%c : %d\n",s[count],is_inside_quotting(s,all,count));
+		if ((s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0'))&& !is_inside_quotting(s,all,count))
 		{
 			result[n_word] = ft_substr(s, start, count - start + 1);
 			if (!result[n_word])
@@ -66,13 +68,13 @@ static char	**ft_findposition_cutstring(char	const *s, char c, char **result)
 	return (result);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_tokens(char const *s, char c, t_all *all)
 {
 	char	**result;
 
-	result = malloc(sizeof(char *) * (ft_count_words(s, c) + 1));
+	result = malloc(sizeof(char *) * (ft_count_words(s, c, all) + 1));
 	if (!result)
 		return (NULL);
-	result = ft_findposition_cutstring(s, c, result);
+	result = ft_findposition_cutstring(s, c, result, all);
 	return (result);
 }

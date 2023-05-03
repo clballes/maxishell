@@ -6,64 +6,135 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/02 09:51:39 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:08:33 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 #include <stdbool.h>
+// Te devuelve 0 si no estas dentro de quotes y 1 si estas dentro de quotes
+int is_inside_quotting(const char *line, t_all *all, int i)
+{
+	
+	if (line[i] == '\"' || line[i] == '\'')
+        {
+            if (!all->quotes.has_quote)
+			{
+                all->quotes.has_quote = 1;
+				all->quotes.found = line[i];
+			}
+            else if (all->quotes.has_quote && line[i] == all->quotes.found)
+			{
+                all->quotes.has_quote = 0;
+				all->quotes.found = ' ';
+			}
+			printf("line[i]:%c:%d\n", line[i], all->quotes.has_quote);
+        }
+		return(all->quotes.has_quote);
+}
+
+// Esta funcion me extrae el comando que separan los pipes dependiendo si es el ultimo o no
+char *save_line_depends_on_position(char *line, int start, int i)
+{
+	char *line_to_return;
+	
+	if(line[i + 1] == '\0')
+        line_to_return = ft_substr(line, start, i + 1 - start);
+    else
+        line_to_return = ft_substr(line, start, i - start); //TODO cada substring hace MALLOC HAY QUE HACER FREE
+	return(line_to_return);
+}
 
 //Esta funcion recorre la string si encuentra quotes se activa una variable para que 
 // en el caso de que haya un pipe dentro de comillas no nos lo coja como un real pipe
 // Si encuentra un pipe real o ya no quedan pipes y estamos al final de la linea
-// lo que hace es extraer la linea y guardar las nuevas posiciones para la proxima vez 
-// que al crear un nodo se llame a esta función 
+// lo que hace es extraer la linea y guardar las nuevas posiciones de i,count,start para que la proxima vez 
+// que al crear un nodo se llame a esta función siga por donde se quedo.
 // Devuelve esa linea  que en la función de analize line lo introducimos como contenido del nodo
 char   *content_list(char *line, bool init, t_all *all)
 {   
     static int  i;
     static int  start;
-    bool        active_quotes;
     char        *line_split_by_pipes;
-    static int  count;
+    static int  count_pipes;
     
 	line_split_by_pipes = NULL;
     if (init)
     {
         i = 0;
         start = 0;
-        count = all->n_pipes;
+        count_pipes = all->n_pipes;
     }
-    active_quotes = false;
-    while (line[i] != '\0')
+    all->quotes.has_quote = 0;
+    while (line[i++] != '\0')
     {
-        // printf("llega a entrar? line[%d]=%c \n", i, line[i]);
-        if (line[i] == '\"' || line[i] == '\'')
+		all->quotes.has_quote = is_inside_quotting(line, all, i);
+		printf("aqui\n");
+        if ((line[i] == '|' && !all->quotes.has_quote) || (count_pipes == 0 && line[i + 1] == '\0'))
         {
-            if (!active_quotes)
-                active_quotes = true;
-            else if (active_quotes)
-                active_quotes = false;
-        }
-        if ((line[i] == '|' && !active_quotes) || (count == 0 && line[i+1] == '\0'))
-        {
-            // printf("n_pipes:%d\n", all->n_pipes);
-            if(line[i+1] == '\0')
-                line_split_by_pipes = ft_substr(line, start, i + 1 - start); // mirar por qué el +1
-            else
-                line_split_by_pipes = ft_substr(line, start, i - start); //TODO cada substring hace MALLOC HAY QUE HACER FREE
-            count--;
+			line_split_by_pipes = save_line_depends_on_position(line, start, i);
+            count_pipes--;
             start = i + 1;
             i++;
-            // printf("la linea es:%s\n ", line_split_by_pipes);
             break;  
         }
-        i++;
     }
     return(line_split_by_pipes);
 }
 
+void	divide_in_tokens(t_all *all)
+{
+	char	c;
+	
+	c = ' ';
+	while(all->node)
+	{
+		all->node->args = ft_split_tokens(all->node->line, c, all);
+		printf("%s\n",all->node->args[1]);
+		all->node = all->node->next;
+	}
+	// // int i;
+	// // int j;
+	// // int k;
+	// int size;
+	
+	// // i = 0;
+	// // j = 0;
+	// // k = 0;
+	// size = 0;
+	
+
+
+    // while(all->node->line[i] != '\0')
+	// {
+	// 	while(all->node->line[i] == 32)
+	// 		i++;
+	// 	while(all->node->line[i] != '\0')
+	// 	{
+	// 		if(all->node->line[i] == 32)
+	// 		{
+	// 			k++;
+	// 			printf("tokens divididos %s\n ", all->node->args[k]);
+	// 			break;
+	// 		}
+	// 		// else if (all->node->line[i] == '\'')
+	// 		// {
+	// 		// 	// all->node = single_quote_mode(all->node->line, i, all->node);                       
+	// 		// }
+	// 		// else if (all->node->line[i] == '\"')
+	// 		// {
+	// 		// 	// all->node = double_quote_mode(all->node->line, i, all->node);
+	// 		// }
+	// 		else
+	// 		{
+	// 			all->node->args[k][j] = all->node->line[i];
+	// 			j++;
+	// 		}
+	// 		i++;
+	// 	}
+	// }
+}
 // static int analyze_line(char *all_line, t_all *all)
 // {
 //     int n_pipes;

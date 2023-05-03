@@ -31,11 +31,12 @@
 //Guarda cada linea de comando 
 typedef struct s_cmd 
 {
-    char *cmd;
+    char		*cmd;
     // t_token *args;
-    char **args;
-    char   *line;
-    int    n_args;
+    char		**args;
+    char		*line;
+    int			n_args;
+	int			equal; //para saber si hay iguales dentr del export
     struct s_cmd *next;
 }   t_cmd;
 
@@ -50,7 +51,8 @@ typedef struct s_env
 {
 	char			*name;
 	char			*content;
-	int				index;
+	int				print; //para saber si se ha de printar la variable en el env o export 
+	struct s_env	*temporal; //para saber la ultima osicion del env y enlazar el siguiente nodo de la lista
 	struct s_env	*next;
 	struct s_env	*previous;
 }					t_env;

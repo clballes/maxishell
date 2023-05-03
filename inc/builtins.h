@@ -18,6 +18,11 @@ void	exec_env(t_env **list_env);
 void	env_list(t_all *all);
 int     exec_pwd(void);
 void    exec_exit(t_all *all);
-void	exec_export(t_env **list_env, t_cmd *node);
 void	swap(t_env **temp);
+
+//export funtions
+void	exec_export(t_all *all);
+int		check_equal(t_cmd *node);
+int		ft_prohibited(char c, int j);
+int		check_arg(char **args);
 #endif

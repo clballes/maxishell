@@ -55,10 +55,29 @@ void	sort_list(t_env **list_env)
 	}
 }
 
-void	exec_export(t_env **list_env, t_cmd *node)
+void	exec_export(t_all *all)
 {
-	// print_list(list_env);
-	printf("el num args es: %s\n", node->args[0]);
-	sort_list(list_env);
-	print_list(list_env);
+	int	i;
+	t_env	*temp;
+
+	temp = all->list_env;
+	i = 0;
+	while(all->node->args[i])
+		i++;
+	if (i == 1)
+	{
+		sort_list(&all->list_env);
+		print_list(&all->list_env);
+	}
+	else
+	{
+		if (check_equal(all->node) == 0)
+		{
+			all->list_env->temporal = lst_new_env(all->node->args[1], NULL);
+			lst_add_back_env(&all->list_env, all->list_env->temporal);
+			all->list_env->temporal->print = 0;
+			sort_list(&all->list_env);
+			print_list(&all->list_env);
+		}
+	}
 }

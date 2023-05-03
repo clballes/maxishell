@@ -27,6 +27,8 @@ void	env_list(t_all *all)
 		temp = lst_new_env(cont_name[0], cont_name[1]);
 		lst_add_back_env(&all->list_env, temp);
 		free(cont_name);
+		temp->print = 1;
+		all->list_env->temporal = temp;
 		temp = temp->next;
 		i++;
 	}
@@ -41,7 +43,8 @@ void	exec_env(t_env **list_env)
 	temp = *list_env;
 	while (temp)
 	{
-		printf("%s=%s\n", temp->name, temp->content);
+		if (temp->print == 1)
+			printf("%s=%s\n", temp->name, temp->content);
 		temp = temp->next;
 	}
 }

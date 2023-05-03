@@ -13,15 +13,18 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	print_list (t_env **list_a)
+void	print_list (t_env **list_env)
 {
-	t_env *temp_a;
+	t_env *temp;
 
-	temp_a = *list_a;
-	while (temp_a)
+	temp = *list_env;
+	while (temp)
 	{
-		printf("declare -x %s=\"%s\"\n",temp_a->name, temp_a->content);
-		temp_a = temp_a->next;
+		if (temp->print == 0)
+			printf("declare -x %s\n",temp->name);
+		else
+			printf("declare -x %s=\"%s\"\n",temp->name, temp->content);
+		temp = temp->next;
 	}
 }
 
@@ -60,6 +63,7 @@ void	exec_export(t_all *all)
 	int	i;
 	t_env	*temp;
 
+
 	temp = all->list_env;
 	i = 0;
 	while(all->node->args[i])
@@ -73,11 +77,14 @@ void	exec_export(t_all *all)
 	{
 		if (check_equal(all->node) == 0)
 		{
-			all->list_env->temporal = lst_new_env(all->node->args[1], NULL);
-			lst_add_back_env(&all->list_env, all->list_env->temporal);
-			all->list_env->temporal->print = 0;
-			sort_list(&all->list_env);
-			print_list(&all->list_env);
+			// if ((check_args) == 0) //si esta limpio 
+			// {
+				all->list_env->temporal = lst_new_env(all->node->args[1], NULL);
+				lst_add_back_env(&all->list_env, all->list_env->temporal);
+				all->list_env->temporal->print = 0;
+				sort_list(&all->list_env);
+				print_list(&all->list_env);
+			// }
 		}
 	}
 }

@@ -24,6 +24,7 @@ void	print_list (t_env **list_a)
 		temp_a = temp_a->next;
 	}
 }
+
 void	sort_list(t_env **list_env)
 {
 	int		i;
@@ -54,9 +55,10 @@ void	sort_list(t_env **list_env)
 	}
 }
 
-void	exec_export(t_env **list_env)
+void	exec_export(t_env **list_env, t_cmd *node)
 {
 	// print_list(list_env);
+	printf("el num args es: %s\n", node->args[0]);
 	sort_list(list_env);
 	print_list(list_env);
 }

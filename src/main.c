@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/03 13:51:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:52:30 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int analyze_line(char *all_line, t_all *all)
 
     i = 0;
     
-    if(clean_all_line(all_line, &all->quotes) != 0)
+    if(clean_all_line(all_line, all) != 0)
         return(1);
     all->n_pipes = number_of_pipes(all_line, all);
     // splitted = ft_split(all_line, '|');//va a desaparecer
@@ -71,12 +71,12 @@ static int analyze_line(char *all_line, t_all *all)
         else
             all->node = lst_new(content_list(all_line, false, all));
         lst_add_back(&all->node, all->node);
-		all->node->args = ft_split_tokens(all->node->line, ' ', all);
-	
         printf("el contenido del nodo es:%s\n", all->node->line);
+		all->node->args = ft_split_tokens(all->node->line, ' ', all);
+	// TODO HAY QUE TENER EN CUENTA TABULACIONES ESPACIOS ETC IS_SPACE
         printf("arg[0]:%s\n", all->node->args[0]);
         printf("arg[1]:%s\n", all->node->args[1]);
-        printf("arg[1]:%s\n", all->node->args[2]);
+        // printf("arg[1]:%s\n", all->node->args[2]);
         // all->node->args = ft_split(splitted[i], ' ');//aquí va la función que me va a separar los argumentos 
         all->node->cmd = all->node->args[0];
         all->node = all->node->next;

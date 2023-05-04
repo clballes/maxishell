@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/03 14:08:33 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:26:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,54 @@
 #include "../inc/parsing.h"
 #include <stdbool.h>
 // Te devuelve 0 si no estas dentro de quotes y 1 si estas dentro de quotes
+// int is_inside_quotting(const char *line, t_all *all, int i)
+// {
+// 		if (line[i] == '\"' || line[i] == '\'')
+// 			{
+// 				if (!all->quotes.has_quote)
+// 				{
+// 					all->quotes.has_quote = 1;
+// 					all->quotes.found = line[i];
+// 				}
+// 				else if (all->quotes.has_quote && line[i] == all->quotes.found)
+// 				{
+// 					all->quotes.has_quote = 0;
+// 					all->quotes.found = ' ';
+// 				}
+// 				printf("line[i]:%c:%d\n", line[i], all->quotes.has_quote);
+// 			}
+	
+
+// 	return(all->quotes.has_quote);
+// }
+
+
 int is_inside_quotting(const char *line, t_all *all, int i)
 {
-	
-	if (line[i] == '\"' || line[i] == '\'')
-        {
-            if (!all->quotes.has_quote)
+	//se inicia la has_quote a cero
+	all->quotes.has_quote=0;
+	int j;
+
+	j = 0;
+	while(j <= i)
+	{
+		if (line[j] == '\"' || line[j] == '\'')
 			{
-                all->quotes.has_quote = 1;
-				all->quotes.found = line[i];
+				if (!all->quotes.has_quote)
+				{
+					all->quotes.has_quote = 1;
+					all->quotes.found = line[j];
+				}
+				else if (all->quotes.has_quote && line[j] == all->quotes.found)
+				{
+					all->quotes.has_quote = 0;
+					all->quotes.found = ' ';
+				}
+				printf("line[j]:%c:%d\n", line[j], all->quotes.has_quote);
 			}
-            else if (all->quotes.has_quote && line[i] == all->quotes.found)
-			{
-                all->quotes.has_quote = 0;
-				all->quotes.found = ' ';
-			}
-			printf("line[i]:%c:%d\n", line[i], all->quotes.has_quote);
-        }
-		return(all->quotes.has_quote);
+		j++;
+	}
+	return(all->quotes.has_quote);
 }
 
 // Esta funcion me extrae el comando que separan los pipes dependiendo si es el ultimo o no
@@ -67,18 +97,20 @@ char   *content_list(char *line, bool init, t_all *all)
         count_pipes = all->n_pipes;
     }
     all->quotes.has_quote = 0;
-    while (line[i++] != '\0')
+    while (line[i] != '\0')
     {
 		all->quotes.has_quote = is_inside_quotting(line, all, i);
-		printf("aqui\n");
+		printf("metiendo la info en los nodos line[i]:%c\n", line[i]);
         if ((line[i] == '|' && !all->quotes.has_quote) || (count_pipes == 0 && line[i + 1] == '\0'))
         {
+			printf("estoy aqui???\n");
 			line_split_by_pipes = save_line_depends_on_position(line, start, i);
             count_pipes--;
             start = i + 1;
             i++;
             break;  
         }
+		i++;
     }
     return(line_split_by_pipes);
 }
@@ -94,46 +126,7 @@ void	divide_in_tokens(t_all *all)
 		printf("%s\n",all->node->args[1]);
 		all->node = all->node->next;
 	}
-	// // int i;
-	// // int j;
-	// // int k;
-	// int size;
 	
-	// // i = 0;
-	// // j = 0;
-	// // k = 0;
-	// size = 0;
-	
-
-
-    // while(all->node->line[i] != '\0')
-	// {
-	// 	while(all->node->line[i] == 32)
-	// 		i++;
-	// 	while(all->node->line[i] != '\0')
-	// 	{
-	// 		if(all->node->line[i] == 32)
-	// 		{
-	// 			k++;
-	// 			printf("tokens divididos %s\n ", all->node->args[k]);
-	// 			break;
-	// 		}
-	// 		// else if (all->node->line[i] == '\'')
-	// 		// {
-	// 		// 	// all->node = single_quote_mode(all->node->line, i, all->node);                       
-	// 		// }
-	// 		// else if (all->node->line[i] == '\"')
-	// 		// {
-	// 		// 	// all->node = double_quote_mode(all->node->line, i, all->node);
-	// 		// }
-	// 		else
-	// 		{
-	// 			all->node->args[k][j] = all->node->line[i];
-	// 			j++;
-	// 		}
-	// 		i++;
-	// 	}
-	// }
 }
 // static int analyze_line(char *all_line, t_all *all)
 // {

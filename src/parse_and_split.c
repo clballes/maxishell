@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/03 13:56:01 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:42:46 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ static int	ft_count_words(char	const *s, char c, t_all *all)
 
 	count = 0;
 	n_word = 0;
+	printf("que linea llega para contar palabras:%s que has_quotellega:%d\n", s, all->quotes.has_quote);
 	while (s[count])
 	{
-		if (s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0')&& !is_inside_quotting(s,all,count))
+		// printf("s[%d]:%c\n", count, s[count]);
+		if ((s[count] != c && (s[count + 1] == c) && !is_inside_quotting(s,all,count + 1))|| s[count + 1] == '\0')
+		{
 			n_word++;
+			printf("n_word=%d\n",n_word);
+		}
 		count++;
 	}
 	return (n_word);
@@ -52,10 +57,15 @@ static char	**ft_findposition_cutstring(char const *s, char c, char **result, t_
 	{
 		if (count == 0 && s[count] != c)
 			start = count;
-		if (count > 0 && s[count] != c && s[count -1] == c /*&& !is_inside_quotting(s,all,count)*/)
-			start = count;
-		printf("esta dentro:%c : %d\n",s[count],is_inside_quotting(s,all,count));
-		if ((s[count] != c && ((s[count + 1] == c) || s[count + 1] == '\0'))&& !is_inside_quotting(s,all,count))
+		if (count > 0 && s[count] == c && s[count +1] != c && !is_inside_quotting(s,all,count))
+		{
+			start = count + 1;
+		 	printf("actualizando start:%c:%d\n",s[count],is_inside_quotting(s,all,count));
+			
+		}
+		if (s[count] != c 
+			&& ((s[count + 1] == c && !is_inside_quotting(s,all,count + 1))
+			|| s[count + 1] == '\0'))
 		{
 			result[n_word] = ft_substr(s, start, count - start + 1);
 			if (!result[n_word])

@@ -58,33 +58,52 @@ void	sort_list(t_env **list_env)
 	}
 }
 
+void	add_new(t_all *all, char *arg)
+{
+	char	**cont_name;
+	
+	if (check_equal(all->node) == 0) //si no tenim iguals, ha dapareixer al export no al env
+	{
+		all->list_env->temporal = lst_new_env(arg, NULL);
+		lst_add_back_env(&all->list_env, all->list_env->temporal);
+		all->list_env->temporal->print = 0;
+		sort_list(&all->list_env);
+	}
+	else //si tenim iguals han dapareixer a les dos
+	{
+		cont_name = ft_split(arg, '=');
+		all->list_env->temporal = lst_new_env(cont_name[0], cont_name[1]);
+		lst_add_back_env(&all->list_env, all->list_env->temporal);
+		all->list_env->temporal->print = 1;
+		free(cont_name);
+		sort_list(&all->list_env);
+	}
+}
+
 void	exec_export(t_all *all)
 {
 	int	i;
+	int j;
 	t_env	*temp;
-
 
 	temp = all->list_env;
 	i = 0;
+	j = 1;
 	while(all->node->args[i])
 		i++;
-	if (i == 1)
+	if (i == 1) //si tenim nomes export
 	{
 		sort_list(&all->list_env);
 		print_list(&all->list_env);
 	}
-	else
+	else //si tenim arguments
 	{
-		if (check_equal(all->node) == 0)
+		check_arg(all->node->args);
+		while(all->node->args[j])
 		{
-			// if ((check_args) == 0) //si esta limpio 
-			// {
-				all->list_env->temporal = lst_new_env(all->node->args[1], NULL);
-				lst_add_back_env(&all->list_env, all->list_env->temporal);
-				all->list_env->temporal->print = 0;
-				sort_list(&all->list_env);
-				print_list(&all->list_env);
-			// }
+			// check_repeat();
+			add_new(all, all->node->args[j]);
+			j++;
 		}
 	}
 }

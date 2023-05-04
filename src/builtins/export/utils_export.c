@@ -35,14 +35,8 @@ void	swap(t_env **temp)
 int	ft_prohibited(char c, int j)
 {
 	if ((j == 0) && ((c >= 33 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
-	{
-		printf("char c es %c\n", c);
 		return (1);
-	}
 	else if ((j != 0) && ((c >= 34 && c <= 47) || (c >= 58 && c <= 64) || (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
-	{
-		printf("char c 2sssss es %c\n", c);
 		return (1);
-	}
 	return (0);
 }

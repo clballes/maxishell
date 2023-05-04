@@ -13,23 +13,12 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	var(t_all *all)
-{
-	printf("el char es %s\n", all->env[29]);
 
-	// temp = *list_env;
-	// while (all->env[all->list_env->index])
-	// {
-	// 	printf("la string es : %s\n", env[list_env->index]);
-	// 	// cont_name = ft_split(all->env[i], '=');
-	// 	// temp = lst_new_env(cont_name[0], cont_name[1]);
-	// 	// lst_add_back_env(&all->list_env, temp);
-	// 	// free(cont_name);
-	// 	// temp = temp->next;
-	// 	// all->list_env->index++;
-	// }
+//funcions repetides
+// int	check_repeat()
+// {
 
-}
+// }
 
 int	check_equal(t_cmd *node)
 {

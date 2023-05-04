@@ -8,7 +8,7 @@ OBJ_DIR = obj/
 SRC_DIR = src/
 BUILTINS_DIR = builtins/
 RM = rm -f
-#FSANITIZE	:= -fsanitize=addresmas -g3
+FSANITIZE	:= -fsanitize=address -g3
 
 SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export $(BUILTINS_DIR)utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit
 SRC_FILES	+= parsing parsing_pipes_commands parse_and_split init

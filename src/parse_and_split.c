@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/04 15:54:05 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:59:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 			|| s[i + 1] == '\0'))
 		{
 			result[n_word] = ft_substr(s, start, i - start + 1);
+			printf("cada token[%d]:%s\n", n_word,result[n_word]);
 			if (!result[n_word])
 				return (ft_free(result, n_word));
 			n_word++;

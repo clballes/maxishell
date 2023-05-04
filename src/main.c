@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:42 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:13:57 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	analyze_line(char *all_line, t_all *all)
 	int	i;
 
 	i = 0;
-	if (clean_all_line(all_line, all) != 0)
+	if (valid_line(all_line, all) != 0)
 		return (1);
 	all->n_pipes = number_of_pipes(all_line, all);
 	while (i < (all->n_pipes + 1))
@@ -67,6 +67,7 @@ static int	analyze_line(char *all_line, t_all *all)
 		else
 			all->node = lst_new(content_list(all_line, false, all));
 		lst_add_back(&all->node, all->node);
+		printf("%s\n",all->node->line);
 		all->node->line = ft_strtrim_free_s1(all->node->line, " ");
 		all->node->args = ft_split_tokens(all->node->line, ' ', all);
 	// TODO HAY QUE TENER EN CUENTA TABULACIONES ESPACIOS ETC IS_SPACE

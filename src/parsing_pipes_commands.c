@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/04 17:38:09 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:49:26 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*content_list(char *line, bool init, t_all *all)
 		}
 		i++;
 	}
+	printf("linea %s\n", line_split_by_pipes);
 	return (line_split_by_pipes);
 }
 

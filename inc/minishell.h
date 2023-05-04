@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/03 13:38:21 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:39:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	lstfree(t_cmd **lst);
 void	free_arr(char **array);
 //utils list
 t_cmd	*lst_new(char *comand);
-t_cmd	*lst_last(t_cmd *lst);
+t_cmd	*lst_last(t_cmd **lst);
 int		lst_size(t_cmd *lst);
 void	lst_add_back(t_cmd **first, t_cmd *new_el);
 t_env	*lst_new_env(char *name, char *content);

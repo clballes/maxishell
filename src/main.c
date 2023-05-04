@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 18:13:57 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:56:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,21 @@ int	number_of_pipes(char *line, t_all *all)
 static int	analyze_line(char *all_line, t_all *all)
 {
 	int	i;
-
+	t_cmd *temp;
 	i = 0;
-	if (valid_line(all_line, all) != 0)
+	if (valid_clean_line(all_line, all) != 0)
 		return (1);
 	all->n_pipes = number_of_pipes(all_line, all);
 	while (i < (all->n_pipes + 1))
 	{
 		if (i == 0)
-			all->node = lst_new(content_list(all_line, true, all));
+			temp = lst_new(content_list(all_line, true, all));
 		else
-			all->node = lst_new(content_list(all_line, false, all));
-		lst_add_back(&all->node, all->node);
-		printf("%s\n",all->node->line);
-		all->node->line = ft_strtrim_free_s1(all->node->line, " ");
-		all->node->args = ft_split_tokens(all->node->line, ' ', all);
-	// TODO HAY QUE TENER EN CUENTA TABULACIONES ESPACIOS ETC IS_SPACE
+			temp = lst_new(content_list(all_line, false, all));
+		lst_add_back(&all->node, temp);
+		temp->line = ft_strtrim_free_s1(temp->line, " ");
+		all->node->args = ft_split_tokens(temp->line, ' ', all);
 		all->node->cmd = all->node->args[0];
-		all->node = all->node->next;
 		i++;
 	}
 	return (0);

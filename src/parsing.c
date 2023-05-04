@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/04 18:40:11 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:46:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	clean_spaces_line(char *all_line, t_all *all)
 
 
 // limpia la linea y analiza si es correcta
-int	valid_line(char *all_line, t_all *all)
+int	valid_clean_line(char *all_line, t_all *all)
 {
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);

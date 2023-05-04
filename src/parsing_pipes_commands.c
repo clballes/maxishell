@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/04 12:26:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:50:25 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int is_inside_quotting(const char *line, t_all *all, int i)
 					all->quotes.has_quote = 0;
 					all->quotes.found = ' ';
 				}
-				printf("line[j]:%c:%d\n", line[j], all->quotes.has_quote);
+				// printf("line[j]:%c:%d\n", line[j], all->quotes.has_quote);
 			}
 		j++;
 	}

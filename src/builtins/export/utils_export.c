@@ -40,18 +40,20 @@ void	change_var_list(char *content, t_env *temp)
 	new->content = content;
 }
 
-int	ft_prohibited(char c, int j, int flag)
+int	ft_prohibited(char c, int j, int flag, int concat)
 {
 	if (c == '=')
 		return (0);
-	if ((j == 0) && (flag == 0) && ((c >= 33 && c <= 64)
+	if ((j == 0) && (concat == 0) && (flag == 0) && ((c >= 33 && c <= 64)
 			|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
 		return (1);
-	else if ((j != 0) && (flag == 0) && ((c >= 34 && c <= 47)
+	// else if(concat == 1)
+	// 	return (0)
+	else if ((j != 0) && (flag == 0) && (concat == 0) && ((c >= 34 && c <= 47)
 			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
 			|| (c >= 123 && c <= 126)))
 		return (1);
-	else if ((flag == 1) && (j != 0))
+	else if ((flag == 1) && (j != 0) && (concat == 1))
 		return (0);
 	return (0);
 }

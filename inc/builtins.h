@@ -23,7 +23,7 @@ void	swap(t_env **temp);
 //export funtions
 void	exec_export(t_all *all);
 int		check_equal(t_cmd *node, t_all *all);
-int		ft_prohibited(char c, int j, int flag);
+int		ft_prohibited(char c, int j, int flag, int concat);
 void	check_arg(t_all *all);
 void	change_var_list(char *content, t_env *temp);
 #endif

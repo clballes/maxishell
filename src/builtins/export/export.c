@@ -89,9 +89,21 @@ void	add_new(t_all *all, char *arg)
 	}
 	else
 	{
-		res = ft_strchr(arg, '=');
-		res++;
-		cont_name = ft_split(arg, '=');
+		if (all->list_env->concatenate == 1)
+		{
+			res = ft_strchr(arg, '=');
+			res++;
+			cont_name = ft_split(arg, '+');
+		}
+		//hola+=o ---- hola=o
+		else
+		{
+			res = ft_strchr(arg, '=');
+			printf("le res es %s\n", res);
+			res++;
+			cont_name = ft_split(arg, '=');
+		}
+			printf("el cont name es %s\n", cont_name[0]);
 		if (ft_repeat(all, res, cont_name[0]) == 1)
 			return ;
 		all->list_env->temporal = lst_new_env(cont_name[0], res);

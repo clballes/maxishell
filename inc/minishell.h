@@ -36,6 +36,7 @@ typedef struct s_cmd
     char		**args;
     char		*line;
     int			n_args;
+	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
     struct s_cmd *next;
 }   t_cmd;
@@ -51,6 +52,7 @@ typedef struct s_env
 {
 	char			*name;
 	char			*content;
+	int				concatenate;
 	int				print; //para saber si se ha de printar la variable en el env o export 
 	struct s_env	*temporal; //para saber la ultima osicion del env y enlazar el siguiente nodo de la lista
 	struct s_env	*next;
@@ -73,6 +75,7 @@ typedef struct s_all
 void	exec_cmd(t_all *all);
 //free
 void	lstfree(t_cmd **lst);
+void	lstfree_env(t_env **lst);
 void	free_arr(char **array);
 //utils list
 t_cmd	*lst_new(char *comand);

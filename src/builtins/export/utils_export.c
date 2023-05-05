@@ -40,20 +40,48 @@ void	change_var_list(char *content, t_env *temp)
 	new->content = content;
 }
 
-int	ft_prohibited(char c, int j, int flag, int concat)
+void	sort_list(t_env **list_env)
 {
-	if (c == '=')
-		return (0);
-	if ((j == 0) && (concat == 0) && (flag == 0) && ((c >= 33 && c <= 64)
-			|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
-		return (1);
-	// else if(concat == 1)
-	// 	return (0)
-	else if ((j != 0) && (flag == 0) && (concat == 0) && ((c >= 34 && c <= 47)
-			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
-			|| (c >= 123 && c <= 126)))
-		return (1);
-	else if ((flag == 1) && (j != 0) && (concat == 1))
-		return (0);
-	return (0);
+	int		i;
+	t_env	*temp;
+	t_env	*temp2;
+
+	i = 0;
+	temp = *list_env;
+	temp2 = temp->next;
+	while (temp && temp->next)
+	{
+		if (ft_strncmp(temp->name, temp2->name,
+				ft_strlen(temp->name)) > 0)
+		{
+			swap(&temp);
+			if (temp2->previous == 0)
+				*list_env = temp2;
+			temp = *list_env;
+			temp2 = temp->next;
+		}
+		else
+		{
+			temp = temp->next;
+			if (temp2)
+				temp2 = temp2->next;
+		}
+	}
+}
+
+void	print_list(t_env **list_env)
+{
+	t_env	*temp;
+
+	temp = *list_env;
+	while (temp)
+	{
+		if (temp->print == 0)
+		{
+			printf("declare -x %s\n", temp->name);
+		}
+		else
+			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+		temp = temp->next;
+	}
 }

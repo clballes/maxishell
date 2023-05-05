@@ -22,8 +22,10 @@ void	swap(t_env **temp);
 
 //export funtions
 void	exec_export(t_all *all);
-int		check_equal(t_cmd *node, t_all *all);
+void	sort_list(t_env **list_env);
+void	print_list(t_env **list_env);
+int		check_equal(t_cmd *node);
 int		ft_prohibited(char c, int j, int flag, int concat);
-void	check_arg(t_all *all);
+void	check_arg(t_all *all, char *arg);
 void	change_var_list(char *content, t_env *temp);
 #endif

@@ -13,53 +13,61 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-int	check_equal(t_cmd *node, t_all *all)
+// int	check_equal(t_cmd *node)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 1;
+// 	node->equal = 0;
+// 	while (node->args[i])
+// 	{
+// 		j = 0;
+// 		while (node->args[i][j])
+// 		{
+// 			if (node->args[i][j] == '=' && node->args[i][j - 1] != '=')
+// 				node->equal++;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (node->equal);
+// }
+
+void	check_arg(t_all *all, char *arg)
 {
 	int	i;
-	int	j;
 
-	(void)all;
+	all->node->equal = 0;
 	i = 1;
-	node->equal = 0;
-	while (node->args[i])
+	while (arg[i])
 	{
-		j = 0;
-		while (node->args[i][j])
+		if (arg[i] == '+' && arg[i + 1] == '=')
+			all->list_env->concatenate = 1;
+		if (arg[i] == '=')
+			all->node->equal = 1;
+		if (ft_prohibited(arg[i], i, all->node->equal, all->list_env->concatenate) == 1)
 		{
-			if (node->args[i][j] == '=' && node->args[i][j - 1] != '=')
-				node->equal++;
-			j++;
+			printf("bash: export: %s: not a valid identifier\n", arg);
+			return ;
 		}
-		i++;
+		else
+			i++;
 	}
-	return (node->equal);
 }
 
-void	check_arg(t_all *all)
+int	ft_prohibited(char c, int j, int equal, int concat)
 {
-	int	i;
-	int	j;
-
-	j = 0;
-	all->node->flag = 0;
-	i = 1;
-	while (all->node->args[i])
-	{
-		j = 0;
-		while (all->node->args[i][j])
-		{
-			if (all->node->args[i][j] == '+' && all->node->args[i][j + 1] == '=')
-				all->list_env->concatenate = 1;
-			if (all->node->args[i][j] == '=')
-				all->node->flag = 1;
-			if (ft_prohibited(all->node->args[i][j], j, all->node->flag, all->list_env->concatenate) == 1)
-			{
-				printf("bash: export: %s: not a valid identifier\n", all->node->args[i]);
-				return ;
-			}
-			else
-				j++;
-		}
-		i++;
-	}
+	if (c == '=')
+		return (0);
+	else if ((j == 0) && (concat == 0) && (equal == 0) && ((c >= 33 && c <= 64)
+			|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
+		return (1);
+	else if ((j != 0) && (equal == 0) && (concat == 0) && ((c >= 34 && c <= 47)
+			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
+			|| (c >= 123 && c <= 126)))
+		return (1);
+	else if ((equal == 1) && (j != 0) && (concat == 1))
+		return (0);
+	return (0);
 }

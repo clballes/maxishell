@@ -93,7 +93,7 @@ void	exec_cmd(t_all *all)
 	if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
 		exec_echo(all->node);
 	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
-		printf("he entradoooo CD\n");
+		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
 		exec_pwd();
 	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)

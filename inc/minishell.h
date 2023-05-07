@@ -57,6 +57,8 @@ typedef struct s_env
 	struct s_env	*temporal; //para saber la ultima osicion del env y enlazar el siguiente nodo de la lista
 	struct s_env	*next;
 	struct s_env	*previous;
+	char			*current_cd;
+	char			*new_cd;
 }					t_env;
 
 typedef struct s_all

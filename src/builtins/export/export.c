@@ -36,7 +36,6 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 				temp->print = 0;
 			else if ((all->list_env->concatenate == 0) || (all->node->equal != 0))
 			{
-					printf("AIIII\n");
 				change_var_list(res, temp);
 				temp->print = 1;
 			}

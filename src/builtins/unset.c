@@ -13,3 +13,23 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+void    exec_unset(t_all *all)
+{
+   t_env *temp;
+
+    temp = all->list_env;
+    while(temp)
+    {
+        if (all->node->args[1] == NULL) //si nomes tinc larg de unset que faig
+            return ;
+        if (ft_strncmp(all->node->args[1], temp->name, ft_strlen(temp->name)) == 0)
+        {
+            printf("holaaaaa\n");
+            temp->previous->next = temp->next;
+            free(temp);
+            return ;
+        }    
+        else
+            temp = temp->next;
+    }
+}

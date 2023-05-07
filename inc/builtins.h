@@ -20,6 +20,7 @@ int     exec_pwd(void);
 int     exec_cd(t_all *all);
 void    exec_exit(t_all *all);
 void	swap(t_env **temp);
+void    exec_unset(t_all *all);
 
 //export funtions
 void	exec_export(t_all *all);

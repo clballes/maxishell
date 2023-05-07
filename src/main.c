@@ -99,7 +99,7 @@ void	exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
 		exec_export(all);
 	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
-		printf("he entradoooo UNSET \n");
+		exec_unset(all);
 	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
 		exec_env(&all->list_env);
 	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)

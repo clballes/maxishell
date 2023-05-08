@@ -27,13 +27,14 @@ int	exec_option(char *args)
 	return (0);
 }
 
-void	exec_echo(t_cmd *builtins)
+void	exec_echo(t_cmd *builtins, int exit)
 {
 	int	i;
 	int	res;
 
 	i = 1;
 	res = 0;
+	
 	while (ft_strncmp(builtins->args[i], "-n", 2) == 0)
 	{
 		if (exec_option(builtins->args[i]) != 1)

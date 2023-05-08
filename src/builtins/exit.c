@@ -73,9 +73,8 @@ void	exec_exit(t_all *all)
 	int	i;
 
 	i = 0;
-	all->exit = 0;
-	all->exit = ft_atoi(all->node->args[1]);
-	all->exit = all->exit % 256;
+	// all->exit = ft_atoi(all->node->args[1]);
+	// all->exit = all->exit % 256;
 	while (all->node->args[i])
 		i++;
 	if (i == 1)

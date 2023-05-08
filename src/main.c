@@ -91,7 +91,7 @@ static int	analyze_line(char *all_line, t_all *all)
 void	exec_cmd(t_all *all)
 {
 	if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
-		exec_echo(all->node);
+		exec_echo(all->node, all->exit);
 	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)

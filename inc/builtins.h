@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-void	exec_echo(t_cmd *builtins);
+void	exec_echo(t_cmd *builtins, int exit);
 void	exec_env(t_env **list_env);
 void	env_list(t_all *all);
 int     exec_pwd(void);
@@ -21,6 +21,10 @@ int     exec_cd(t_all *all);
 void    exec_exit(t_all *all);
 void	swap(t_env **temp);
 void    exec_unset(t_all *all);
+
+//print functions
+void	ft_putcharshell_fd(char c, int fd, char **args);
+void	ft_putstrshell_fd(char *s, int fd, char **args);
 
 //export funtions
 void	exec_export(t_all *all);

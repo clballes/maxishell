@@ -13,27 +13,41 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+void	print_err(char	**args, char *print)
+{
+	ft_putendl_fd("exit", 2);
+	ft_putstrshell_fd(print, 2, args);
+	write(1, "\n", 1);
+}
+
 int	digit_max_min(int c, char *arg)
 {
+	int	j;
+	j = 0;
 	if (!(c >= '0' && c <= '9'))
 		return (1);
-	if (ft_strncmp(arg, "9223372036854775807", 19) > 0)
+	while (arg[j] == '0')
+		j++;
+	if (ft_strlen(arg + j) > 20 || (ft_strlen(arg + j) == 20 && arg[0] != '-'))
 		return (1);
-	if (arg[0] == '-' && (ft_strncmp(arg, "-9223372036854775807", 20) > 0))
+	if (ft_strncmp(arg, "9223372036854775807", 0xffffff) > 0)
+		return (1);
+	if (arg[0] == '-' && (ft_strncmp(arg, "-9223372036854775808", 0xffffff) > 0))
 		return (1);
 	return (0);
 }
 
-int	check_num_args(int i)
+int	check_num_args(t_cmd *builtins)
 {
-	if (i > 2)
+	if (builtins->n_args > 2)
 	{
-		printf("exit\nbash: exit: too many arguments\n");
+		write(1, "bash: exit: too many arguments\n", 31);
+		// print_err(builtins->args, "bash: exit: too many arguments");
 		return (1);
 	}
 	else
 	{
-		printf("exit\n");
+		write(1, "exit", 4);
 		return (0);
 	}
 }
@@ -49,15 +63,14 @@ int	check_digit_args(char **args)
 	{
 		while (args[i][j])
 		{
-			if (args[i][0] == '-')
+			if (args[i][j] == '-' || args[i][j] == '+')
 				j++;
 			if (digit_max_min(args[i][j], args[i]) == 1)
 			{
 				if (i > 1)
 					return (1);
 				else
-					printf("exit\nbash:\
-					exit: %s:numeric argument required\n", args[i]);
+					print_err(args, "bash: exit: &: numeric argument required");
 				return (0);
 			}
 			else
@@ -70,22 +83,22 @@ int	check_digit_args(char **args)
 
 void	exec_exit(t_all *all)
 {
-	int	i;
-
-	i = 0;
-	all->exit = 0;
-	all->exit = ft_atoi(all->node->args[1]);
-	all->exit = all->exit % 256;
-	while (all->node->args[i])
-		i++;
-	if (i == 1)
+	if (all->node->n_args == 1)
 		exit(all->exit);
 	else if (check_digit_args(all->node->args) == 1)
 	{
-		if (check_num_args(i) == 0)
+		if (check_num_args(all->node) == 0)
+		{
+			all->exit = ft_atoi(all->node->args[1]);
+			all->exit = all->exit % 256;
 			exit(all->exit);
-		return ;
+		}
+		else
+			all->exit = 1;
 	}
-	else
+	else //unsigned int y luego a int
+	{
+		all->exit = 255;
 		exit(all->exit);
+	}
 }

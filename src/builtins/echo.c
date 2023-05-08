@@ -34,7 +34,12 @@ void	exec_echo(t_cmd *builtins, int exit)
 
 	i = 1;
 	res = 0;
-	
+	if (builtins->args[i] == NULL)
+	{
+		printf("\n");
+		exit = 0;
+		return ;
+	}
 	while (ft_strncmp(builtins->args[i], "-n", 2) == 0)
 	{
 		if (exec_option(builtins->args[i]) != 1)

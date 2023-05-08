@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_clean_input.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/04 18:46:17 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:58:21 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	have_open_close_quotes(char *line, t_all *all)
 	return (0);
 }
 
+// Devuelve uno si el caracter analizado es un espacio 
 int	ft_is_space(char c)
 {
 	if(c == 32 || c == '\f'|| c =='\n' || c == '\r' || c == '\t' || c == '\v')
@@ -63,15 +64,11 @@ void	clean_spaces_line(char *all_line, t_all *all)
 	all_line[j] =  '\0';
 }
 
-
 // limpia la linea y analiza si es correcta
 int	valid_clean_line(char *all_line, t_all *all)
 {
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);
-	printf("ANTES de limpiar:%s\n", all->all_line);
-	clean_spaces_line(all->all_line, all);
-	printf("DESPUES de limpiar:%s\n", all->all_line);
-	
+	clean_spaces_line(all->all_line, all);	
 	return (0);
 }

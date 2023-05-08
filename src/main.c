@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 19:56:54 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:30:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	analyze_line(char *all_line, t_all *all)
 {
 	int	i;
 	t_cmd *temp;
+	
 	i = 0;
 	if (valid_clean_line(all_line, all) != 0)
 		return (1);
@@ -72,6 +73,7 @@ static int	analyze_line(char *all_line, t_all *all)
 		all->node->cmd = all->node->args[0];
 		i++;
 	}
+	// final_tokens(all);
 	return (0);
 	//free (all->node->args) while (array doble puntero)
 	//free (all->node) while (lista)

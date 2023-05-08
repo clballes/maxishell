@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 19:39:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:44:39 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,14 @@
 #include <stdbool.h>
 
 
-// // desgrana cada linea de comando en tokens
-// typedef struct s_token{
-//     char *tkn_content;
-//     bool single_quote;
-//     bool double_quote;
-//     struct s_token *next;
-// }t_token;
-//Guarda cada linea de comando 
 typedef struct s_cmd 
 {
-    char *cmd;
-    // t_token *args;
-    char **args;
-    char   *line;
-    int    n_args;
+    char	*cmd;
+    char	**args;
+    char	*line;
+    int		n_args;
+	bool	double_quote;
+	bool	single_quote;
     struct s_cmd *next;
 }   t_cmd;
 

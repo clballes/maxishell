@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/04 19:49:26 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:31:51 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,19 @@ char	*content_list(char *line, bool init, t_all *all)
 		}
 		i++;
 	}
-	printf("linea %s\n", line_split_by_pipes);
+	// printf("linea %s\n", line_split_by_pipes);
 	return (line_split_by_pipes);
 }
 
-void	divide_in_tokens(t_all *all)
-{
-	char	c;
+// void	divide_in_tokens(t_all *all)
+// {
+// 	char	c;
 
-	c = ' ';
-	while (all->node)
-	{
-		all->node->args = ft_split_tokens(all->node->line, c, all);
-		printf("%s\n", all->node->args[1]);
-		all->node = all->node->next;
-	}
-}
+// 	c = ' ';
+// 	while (all->node)
+// 	{
+// 		all->node->args = ft_split_tokens(all->node->line, c, all);
+// 		printf("%s\n", all->node->args[1]);
+// 		all->node = all->node->next;
+// 	}
+// }

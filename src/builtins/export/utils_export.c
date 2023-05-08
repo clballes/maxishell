@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:23:05 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 12:23:06 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/04 10:20:15 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,58 @@ void	swap(t_env **temp)
 		second->next->previous = first;
 	second->next = first;
 	first->previous = second;
+}
+
+void	change_var_list(char *content, t_env *temp)
+{
+	t_env	*new;
+
+	new = temp;
+	new->content = content;
+}
+
+void	sort_list(t_env **list_env)
+{
+	int		i;
+	t_env	*temp;
+	t_env	*temp2;
+
+	i = 0;
+	temp = *list_env;
+	temp2 = temp->next;
+	while (temp && temp->next)
+	{
+		if (ft_strncmp(temp->name, temp2->name,
+				ft_strlen(temp->name)) > 0)
+		{
+			swap(&temp);
+			if (temp2->previous == 0)
+				*list_env = temp2;
+			temp = *list_env;
+			temp2 = temp->next;
+		}
+		else
+		{
+			temp = temp->next;
+			if (temp2)
+				temp2 = temp2->next;
+		}
+	}
+}
+
+void	print_list(t_env **list_env)
+{
+	t_env	*temp;
+
+	temp = *list_env;
+	while (temp)
+	{
+		if (temp->print == 0)
+		{
+			printf("declare -x %s\n", temp->name);
+		}
+		else
+			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+		temp = temp->next;
+	}
 }

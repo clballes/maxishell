@@ -29,6 +29,22 @@ void	lstfree(t_cmd **lst)
 	}
 }
 
+void	lstfree_env(t_env **lst)
+{
+	t_env	*temp;
+
+	while (*lst != NULL)
+	{
+		temp = *lst;
+		while (temp != NULL)
+		{
+			free (temp);
+			temp = temp->next;
+		}
+		*lst = NULL;
+	}
+}
+
 void	free_arr(char **array)
 {
 	int	i;

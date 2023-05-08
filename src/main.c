@@ -16,7 +16,7 @@
 #include <stdbool.h>
 
 //Lee la linea del promps si algo falla sale y sino la devuelve para empezar a analizarla
-static char    *get_line()
+static char	*get_line(void)
 {
 	char		*line;
 	const char	*prompt;
@@ -58,35 +58,34 @@ int   number_of_pipes(char *line)
     return(count);
 }
 
-static int analyze_line(char *all_line, t_all *all)
+static int	analyze_line(char *all_line, t_all *all)
 {
-    
-    int i;
-    char **splitted;
+	int i;
+	char **splitted;
 
-    i = 0;
-    all->n_pipes = number_of_pipes(all_line);
-    // printf("all_line %s\n", all_line);
-    if(clean_all_line(all_line, &all->quotes) != 0)
-        return(1);
-    splitted = ft_split(all_line, '|');
-    // clean_args(splitted); //doblepuntero
-    while (i < (all->n_pipes + 1) && splitted[i])
-    {
-        if (i == 0)
-            all->node = lst_new(content_list(all_line, true, all));
-        else
-            all->node = lst_new(content_list(all_line, false, all));
-        lst_add_back(&all->node, all->node);
-        // printf("el contenido del nodo es:%s\n", all->node->line);
-        all->node->args = ft_split(splitted[i], ' ');//aquí va la función que me va a separar los argumentos 
-        all->node->cmd = all->node->args[0];
-        all->node = all->node->next;
-        i++;
-    }
-    return(0);
-    //free (splitted) while 
-    //free (pipes node args) while
+	i = 0;
+	all->n_pipes = number_of_pipes(all_line);
+	// printf("all_line %s\n", all_line);
+	if (clean_all_line(all_line, &all->quotes) != 0)
+		return(1);
+	splitted = ft_split(all_line, '|');
+	// clean_args(splitted); //doblepuntero
+	while (i < (all->n_pipes + 1) && splitted[i])
+	{
+		if (i == 0)
+			all->node = lst_new(content_list(all_line, true, all));
+		else
+			all->node = lst_new(content_list(all_line, false, all));
+		lst_add_back(&all->node, all->node);
+		// printf("el contenido del nodo es:%s\n", all->node->line);
+		all->node->args = ft_split(splitted[i], ' ');//aquí va la función que me va a separar los argumentos 
+		all->node->cmd = all->node->args[0];
+		all->node = all->node->next;
+		i++;
+	}
+	return (0);
+	//free (splitted) while 
+	//free (pipes node args) while
 }
 
 void	exec_cmd(t_all *all)
@@ -98,7 +97,7 @@ void	exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
 		exec_pwd();
 	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
-		exec_export(&all->list_env, all->node);
+		exec_export(all);
 	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
 		printf("he entradoooo UNSET \n");
 	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
@@ -111,25 +110,25 @@ void	exec_cmd(t_all *all)
 
 int	main(int argc, char **argv, char **env)
 {
-    (void)argc;
-    (void)argv;
- 
-    t_all *all;
-    
-    // line = NULL;
-    all = malloc(sizeof(t_all));
-    if(!all)
-        exit(0);
-    all->env = env;
+	t_all	*all;
+
+	(void)argc;
+	(void)argv;
+	// line = NULL;
+	all = malloc(sizeof(t_all));
+	if (!all)
+		exit(0);
+	all->env = env;
 	env_list(all);
-    while (1)
-    {
-        all->all_line = get_line();
-        if(analyze_line(all->all_line, all) == 0)
-        {
-            exec_cmd(all);
-            free(all->all_line); //readline hace malloc
-        }
-    }
-    return (0);
+	while (1)
+	{
+		all->all_line = get_line();
+		if (analyze_line(all->all_line, all) == 0)
+		{
+			// qui hay malloc no resuelto da ROOT LEAK que arrastramos
+			exec_cmd(all);
+			free(all->all_line); //readline hace malloc
+		}
+	}
+	return (0);
 }

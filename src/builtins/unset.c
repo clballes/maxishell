@@ -24,7 +24,6 @@ void    exec_unset(t_all *all)
             return ;
         if (ft_strncmp(all->node->args[1], temp->name, ft_strlen(temp->name)) == 0)
         {
-            printf("holaaaaa\n");
             temp->previous->next = temp->next;
             free(temp);
             return ;

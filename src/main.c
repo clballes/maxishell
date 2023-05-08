@@ -19,12 +19,19 @@
 static char	*get_line(void)
 {
 	char		*line;
-	const char	*prompt;
+	// const char	*prompt;
 
-	prompt = "Bienvenid@ a Maxishell: ";
-	line = readline(prompt);
+	// prompt = "Bienvenid@ a Maxishell: ";
+	// line = readline(prompt);
+	line = readline("minishell $");
 	if (!line)
-		exit(0); //funcion de error
+	{
+		if (isatty(STDIN_FILENO))
+			write(2, "exit\n", 6);
+		exit (0);
+	}
+	// if (!line)
+	// 	exit(0); //funcion de error
 	return (line);
 }
 

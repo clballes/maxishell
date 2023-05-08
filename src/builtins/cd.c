@@ -36,11 +36,10 @@ int    exec_cd(t_all *all)
     else
         chdir(getenv("HOME"));
     all->list_env->new_cd = getcwd(NULL, 0);
-    printf("%s\n", all->list_env->new_cd);
     change_env(all);
     // if (chdir("/home/user/Desktop") == -1) {
     //     perror("chdir failed");
     //     return 1;
     // }
-    return 0;
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/02 09:40:36 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:39:11 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include "../inc/parsing.h"
 #include <stdbool.h>
 
-//Lee la linea del promps si algo falla sale y sino la devuelve para empezar a analizarla
+//Lee la linea del promps si algo falla sale y sino la devuelve para 
+// empezar a analizarla
 static char	*get_line(void)
 {
 	char		*line;
@@ -36,63 +37,55 @@ static char	*get_line(void)
 }
 
 // Cuenta los pipes reales que hay, si hay pipes entre comillas no lo cuenta.
-// Con el numero de pipes sabremos el numero de t_cmd que necesitamos para el malloc.
-int   number_of_pipes(char *line)
-{   
-    int i;
-    int count;
-    bool active_quotes;
+// Con el numero de pipes sabremos el numero de t_cmd que necesitamos para 
+// el malloc.
+int	number_of_pipes(char *line, t_all *all)
+{
+	int	i;
+	int	count;
 
-    i = 0;
-    count = 0;
-    active_quotes = false;
-    while (line[i] != '\0')
-    {
-        if (line[i] == '\"' || line[i] == '\'')
-        {
-            if (!active_quotes)
-                active_quotes = true;
-            else if (active_quotes)
-                active_quotes = false;
-        }
-        if (line[i] == '|' && !active_quotes)
-        {
-            count++;
-        }
-        i++;
-    }
-    // printf("numpipes is:%d\n ", count);
-    return(count);
+	i = 0;
+	count = 0;
+	all->quotes.has_quote = 0;
+	while (line[i] != '\0')
+	{
+		all->quotes.has_quote = is_in_quottes(line, all, i);
+		if (line[i] == '|' && !all->quotes.has_quote)
+		{
+			count++;
+		}
+		i++;
+	}
+	return (count);
 }
 
 static int	analyze_line(char *all_line, t_all *all)
 {
-	int i;
-	char **splitted;
-
+	int	i;
+	t_cmd *temp;
+	
 	i = 0;
-	all->n_pipes = number_of_pipes(all_line);
-	// printf("all_line %s\n", all_line);
-	if (clean_all_line(all_line, &all->quotes) != 0)
-		return(1);
-	splitted = ft_split(all_line, '|');
-	// clean_args(splitted); //doblepuntero
-	while (i < (all->n_pipes + 1) && splitted[i])
+	if (valid_clean_line(all_line, all) != 0)
+		return (1);
+	all->n_pipes = number_of_pipes(all_line, all);
+	while (i < (all->n_pipes + 1))
 	{
 		if (i == 0)
-			all->node = lst_new(content_list(all_line, true, all));
+			temp = lst_new(content_list(all_line, true, all));
 		else
-			all->node = lst_new(content_list(all_line, false, all));
-		lst_add_back(&all->node, all->node);
-		// printf("el contenido del nodo es:%s\n", all->node->line);
-		all->node->args = ft_split(splitted[i], ' ');//aquí va la función que me va a separar los argumentos 
+			temp = lst_new(content_list(all_line, false, all));
+		lst_add_back(&all->node, temp);
+		temp->line = ft_strtrim_free_s1(temp->line, " ");
+		all->node->args = ft_split_tokens(temp->line, ' ', all);
 		all->node->cmd = all->node->args[0];
-		all->node = all->node->next;
 		i++;
 	}
+	// final_tokens(all);
 	return (0);
-	//free (splitted) while 
-	//free (pipes node args) while
+	//free (all->node->args) while (array doble puntero)
+	//free (all->node) while (lista)
+	//free all->node->line
+	//free all->node->cmd
 }
 
 void	exec_cmd(t_all *all)
@@ -119,20 +112,18 @@ int	main(int argc, char **argv, char **env)
 {
 	t_all	*all;
 
-	(void)argc;
-	(void)argv;
-	// line = NULL;
-	all = malloc(sizeof(t_all));
+	(void) argc;
+	(void) argv;
+	all = ft_calloc(1, sizeof(t_all));
 	if (!all)
 		exit(0);
 	all->env = env;
-	env_list(all);
+	init_struct(all);
 	while (1)
 	{
 		all->all_line = get_line();
 		if (analyze_line(all->all_line, all) == 0)
 		{
-			// qui hay malloc no resuelto da ROOT LEAK que arrastramos
 			exec_cmd(all);
 			free(all->all_line); //readline hace malloc
 		}

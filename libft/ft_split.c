@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2022/06/09 10:13:43 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/03 12:38:20 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_count_words(char	const *s, char c)
+static int	ft_count_words(char	const *s, char c)
 {
 	int	count;
 	int	n_word;
@@ -28,7 +28,7 @@ int	ft_count_words(char	const *s, char c)
 	return (n_word);
 }
 
-char	**ft_free(char **result, int n_word)
+static char	**ft_free(char **result, int n_word)
 {
 	while (n_word > 0)
 	{
@@ -39,7 +39,7 @@ char	**ft_free(char **result, int n_word)
 	return (0);
 }
 
-char	**ft_findposition_cutstring(char	const *s, char c, char **result)
+static char	**ft_findposition_cutstring(char	const *s, char c, char **result)
 {
 	int		n_word;
 	int		count;

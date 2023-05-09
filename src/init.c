@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:28:57 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/03 13:36:26 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:22:05 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	init_struct(t_all *all)
 {
 	all->quotes.has_quote = 0;
-	
-	
+	all->exit = 0;
+	env_list(all);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:44:23 by albagarc          #+#    #+#             */
-/*   Updated: 2022/05/27 15:59:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:48:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		new[count + i] = s2[count];
 		count++;
 	}
+	
 	new[count + i] = '\0';
 	return (new);
 }

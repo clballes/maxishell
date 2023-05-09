@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/08 13:35:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:23:32 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ t_env	*lst_new_env(char *name, char *content);
 void	lst_add_back_env(t_env **first, t_env *new_el);
 t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
+void	env_list(t_all *all);
 
 #endif

@@ -16,9 +16,20 @@
 int	exec_pwd(void)
 {
 	char	pwd[1024];
+	char *res;
+	int	i;
 
+	i = 0;
+	res = getcwd(pwd, sizeof(pwd));
 	if (getcwd(pwd, sizeof(pwd)) != NULL)
-		printf("%s\n", pwd);
+	{
+		while(res[i])
+		{
+			write(1, &res[i], 1);
+			i++;
+		}
+		write(1, "\n", 1);
+	}
 	else
 	{
 		perror("getcwd() error");

@@ -17,7 +17,7 @@ void	print_err(char	**args, char *print)
 {
 	ft_putendl_fd("exit", 2);
 	ft_putstrshell_fd(print, 2, args);
-	write(1, "\n", 1);
+	write(2, "\n", 1);
 }
 
 int	digit_max_min(int c, char *arg)
@@ -39,6 +39,7 @@ int	digit_max_min(int c, char *arg)
 
 int	check_num_args(t_cmd *builtins)
 {
+	// lst_last(&all->node)->n_args
 	if (builtins->n_args > 2)
 	{
 		print_err(builtins->args, "bash: exit: too many arguments");
@@ -79,6 +80,7 @@ int	check_digit_args(char **args)
 
 void	exec_exit(t_all *all)
 {
+	// printf("num args %d\n", lst_last(&all->node)->n_args);
 	if (all->node->n_args == 1)
 		exit(all->exit);
 	else if (check_digit_args(all->node->args) == 1)
@@ -93,7 +95,7 @@ void	exec_exit(t_all *all)
 		{
 			all->exit = 1;
 			return ;
-		}	
+		}
 	}
 	else //unsigned int y luego a int
 	{

@@ -19,6 +19,9 @@
 # include <readline/history.h>
 # include <stdlib.h>
 #include <stdbool.h>
+//opndir
+#include <sys/types.h>
+#include <dirent.h>
 
 
 typedef struct s_cmd 
@@ -65,7 +68,6 @@ typedef struct s_all
 	int		exit;
     int 	n_pipes;
 }       			t_all;
-
 
 //line
 void	exec_cmd(t_all *all);

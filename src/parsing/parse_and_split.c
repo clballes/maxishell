@@ -70,7 +70,10 @@ static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 		i++;
 	}
 	result[n_word] = NULL;
+	// printf("n_word:%d\n", n_word);
+	// printf("ANTES %d\n",lst_last(&all->node)->n_args);
 	lst_last(&all->node)->n_args = n_word;
+	// printf("DESPUES %d\n",lst_last(&all->node)->n_args);
 	return (result);
 }
 

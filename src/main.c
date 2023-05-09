@@ -90,32 +90,29 @@ static int	analyze_line(char *all_line, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
-	int i = 0;
-	all->node->n_args = 0;
-	while(all->node->args[i])
+	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
 	{
-		all->node->n_args++;
-		i++;
+		all->exit = exec_echo(all->node, all->exit);
+		printf("all exit %d\n", all->exit);
 	}
-	if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
-		exec_echo(all->node, all->exit);
-	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
+	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
-	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
+	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
 		exec_pwd();
-	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
+	else if (ft_strncmp(all->node->cmd, "export", 7) == 0)
 		exec_export(all);
-	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
+	else if (ft_strncmp(all->node->cmd, "unset", 6) == 0)
 		exec_unset(all);
-	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
-	{
-		printf("holaaa\n");
+	else if (ft_strncmp(all->node->cmd, "env", 4) == 0)
 		exec_env(&all->list_env);
-	}
-	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
+	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
 	else
+	{
+		DIR *res = opendir("/Users/clballes/miniconda3/bin");
+		printf("el rsultado esss %p\n", (void*)res);
 		printf("hemos de encontar el path de los otros\n");
+	}
 }
 
 int	main(int argc, char **argv, char **env)
@@ -131,11 +128,13 @@ int	main(int argc, char **argv, char **env)
 	init_struct(all);
 	while (1)
 	{
+		
 		all->all_line = get_line();
 		if (analyze_line(all->all_line, all) == 0)
 		{
 			exec_cmd(all);
 			free(all->all_line); //readline hace malloc
+			lstfree(&all->node);
 		}
 	}
 	return (0);

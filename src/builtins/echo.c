@@ -49,6 +49,7 @@ void	exec_echo(t_cmd *builtins, int exit)
 	if (builtins->args[i] == NULL)
 	{
 		printf("\n");
+		// printf("all exit %d\n", exit);
 		exit = 0;
 		return ;
 	}

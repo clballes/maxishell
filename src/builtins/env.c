@@ -44,7 +44,11 @@ void	exec_env(t_env **list_env)
 	while (temp)
 	{
 		if (temp->print == 1)
+		{
+			// write(1, &temp->name, 1);
+			// write(1,"\n", 1);
 			printf("%s=%s\n", temp->name, temp->content);
+		}
 		temp = temp->next;
 	}
 }

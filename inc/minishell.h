@@ -82,5 +82,6 @@ t_env	*lst_new_env(char *name, char *content);
 void	lst_add_back_env(t_env **first, t_env *new_el);
 t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
+void	env_list(t_all *all);
 
 #endif

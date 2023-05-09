@@ -10,7 +10,6 @@ BUILTINS_DIR = builtins/
 PARSING_DIR = parsing/
 RM = rm -f
 # FSANITIZE	:= -fsanitize=address -g3
-
 SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset
 SRC_FILES	+= $(PARSING_DIR)parsing_clean_input $(PARSING_DIR)parsing_pipes_commands $(PARSING_DIR)parse_and_split $(PARSING_DIR)parse_dolar_exp init
 

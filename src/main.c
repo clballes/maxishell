@@ -90,6 +90,13 @@ static int	analyze_line(char *all_line, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
+	int i = 0;
+	all->node->n_args = 0;
+	while(all->node->args[i])
+	{
+		all->node->n_args++;
+		i++;
+	}
 	if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
 		exec_echo(all->node, all->exit);
 	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
@@ -101,7 +108,10 @@ void	exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
 		exec_unset(all);
 	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
+	{
+		printf("holaaa\n");
 		exec_env(&all->list_env);
+	}
 	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
 		exec_exit(all);
 	else

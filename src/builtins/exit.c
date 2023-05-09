@@ -41,15 +41,11 @@ int	check_num_args(t_cmd *builtins)
 {
 	if (builtins->n_args > 2)
 	{
-		write(1, "bash: exit: too many arguments\n", 31);
-		// print_err(builtins->args, "bash: exit: too many arguments");
+		print_err(builtins->args, "bash: exit: too many arguments");
 		return (1);
 	}
 	else
-	{
-		write(1, "exit", 4);
 		return (0);
-	}
 }
 
 int	check_digit_args(char **args)
@@ -94,7 +90,10 @@ void	exec_exit(t_all *all)
 			exit(all->exit);
 		}
 		else
+		{
 			all->exit = 1;
+			return ;
+		}	
 	}
 	else //unsigned int y luego a int
 	{

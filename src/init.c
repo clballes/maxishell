@@ -16,5 +16,5 @@ void	init_struct(t_all *all)
 {
 	all->quotes.has_quote = 0;
 	all->exit = 0;
-	
+	env_list(all);
 }

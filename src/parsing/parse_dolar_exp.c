@@ -6,13 +6,17 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/09 21:07:10 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:02:28 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 #include "../inc/minishell.h"
-
+// Nos devuelve la longitud de la variable a buscar en el env
+// Ej:$USER nos devuelve 4
+// cuenta solo los valores validos para una variable que son letras
+// barra baja _
+// numeros si no estan en la primera posicion
 int dolar_exp_len(char *token)
 {
 	int i;
@@ -21,8 +25,11 @@ int dolar_exp_len(char *token)
 	// NUMEROS
 	while (token[i])
 	{
-		// if(token[0] >= '0' && token[i] <= '9' )
-		if ((token[i] >= 'a' && token[i] <= 'z') || (token[i] >= 'A' && token[i] <= 'Z') || token[i] == '_' /* || (token[i] >= '0' && token[i] <= '9')*/)
+		// if(token[0] >= '0' && token[0] <= '9' )
+		// 	return(i);	
+		if ((token[i] >= 'a' && token[i] <= 'z') \
+			|| (token[i] >= 'A' && token[i] <= 'Z') \
+			|| token[i] == '_' || (token[i] >= '0' && token[i] <= '9'))
 			i++;
 		else
 			break;
@@ -41,7 +48,9 @@ char *dolar_search_value(char *token)
 	len = dolar_exp_len(token);
 	printf("len:%d\n", len);
 	// para hacer el len del USER para el malloc hacemos el dolar_exp_len
-	search_env = ft_calloc(len + 1, sizeof(char)); // FREEEEE
+	// if(!len)
+	// 	return(NULL);
+	search_env = ft_calloc(len + 1, sizeof(char)); // FREEEEE y proteccion
 	if (!search_env)
 		return NULL;
 	while (len)
@@ -73,7 +82,7 @@ char *env_search(t_env *env, char *search_value)
 	}
 	env = first_node;
 	free(search_value);
-	return (NULL);
+	return (ft_strdup(""));
 	// return(0);
 }
 
@@ -86,6 +95,7 @@ void clean_tokens(t_all *all, t_cmd *node)
 	char *expanded_value; // es el puntero que apunta a la lista de env asi que no lo liberamos.
 	char *before_dolar;
 	char *result;
+	int	variable_len;
 
 	i = 1;
 	j = 0;
@@ -100,35 +110,39 @@ void clean_tokens(t_all *all, t_cmd *node)
 			if (node->args[i][j] == '\"' && !is_in_quottes(node->args[i], all, i))
 			{
 				node->double_quote = true;
-				// node->args[i]++;
 				j++;
 			}
 			if (node->args[i][j] == '\'' && !is_in_quottes(node->args[i], all, i))
 			{
 				node->single_quote = true;
-				// node->args[i]++;
 				j++;
 			}
 			if (node->args[i][j] == '$')
 			{
+				// hay que comprobar los casos de $1USER $11USEER
+				// if(node->args[i][j + 1] >= '0' && node->args[i][j + 1] <= '9')
+				// {
+				// 	node->args[i] = 
+				// 	break;
+				// }
+				if(j == 0)
+					before_dolar = ft_strdup("");
 				if (j != 0)
 					before_dolar = ft_substr(node->args[i], 0, j);
 				j++;
 				search_value = dolar_search_value(node->args[i] + j);
-				ft_strlen(search_values)//QUIERO LA longitud de USER para avanzar el puntero
+				// if(search_value == NULL)
+				// 	j += 2;
+				variable_len = ft_strlen(search_value);//QUIERO LA longitud de USER para avanzar el puntero
 				expanded_value = env_search(all->list_env, search_value);
-				
-				ft_strjoin(expandex_value, )// quiero poner que me anada lo que sobra
+				expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len);
 				if(expanded_value)
 				{
 					result = ft_strjoin(before_dolar, expanded_value);
-					// node->args[i] = result;//habria que hacer free de result????Creo que no porque liberamos el dela lista
+					node->args[i] = result;//habria que hacer free de result????Creo que no porque liberamos el dela lista
 				}
-				// i = 0;
-				j = 0;
 				printf("contenido:%s \n", expanded_value);
 				printf("result:%s\n",  result);
-				
 			}
 			printf("que hay una vez pasado el dolar%c\n",node->args[i][j]);
 			j++;

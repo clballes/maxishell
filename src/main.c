@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/09 16:59:28 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:46:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*get_line(void)
 	char		*line;
 	const char	*prompt;
 
-	prompt = "Bienvenid@ a Maxishell: ";
+	prompt = "\x1b[0;35mBienvenid@ a Maxishell\x1b[0m: ";
 	line = readline(prompt);
 	if (!line)
 		exit(0); //funcion de error
@@ -70,7 +70,9 @@ static int	analyze_line(char *all_line, t_all *all)
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
-		lst_last(&all->node)->cmd = lst_last(&all->node)->args[0];
+		lst_last(&all->node)->double_quote = false;
+		lst_last(&all->node)->single_quote = false;
+		
 		// printf("numero de args = %d\n", all->node->n_args);
 		i++;
 	}
@@ -117,10 +119,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		all->all_line = get_line();
+		add_history(all->all_line);
 		if (analyze_line(all->all_line, all) == 0)
 		{
 			exec_cmd(all);
-			free(all->all_line); //readline hace malloc
+			free(all->all_line); //readline hace malloc // addhistory hace free probar si tenemos que hacer nosotras free;
 			lstfree(&all->node);
 		}
 		else

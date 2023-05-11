@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/11 11:14:04 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:19:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int dolar_exp_len(char *token)
 	printf("iii:%d\n", i);
 	return (i);
 }
+
+
 
 char *dolar_search_value(char *token)
 {
@@ -69,13 +71,13 @@ char *search_in_env(t_env *env, char *search_value)
 
 	t_env *first_node; // guardamos aqui el primer elemento de la lista
 	first_node = env;
-	while (env) // recorremos la lista
+	while (env && ft_strlen(search_value)) // recorremos la lista
 	{
 		
 		if (ft_strncmp(env->name, search_value, ft_strlen(search_value)) == 0)
 		{
 			free(search_value);
-			return (env->content);
+			return (env->content); ///ft_strdup(env->content); y liberarla
 		}
 		env = env->next;
 		// printf("p1:%p p2:%p \n", first_node, env);
@@ -97,7 +99,7 @@ void clean_tokens(t_all *all, t_cmd *node)
 	char *result;
 	int	variable_len;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	if (!node->args[1])
 		return;
@@ -106,45 +108,53 @@ void clean_tokens(t_all *all, t_cmd *node)
 		j= 0;
 		while (node->args[i][j] != '\0')
 		{
-			
-			if (node->args[i][j] == '\"' && !is_in_quottes(node->args[i], all, i))
+			//tengo que poner de alguna manera el node->double_quote a 0
+			// printf("caracter:%c is in quotes?:%d single:%d double:%d\n", node->args[i][j], is_in_quottes(node->args[i], all, i), node->single_quote, node->double_quote );
+			// if(!is_in_quottes(node->args[i], all, i))
+			// {
+			// 	node->double_quote = false;
+			// 	node->single_quote = false;
+			// }
+			if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, i))
 			{
 				node->double_quote = true;
 				j++;
 			}
-			if (node->args[i][j] == '\'' && !is_in_quottes(node->args[i], all, i))
+			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, i))
 			{
 				node->single_quote = true;
 				j++;
 			}
-			if (node->args[i][j] == '$')
+			if (node->args[i][j] == '$' && !node->single_quote)
 			{
-				if(j == 0)
-					before_dolar = ft_strdup("");
-				if (j != 0)
-					before_dolar = ft_substr(node->args[i], 0, j);
+				before_dolar = ft_substr(node->args[i], 0, j);										//si no hay nada porque pasamos 0 y 0 nose devuelve un string vacio
+				if(ft_is_space(node->args[i][j + 1]) || node->args[i][j + 1] == '\0')
+				{
+					node->args[i] = ft_strjoin( before_dolar, ft_strdup("$"));
+					return ;
+				}
 				j++;
 				if (node->args[i][j] >= '0' && node->args[i][j] <= '9')
 				{
 					j++;
 					result = ft_strjoin(before_dolar, node->args[i] + j);		
 				}
-				if (node->args[i][j] == '?')
+				else if (node->args[i][j] == '?')
 				{
 					j++;
 					result = ft_strjoin(before_dolar, ft_itoa(all->exit));		
 				}
 				else
 				{
-					search_value = dolar_search_value(node->args[i] + j); 							//search value es USER
+					search_value = dolar_search_value(node->args[i] + j);
+					printf("search_value:%s\n", search_value); 							//search value es USER
 					variable_len = ft_strlen(search_value);											//QUIERO LA longitud de USER para avanzar el puntero
-					expanded_value = search_in_env(all->list_env, search_value); 					//Busca el search_value (USER) en la lista de env y devuelve albagarc
+					expanded_value = search_in_env(all->list_env, search_value); 
+					printf("expanded value: %s\n", expanded_value);							//Busca el search_value (USER) en la lista de env y devuelve albagarc
 					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len); 
 					result = ft_strjoin(before_dolar, expanded_value);								//hay que liberar dentro del join	
 				}
 				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
-				// printf("contenido:%s \n", expanded_value);
-				// printf("result:%s\n",  result);
 			}
 			j++;
 		}
@@ -158,11 +168,11 @@ int final_tokens_in_nodes(t_all *all)
 	first_node = all->node;
 	while (all->node) // recorremos la lista
 	{
-		printf("arg[0]%s\n", all->node->args[0]);
-		printf("arg[1]%s\n", all->node->args[1]);
-		printf("arg[2]%s\n", all->node->args[2]);
+		// printf("arg[0]%s\n", all->node->args[0]);
+		// printf("arg[1]%s\n", all->node->args[1]);
+		// printf("arg[2]%s\n", all->node->args[2]);
 		clean_tokens(all, all->node);
-
+		lst_last(&all->node)->cmd = lst_last(&all->node)->args[0];
 		all->node = all->node->next;
 		// printf("p1:%p p2:%p \n", first_node, all->node);
 	}

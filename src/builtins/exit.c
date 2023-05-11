@@ -13,10 +13,10 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	print_err(char	**args, char *print)
+void	print_err(char	**args, char *print, t_all *all)
 {
 	ft_putendl_fd("exit", 2);
-	ft_putstrshell_fd(print, 2, args);
+	ft_putstrshell_fd(print, 2, args, all);
 	write(2, "\n", 1);
 }
 
@@ -42,7 +42,7 @@ int	check_num_args(t_cmd *builtins)
 	// lst_last(&all->node)->n_args
 	if (builtins->n_args > 2)
 	{
-		print_err(builtins->args, "bash: exit: too many arguments");
+		print_err(builtins->args, "bash: exit: too many arguments", NULL);
 		return (1);
 	}
 	else
@@ -67,7 +67,7 @@ int	check_digit_args(char **args)
 				if (i > 1)
 					return (1);
 				else
-					print_err(args, "bash: exit: &: numeric argument required");
+					print_err(args, "bash: exit: &: numeric argument required", NULL);
 				return (0);
 			}
 			else

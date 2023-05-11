@@ -27,12 +27,47 @@ void    change_env(t_all *all)
     }
 }
 
+void    error_msg(t_all *all) //free malloc perq faig un join
+{
+    struct stat path_stat;
+    char *new_cd;
+
+    if (all->node->args[1][0] != '/')
+		new_cd = ft_strjoin_mini(all->list_env->current_cd, all->node->args[1]); //join modificat em passo de lineas
+	else
+		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1]);
+    if (stat(new_cd, &path_stat) == 0)
+    {
+        if (S_ISDIR(path_stat.st_mode))
+        {
+            ft_putstrshell_fd("bash: &: &: Not a directory", 2, all->node->args, all);
+			write(2, "\n", 1);
+            printf("%s is a directory\n", new_cd);
+        }
+        else if (S_ISREG(path_stat.st_mode))
+        {
+            ft_putstrshell_fd("&: Not a directory", 2, all->node->args, all);
+		    write(2, "\n", 1);
+            // printf("%s is a file\n", new_cd);
+        }
+        else
+            printf("%s is neither a directory nor a file\n", new_cd);
+    }
+    else
+    {
+        ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all->node->args, all);
+		write(2, "\n", 1);
+    }
+}
+
 int    exec_cd(t_all *all)
 {
     all->list_env->current_cd = getcwd(NULL, 0);
-    // printf("Current working directory is now: %s\n", all->list_env->current_cd);
     if (all->node->args[1])
-        chdir(all->node->args[1]);
+    {
+        if (chdir(all->node->args[1]) == -1)
+            error_msg(all);
+    }
     else
         chdir(getenv("HOME"));
     all->list_env->new_cd = getcwd(NULL, 0);

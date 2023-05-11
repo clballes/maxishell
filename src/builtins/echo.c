@@ -27,33 +27,26 @@ int	exec_option(char *args)
 	return (0);
 }
 
-void	print(char *args)
-{
-	int i;
+// void	print(char *args)
+// {
+// 	int i;
 
-	i = 0;
-	while(args[i])
-	{
-		write(1, &args[i], 1);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while(args[i])
+// 	{
+// 		write(1, &args[i], 1);
+// 		i++;
+// 	}
+// }
 
-void	exec_echo(t_cmd *builtins, int exit)
+void	exec_echo(t_cmd *builtins)
 {
 	int	i;
 	int	res;
 
 	i = 1;
 	res = 0;
-	if (builtins->args[i] == NULL)
-	{
-		printf("\n");
-		// printf("all exit %d\n", exit);
-		exit = 0;
-		return ;
-	}
-	while (ft_strncmp(builtins->args[i], "-n", 2) == 0)
+	while (builtins->args[i] && (ft_strncmp(builtins->args[i], "-n", 2) == 0))
 	{
 		if (exec_option(builtins->args[i]) != 1)
 		{
@@ -65,7 +58,6 @@ void	exec_echo(t_cmd *builtins, int exit)
 	}
 	while (builtins->args[i])
 	{
-		// print(builtins->args[i]);
 		printf("%s", builtins->args[i]);
 		if (builtins->args[i + 1] != NULL)
 			printf(" ");

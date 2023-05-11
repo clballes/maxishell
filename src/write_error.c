@@ -13,28 +13,32 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	ft_putcharshell_fd(char c, int fd, char **args)
+void	ft_putcharshell_fd(char c, int fd, char **args, t_all *all)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 1;
+	if (all->node->n_args == 1)
+		j = 0;
 	if (c == '&')
 	{
-		while(args[1][i])
-			write(fd, &args[1][i++], 1);
+		while(args[j][i])
+			write(fd, &args[j][i++], 1);
 	}
 	else
 		write(fd, &c, 1);
 }
 
-void	ft_putstrshell_fd(char *s, int fd,  char **args)
+void	ft_putstrshell_fd(char *s, int fd,  char **args, t_all *all)
 {
 	int	i;
 
 	i = 0;
 	while (s[i] != '\0')
 	{
-		ft_putcharshell_fd(s[i], fd, args);
+		ft_putcharshell_fd(s[i], fd, args, all);
 		i++;
 	}
 }

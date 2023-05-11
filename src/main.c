@@ -14,6 +14,7 @@
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
 #include <stdbool.h>
+#include <errno.h>
 
 //Lee la linea del promps si algo falla sale y sino la devuelve para 
 // empezar a analizarla
@@ -87,14 +88,47 @@ static int	analyze_line(char *all_line, t_all *all)
 	//free all->node->line
 	//free all->node->cmd
 }
+int	search_path(t_all *all)
+{
+	char	*res;
+	char	**split_path;
+	int		i;
+	char	*new_path;
+
+	i = 0;
+	res = getenv("PATH");
+	split_path = ft_split(res, ':');
+	while(split_path[i])
+	{
+		if (all->node->args[0][0] != '/')
+			new_path = ft_strjoin_mini(split_path[i], all->node->args[0]); //join modificat em passo de lineas
+		else
+			new_path = ft_strjoin(split_path[i], all->node->args[0]); //join modificat em passo de lineas
+		if (access(new_path, F_OK | R_OK) == 0)
+		{
+			printf("we access it\n");
+			printf("existeee %s\n",all->node->args[0] );
+			execve(new_path, &all->node->args[0], NULL);
+			free(new_path); //free del join
+			return (0);
+		}
+		// if (errno == EACCES) {
+        //     printf("%s is not readable: permission denied\n", new_path);
+        // } else if (errno == ENOENT) {
+        //     printf("%s does not exist\n", new_path);
+        // } else {
+        //     perror("access");
+        // }
+		i++;
+	}
+	free_arr(split_path); //free del split
+	return (1);
+}
 
 void	exec_cmd(t_all *all)
 {
 	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
-	{
-		all->exit = exec_echo(all->node, all->exit);
-		printf("all exit %d\n", all->exit);
-	}
+		exec_echo(all->node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
@@ -109,9 +143,13 @@ void	exec_cmd(t_all *all)
 		exec_exit(all);
 	else
 	{
-		DIR *res = opendir("/Users/clballes/miniconda3/bin");
-		printf("el rsultado esss %p\n", (void*)res);
-		printf("hemos de encontar el path de los otros\n");
+		if (search_path(all) == 0)
+			all->exit = 0;
+		else
+		{
+			ft_putstrshell_fd("bash: &: command not found", 2, all->node->args, all);
+			write(2, "\n", 1);
+		}
 	}
 }
 

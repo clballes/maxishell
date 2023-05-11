@@ -12,16 +12,15 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <stdio.h>
 # include "../libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdlib.h>
 #include <stdbool.h>
-//opndir
 #include <sys/types.h>
-#include <dirent.h>
+#include <sys/stat.h>
 
 
 typedef struct s_cmd 
@@ -85,5 +84,6 @@ void	lst_add_back_env(t_env **first, t_env *new_el);
 t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
 void	env_list(t_all *all);
+char	*ft_strjoin_mini(char const *s1, char const *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/10 14:02:28 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/11 11:14:04 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char *dolar_search_value(char *token)
 	return (search_env);
 }
 
-char *env_search(t_env *env, char *search_value)
+char *search_in_env(t_env *env, char *search_value)
 {
 
 	t_env *first_node; // guardamos aqui el primer elemento de la lista
@@ -119,36 +119,35 @@ void clean_tokens(t_all *all, t_cmd *node)
 			}
 			if (node->args[i][j] == '$')
 			{
-				// hay que comprobar los casos de $1USER $11USEER
-				// if(node->args[i][j + 1] >= '0' && node->args[i][j + 1] <= '9')
-				// {
-				// 	node->args[i] = 
-				// 	break;
-				// }
 				if(j == 0)
 					before_dolar = ft_strdup("");
 				if (j != 0)
 					before_dolar = ft_substr(node->args[i], 0, j);
 				j++;
-				search_value = dolar_search_value(node->args[i] + j);
-				// if(search_value == NULL)
-				// 	j += 2;
-				variable_len = ft_strlen(search_value);//QUIERO LA longitud de USER para avanzar el puntero
-				expanded_value = env_search(all->list_env, search_value);
-				expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len);
-				if(expanded_value)
+				if (node->args[i][j] >= '0' && node->args[i][j] <= '9')
 				{
-					result = ft_strjoin(before_dolar, expanded_value);
-					node->args[i] = result;//habria que hacer free de result????Creo que no porque liberamos el dela lista
+					j++;
+					result = ft_strjoin(before_dolar, node->args[i] + j);		
 				}
-				printf("contenido:%s \n", expanded_value);
-				printf("result:%s\n",  result);
+				if (node->args[i][j] == '?')
+				{
+					j++;
+					result = ft_strjoin(before_dolar, ft_itoa(all->exit));		
+				}
+				else
+				{
+					search_value = dolar_search_value(node->args[i] + j); 							//search value es USER
+					variable_len = ft_strlen(search_value);											//QUIERO LA longitud de USER para avanzar el puntero
+					expanded_value = search_in_env(all->list_env, search_value); 					//Busca el search_value (USER) en la lista de env y devuelve albagarc
+					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len); 
+					result = ft_strjoin(before_dolar, expanded_value);								//hay que liberar dentro del join	
+				}
+				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
+				// printf("contenido:%s \n", expanded_value);
+				// printf("result:%s\n",  result);
 			}
-			printf("que hay una vez pasado el dolar%c\n",node->args[i][j]);
 			j++;
 		}
-		// exit(0);
-		// if (node->args[i][j] == '$' && )
 		i++;
 	}
 }

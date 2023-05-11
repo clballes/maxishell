@@ -33,7 +33,7 @@ void    error_msg(t_all *all) //free malloc perq faig un join
     char *new_cd;
 
     if (all->node->args[1][0] != '/')
-		new_cd = ft_strjoin_mini(all->list_env->current_cd, all->node->args[1]); //join modificat em passo de lineas
+		new_cd = ft_strjoin_path(all->list_env->current_cd, all->node->args[1]); //join modificat em passo de lineas
 	else
 		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1]);
     if (stat(new_cd, &path_stat) == 0)

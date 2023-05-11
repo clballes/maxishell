@@ -46,7 +46,8 @@ void	check_arg(t_all *all, char *arg)
 			all->list_env->concatenate = 1;
 		if (arg[i] == '=')
 			all->node->equal = 1;
-		if (ft_prohibited(arg[i], i, all->node->equal, all->list_env->concatenate) == 1)
+		if (ft_prohibited(arg[i], i, all->node->equal,
+				all->list_env->concatenate) == 1)
 		{
 			printf("bash: export: %s: not a valid identifier\n", arg);
 			return ;

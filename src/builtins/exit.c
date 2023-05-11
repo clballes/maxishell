@@ -23,6 +23,7 @@ void	print_err(char	**args, char *print, t_all *all)
 int	digit_max_min(int c, char *arg)
 {
 	int	j;
+
 	j = 0;
 	if (!(c >= '0' && c <= '9'))
 		return (1);
@@ -32,7 +33,8 @@ int	digit_max_min(int c, char *arg)
 		return (1);
 	if (ft_strncmp(arg, "9223372036854775807", 0xffffff) > 0)
 		return (1);
-	if (arg[0] == '-' && (ft_strncmp(arg, "-9223372036854775808", 0xffffff) > 0))
+	if ((arg[0] == '-')
+		&& (ft_strncmp(arg, "-9223372036854775808", 0xffffff) > 0))
 		return (1);
 	return (0);
 }

@@ -12,7 +12,6 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
-#include "string.h"
 
 int	ft_repeat(t_all *all, char *res, char *arg)
 {
@@ -26,15 +25,13 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 			if (all->list_env->concatenate == 1)
 			{
 				if (res == NULL)
-				{
-					printf("AIIII\n");
 					return (1);
-				}
 				temp->content = ft_strjoin(temp->content, res); //ojo el
 			}
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
 				temp->print = 0;
-			else if ((all->list_env->concatenate == 0) || (all->node->equal != 0))
+			else if ((all->list_env->concatenate == 0)
+				|| (all->node->equal != 0))
 			{
 				change_var_list(res, temp);
 				temp->print = 1;
@@ -48,8 +45,8 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 
 void	add_equal_arg(t_all *all, char *arg)
 {
-	char **cont_name;
-	char *res;
+	char	**cont_name;
+	char	*res;
 
 	res = ft_strchr(arg, '=');
 	res++;

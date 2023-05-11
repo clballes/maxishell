@@ -13,68 +13,69 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void    change_env(t_all *all)
+void	change_env(t_all *all)
 {
-    t_env *temp;
-    temp = all->list_env;
-    while(temp)
-    {
-        if(ft_strncmp(temp->name, "PWD",ft_strlen(temp->name)) == 0)
-            temp->content = all->list_env->new_cd;
-        if(ft_strncmp(temp->name, "OLDPWD",ft_strlen(temp->name)) == 0)
-            temp->content = all->list_env->current_cd;
-        temp = temp->next;
+	t_env	*temp;
+
+	temp = all->list_env;
+	while (temp)
+	{
+		if (ft_strncmp(temp->name, "PWD",ft_strlen(temp->name)) == 0)
+			temp->content = all->list_env->new_cd;
+		if (ft_strncmp(temp->name, "OLDPWD",ft_strlen(temp->name)) == 0)
+			temp->content = all->list_env->current_cd;
+		temp = temp->next;
     }
 }
 
-void    error_msg(t_all *all) //free malloc perq faig un join
+void	error_msg(t_all *all) //free malloc perq faig un join
 {
-    struct stat path_stat;
-    char *new_cd;
+	struct stat	path_stat;
+	char		*new_cd;
 
-    if (all->node->args[1][0] != '/')
+	if (all->node->args[1][0] != '/')
 		new_cd = ft_strjoin_path(all->list_env->current_cd, all->node->args[1]); //join modificat em passo de lineas
 	else
 		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1]);
-    if (stat(new_cd, &path_stat) == 0)
-    {
-        if (S_ISDIR(path_stat.st_mode))
-        {
-            ft_putstrshell_fd("bash: &: &: Not a directory", 2, all->node->args, all);
+	if (stat(new_cd, &path_stat) == 0)
+	{
+		if (S_ISDIR(path_stat.st_mode))
+		{
+			ft_putstrshell_fd("bash: &: &: Not a directory", 2, all->node->args, all);
 			write(2, "\n", 1);
-            printf("%s is a directory\n", new_cd);
-        }
-        else if (S_ISREG(path_stat.st_mode))
-        {
-            ft_putstrshell_fd("&: Not a directory", 2, all->node->args, all);
-		    write(2, "\n", 1);
-            // printf("%s is a file\n", new_cd);
-        }
-        else
-            printf("%s is neither a directory nor a file\n", new_cd);
-    }
-    else
-    {
-        ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all->node->args, all);
+			printf("%s is a directory\n", new_cd);
+		}
+		else if (S_ISREG(path_stat.st_mode))
+		{
+			ft_putstrshell_fd("&: Not a directory", 2, all->node->args, all);
+			write(2, "\n", 1);
+		// printf("%s is a file\n", new_cd);
+		}
+		else
+			printf("%s is neither a directory nor a file\n", new_cd);
+	}
+	else
+	{
+		ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all->node->args, all);
 		write(2, "\n", 1);
-    }
+	}
 }
 
-int    exec_cd(t_all *all)
+int	exec_cd(t_all *all)
 {
-    all->list_env->current_cd = getcwd(NULL, 0);
-    if (all->node->args[1])
-    {
-        if (chdir(all->node->args[1]) == -1)
-            error_msg(all);
-    }
-    else
-        chdir(getenv("HOME"));
-    all->list_env->new_cd = getcwd(NULL, 0);
-    change_env(all);
-    // if (chdir("/home/user/Desktop") == -1) {
-    //     perror("chdir failed");
-    //     return 1;
-    // }
-    return (0);
+	all->list_env->current_cd = getcwd(NULL, 0);
+	if (all->node->args[1])
+	{
+		if (chdir(all->node->args[1]) == -1)
+		error_msg(all);
+	}
+	else
+		chdir(getenv("HOME"));
+	all->list_env->new_cd = getcwd(NULL, 0);
+	change_env(all);
+	// if (chdir("/home/user/Desktop") == -1) {
+	//	 perror("chdir failed");
+	//	 return 1;
+	// }
+	return (0);
 }

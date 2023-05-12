@@ -84,6 +84,9 @@ void	lst_add_back_env(t_env **first, t_env *new_el);
 t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
 void	env_list(t_all *all);
-char	*ft_strjoin_mini(char const *s1, char const *s2);
+char	*ft_strjoin_path(char const *s1, char const *s2);
+
+//path
+int	search_path(t_all *all);
 
 #endif

@@ -39,24 +39,15 @@ void	error_msg(t_all *all) //free malloc perq faig un join
 		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1]);
 	if (stat(new_cd, &path_stat) == 0)
 	{
-		if (S_ISDIR(path_stat.st_mode))
+		if (S_ISREG(path_stat.st_mode))
 		{
-			ft_putstrshell_fd("bash: &: &: Not a directory", 2, all->node->args, all);
+			ft_putstrshell_fd("bash: &: Not a directory", 2, all, 1);
 			write(2, "\n", 1);
-			printf("%s is a directory\n", new_cd);
 		}
-		else if (S_ISREG(path_stat.st_mode))
-		{
-			ft_putstrshell_fd("&: Not a directory", 2, all->node->args, all);
-			write(2, "\n", 1);
-		// printf("%s is a file\n", new_cd);
-		}
-		else
-			printf("%s is neither a directory nor a file\n", new_cd);
 	}
 	else
 	{
-		ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all->node->args, all);
+		ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
 		write(2, "\n", 1);
 	}
 }

@@ -21,10 +21,12 @@ int     exec_cd(t_all *all);
 void    exec_exit(t_all *all);
 void	swap(t_env **temp);
 void    exec_unset(t_all *all);
+void	error_msg(t_all *all); //free malloc perq faig un join
+
 
 //print functions
-void	ft_putcharshell_fd(char c, int fd, char **args, t_all *all);
-void	ft_putstrshell_fd(char *s, int fd, char **args, t_all *all);
+void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
+void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
 
 //export funtions
 void	exec_export(t_all *all);

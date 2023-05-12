@@ -13,10 +13,10 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	print_err(char	**args, char *print, t_all *all)
+void	print_err(char *print, t_all *all)
 {
 	ft_putendl_fd("exit", 2);
-	ft_putstrshell_fd(print, 2, args, all);
+	ft_putstrshell_fd(print, 2, all, 1);
 	write(2, "\n", 1);
 }
 
@@ -39,19 +39,19 @@ int	digit_max_min(int c, char *arg)
 	return (0);
 }
 
-int	check_num_args(t_cmd *builtins)
+int	check_num_args(t_all *all)
 {
 	// lst_last(&all->node)->n_args
-	if (builtins->n_args > 2)
+	if (all->node->n_args > 2)
 	{
-		print_err(builtins->args, "bash: exit: too many arguments", NULL);
+		print_err("bash: exit: too many arguments", all);
 		return (1);
 	}
 	else
 		return (0);
 }
 
-int	check_digit_args(char **args)
+int	check_digit_args(char **args, t_all *all)
 {
 	int	i;
 	int	j;
@@ -69,7 +69,7 @@ int	check_digit_args(char **args)
 				if (i > 1)
 					return (1);
 				else
-					print_err(args, "bash: exit: &: numeric argument required", NULL);
+					print_err("bash: exit: &: numeric argument required", all);
 				return (0);
 			}
 			else
@@ -85,9 +85,9 @@ void	exec_exit(t_all *all)
 	// printf("num args %d\n", lst_last(&all->node)->n_args);
 	if (all->node->n_args == 1)
 		exit(all->exit);
-	else if (check_digit_args(all->node->args) == 1)
+	else if (check_digit_args(all->node->args, all) == 1)
 	{
-		if (check_num_args(all->node) == 0)
+		if (check_num_args(all) == 0)
 		{
 			all->exit = ft_atoi(all->node->args[1]);
 			all->exit = all->exit % 256;

@@ -14,7 +14,7 @@
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
 #include <stdbool.h>
-#include <errno.h>
+// #include <errno.h>
 
 //Lee la linea del promps si algo falla sale y sino la devuelve para 
 // empezar a analizarla
@@ -107,11 +107,19 @@ void	exec_cmd(t_all *all)
 		exec_exit(all);
 	else
 	{
-		if (search_path(all) == 0)
+		if (all->node->args[0][0] == '/')
+		{
+			if (execve(all->node->args[0], &all->node->args[0], NULL) != 0)
+			{
+				ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
+				write(2, "\n", 1);
+			}
+		}
+		else if (search_path(all) == 0)
 			all->exit = 0; //comprobar que sea este el num salida
 		else
 		{
-			ft_putstrshell_fd("bash: &: command not found", 2, all->node->args, all);
+			ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
 			write(2, "\n", 1);
 		}
 	}

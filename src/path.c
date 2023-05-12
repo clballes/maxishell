@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/11 14:47:16 by clballes          #+#    #+#             */
+/*   Updated: 2023/05/11 14:47:22 by clballes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
@@ -41,28 +52,16 @@ int	search_path(t_all *all)
 	i = 0;
 	res = getenv("PATH");
 	split_path = ft_split(res, ':'); //mallocs
-
 	while(split_path[i])
 	{
-		if (all->node->args[0][0] != '/')
-			new_path = ft_strjoin_path(split_path[i], all->node->args[0]); //join modificat em passo de lineas
-		else
-			new_path = ft_strjoin(split_path[i], all->node->args[0]); //join modificat em passo de lineas
+		new_path = ft_strjoin_path(split_path[i], all->node->args[0]); //join modificat em passo de lineas
 		if (access(new_path, F_OK | R_OK) == 0)
 		{
-			printf("we access it\n");
-			printf("existeee %s\n",all->node->args[0] );
 			execve(new_path, &all->node->args[0], NULL);
 			free(new_path); //free del join
+			free_arr(split_path); //free del split
 			return (0);
 		}
-		// if (errno == EACCES) {
-        //     printf("%s is not readable: permission denied\n", new_path);
-        // } else if (errno == ENOENT) {
-        //     printf("%s does not exist\n", new_path);
-        // } else {
-        //     perror("access");
-        // }
 		i++;
 	}
 	free(new_path);

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/11 20:19:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:05:55 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int dolar_exp_len(char *token)
 		else
 			break;
 	}
-	printf("iii:%d\n", i);
 	return (i);
 }
 
@@ -87,7 +86,17 @@ char *search_in_env(t_env *env, char *search_value)
 	return (ft_strdup(""));
 	// return(0);
 }
+int len_in_quottes(char *str, char quo)
+{
+	int i;
 
+	i = 1;
+	while(str[i]!= quo)
+	{
+		i++;
+	}	
+	return (i);
+}
 // Ya tenemos los argumentos guardados pero con comillas y sin hacer expansiones
 void clean_tokens(t_all *all, t_cmd *node)
 {
@@ -98,7 +107,10 @@ void clean_tokens(t_all *all, t_cmd *node)
 	char *before_dolar;
 	char *result;
 	int	variable_len;
-
+	char *before_quottes;
+	int  quo_len;
+	char *in_quottes;//malloc con el substring
+	
 	i = 0;
 	j = 0;
 	if (!node->args[1])
@@ -115,19 +127,38 @@ void clean_tokens(t_all *all, t_cmd *node)
 			// 	node->double_quote = false;
 			// 	node->single_quote = false;
 			// }
-			if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, i))
+			printf("valor [%c] esta en comillas o no:%d\n",node->args[i][j],is_in_quottes(node->args[i], all, j));
+			if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, j))
 			{
+				before_quottes = ft_substr(node->args[i], 0, j);
+				// calculamos la len de lo que hay en quottes
 				node->double_quote = true;
 				j++;
+				quo_len = len_in_quottes(node->args[i] + j, '\"');
+				in_quottes = ft_substr(node->args[i], j, quo_len);
+				result = ft_strjoin(before_quottes,in_quottes);
+				printf("len entre comillas:%d estring entre comillas:%s\n",quo_len, in_quottes);
 			}
-			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, i))
+			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j))
 			{
+				before_quottes = ft_substr(node->args[i], 0, j);
 				node->single_quote = true;
 				j++;
+				// in_quottes = ft_substr(node->args[i], j, j);
 			}
-			if (node->args[i][j] == '$' && !node->single_quote)
+			if (node->double_quote && !is_in_quottes(node->args[i], all, j))
 			{
-				before_dolar = ft_substr(node->args[i], 0, j);										//si no hay nada porque pasamos 0 y 0 nose devuelve un string vacio
+				node->double_quote = false;
+				j++;
+			}
+			if (node->single_quote && !is_in_quottes(node->args[i], all, j))
+			{
+				node->single_quote = false;
+				j++;
+			}
+			if (node->args[i][j] == '$' && node->single_quote == false)
+			{
+				before_dolar = ft_substr(node->args[i], 0, j);									//si no hay nada porque pasamos 0 y 0 nose devuelve un string vacio
 				if(ft_is_space(node->args[i][j + 1]) || node->args[i][j + 1] == '\0')
 				{
 					node->args[i] = ft_strjoin( before_dolar, ft_strdup("$"));
@@ -151,10 +182,12 @@ void clean_tokens(t_all *all, t_cmd *node)
 					variable_len = ft_strlen(search_value);											//QUIERO LA longitud de USER para avanzar el puntero
 					expanded_value = search_in_env(all->list_env, search_value); 
 					printf("expanded value: %s\n", expanded_value);							//Busca el search_value (USER) en la lista de env y devuelve albagarc
-					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len); 
-					result = ft_strjoin(before_dolar, expanded_value);								//hay que liberar dentro del join	
+					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len);
+				
+					result = ft_strjoin(before_dolar, expanded_value);//hay que liberar dentro del join	
 				}
 				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
+				printf("guardamos[%s]\n", node->args[i]);
 			}
 			j++;
 		}

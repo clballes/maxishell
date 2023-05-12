@@ -1,44 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 12:22:24 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/28 12:22:26 by clballes         ###   ########.fr       */
+/*   Created: 2023/05/12 13:52:36 by clballes          #+#    #+#             */
+/*   Updated: 2023/05/12 13:52:40 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
+#include "../inc/interactive.h"
 
-int	exec_pwd(t_all *all)
+void	signal_handler(int sig)
 {
-	char	pwd[1024];
-	char	*res;
-	int		i;
-
-	i = 0;
-	res = getcwd(pwd, sizeof(pwd));
-	if (getcwd(pwd, sizeof(pwd)) != NULL)
+	if (sig == SIGINT) //retorn siginit el valor de ctrt c, que hy de fer un new prompt
 	{
-		while (res[i])
-		{
-			write(1, &res[i], 1);
-			i++;
-		}
-		if (all->bar == 1)
-		{
-			write(1, "/", 1);
-			all->bar = 0;
-		}
-		write(1, "\n", 1);
+		// get_line();
+		printf("holaaaaaa guapi\n");
 	}
-	else
+	else if (sig == SIGQUIT)
 	{
-		perror("getcwd() error");
-		return (1);
+		printf("holaaaaaa\n");
+		exit(0);
 	}
-	return (0);
 }

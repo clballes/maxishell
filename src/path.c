@@ -42,6 +42,21 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 	return (new);
 }
 
+void	fork_function(t_all *all, char *new_path)
+{
+	pid_t pid = fork();
+	if (pid == 0)
+	{
+		if (execve(new_path, &all->node->args[0], NULL) != 0)
+		{
+			ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
+			write(2, "\n", 1);
+		}
+	}
+	else
+		waitpid(pid, &all->exit, 0);
+}
+
 int	search_path(t_all *all)
 {
 	char	*res;
@@ -57,7 +72,7 @@ int	search_path(t_all *all)
 		new_path = ft_strjoin_path(split_path[i], all->node->args[0]); //join modificat em passo de lineas
 		if (access(new_path, F_OK | R_OK) == 0)
 		{
-			execve(new_path, &all->node->args[0], NULL);
+			fork_function(all, new_path);
 			free(new_path); //free del join
 			free_arr(split_path); //free del split
 			return (0);

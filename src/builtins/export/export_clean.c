@@ -13,33 +13,13 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-// int	check_equal(t_cmd *node)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 1;
-// 	node->equal = 0;
-// 	while (node->args[i])
-// 	{
-// 		j = 0;
-// 		while (node->args[i][j])
-// 		{
-// 			if (node->args[i][j] == '=' && node->args[i][j - 1] != '=')
-// 				node->equal++;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (node->equal);
-// }
-
 void	check_arg(t_all *all, char *arg)
 {
 	int	i;
 
 	all->node->equal = 0;
-	i = 1;
+	i = 0;
+	printf("el arg 1 es %s\n", arg);
 	while (arg[i])
 	{
 		if (arg[i] == '+' && arg[i + 1] == '=')
@@ -57,18 +37,20 @@ void	check_arg(t_all *all, char *arg)
 	}
 }
 
-int	ft_prohibited(char c, int j, int equal, int concat)
+int	ft_prohibited(char c, int index, int equal, int concat)
 {
-	if (c == '=')
+	if (c == '=' && (index != 0))
 		return (0);
-	else if ((j == 0) && (concat == 0) && (equal == 0) && ((c >= 33 && c <= 64)
+	else if ((c == '=' || c == ' ') && (index == 0))
+		return (1);
+	else if ((index == 0) && (concat == 0) && (equal == 0) && ((c >= 33 && c <= 64)
 			|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
 		return (1);
-	else if ((j != 0) && (equal == 0) && (concat == 0) && ((c >= 34 && c <= 47)
+	else if ((index != 0) && (equal == 0) && (concat == 0) && ((c >= 34 && c <= 47)
 			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
 			|| (c >= 123 && c <= 126)))
 		return (1);
-	else if ((equal == 1) && (j != 0) && (concat == 1))
+	else if ((equal == 1) && (index != 0) && (concat == 1))
 		return (0);
 	return (0);
 }

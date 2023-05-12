@@ -77,9 +77,7 @@ void	print_list(t_env **list_env)
 	while (temp)
 	{
 		if (temp->print == 0)
-		{
 			printf("declare -x %s\n", temp->name);
-		}
 		else
 			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
 		temp = temp->next;

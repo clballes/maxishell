@@ -22,7 +22,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-
 typedef struct s_cmd 
 {
     char		*cmd;
@@ -65,6 +64,8 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
+	int		absolute; //to kno if its a absolute path 
+	int		bar; // esta es la cd //
     int 	n_pipes;
 }       			t_all;
 
@@ -87,6 +88,7 @@ void	env_list(t_all *all);
 char	*ft_strjoin_path(char const *s1, char const *s2);
 
 //path
-int	search_path(t_all *all);
+int		search_path(t_all *all);
+void		fork_function(t_all *all, char *new_path);
 
 #endif

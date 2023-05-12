@@ -20,14 +20,14 @@ void	ft_putcharshell_fd(char c, int fd, t_all *all, int j)
 	i = 0;
 	if (c == '&')
 	{
-		while(all->node->args[j][i])
+		while (all->node->args[j][i])
 			write(fd, &all->node->args[j][i++], 1);
 	}
 	else
 		write(fd, &c, 1);
 }
 
-void	ft_putstrshell_fd(char *s, int fd,  t_all *all, int j)
+void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j)
 {
 	int	i;
 

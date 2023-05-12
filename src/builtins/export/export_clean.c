@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 10:20:00 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:00:47 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ int	ft_prohibited(char c, int index, int equal, int concat)
 		return (0);
 	else if ((c == '=' || c == ' ') && (index == 0))
 		return (1);
-	else if ((index == 0) && (concat == 0) && (equal == 0) && ((c >= 33 && c <= 64)
+	else if ((index == 0) && (concat == 0)
+		&& (equal == 0) && ((c >= 33 && c <= 64)
 			|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
 		return (1);
-	else if ((index != 0) && (equal == 0) && (concat == 0) && ((c >= 34 && c <= 47)
+	else if ((index != 0) && (equal == 0)
+		&& (concat == 0) && ((c >= 34 && c <= 47)
 			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
 			|| (c >= 123 && c <= 126)))
 		return (1);

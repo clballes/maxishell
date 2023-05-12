@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:47:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/11 14:47:22 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:08:35 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 
 void	fork_function(t_all *all, char *new_path)
 {
-	pid_t pid = fork();
+	pid_t	pid;
+
+	pid = fork();
 	if (pid == 0)
 	{
 		if (execve(new_path, &all->node->args[0], NULL) != 0)
@@ -67,7 +69,7 @@ int	search_path(t_all *all)
 	i = 0;
 	res = getenv("PATH");
 	split_path = ft_split(res, ':'); //mallocs
-	while(split_path[i])
+	while (split_path[i])
 	{
 		new_path = ft_strjoin_path(split_path[i], all->node->args[0]); //join modificat em passo de lineas
 		if (access(new_path, F_OK | R_OK) == 0)

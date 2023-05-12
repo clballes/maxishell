@@ -16,14 +16,12 @@
 void	exec_echo(t_cmd *builtins);
 void	exec_env(t_env **list_env);
 void	env_list(t_all *all);
-int     exec_pwd(t_all *all);
-int     exec_cd(t_all *all);
-void    exec_exit(t_all *all);
+int		exec_pwd(t_all *all);
+int		exec_cd(t_all *all);
+void	exec_exit(t_all *all);
 void	swap(t_env **temp);
-void    exec_unset(t_all *all);
+void	exec_unset(t_all *all);
 void	error_msg(t_all *all); //free malloc perq faig un join
-
-
 //print functions
 void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
 void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);

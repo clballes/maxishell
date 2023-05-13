@@ -136,8 +136,12 @@ void clean_tokens(t_all *all, t_cmd *node)
 				j++;
 				quo_len = len_in_quottes(node->args[i] + j, '\"');
 				in_quottes = ft_substr(node->args[i], j, quo_len);
-				result = ft_strjoin(before_quottes,in_quottes);
-				printf("len entre comillas:%d estring entre comillas:%s\n",quo_len, in_quottes);
+				if(node->args[i][j]!= '$')
+				{
+					result = ft_strjoin(before_quottes,in_quottes);
+					node->args[i] = result;
+					printf("len entre comillas:%d estring entre comillas:%s result:%s\n",quo_len, in_quottes, result);
+				}
 			}
 			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j))
 			{
@@ -183,13 +187,15 @@ void clean_tokens(t_all *all, t_cmd *node)
 					expanded_value = search_in_env(all->list_env, search_value); 
 					printf("expanded value: %s\n", expanded_value);							//Busca el search_value (USER) en la lista de env y devuelve albagarc
 					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len);
-				
+					
 					result = ft_strjoin(before_dolar, expanded_value);//hay que liberar dentro del join	
 				}
-				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
 				printf("guardamos[%s]\n", node->args[i]);
+				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
 			}
 			j++;
+			// node->single_quote = 0;
+			// node->double_quote = 0;
 		}
 		i++;
 	}

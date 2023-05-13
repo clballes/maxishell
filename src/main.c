@@ -107,9 +107,9 @@ void	exec_cmd(t_all *all)
 		exec_exit(all);
 	else
 	{
-		if (search_path(all) == 0)
+		// if (search_path(all) == 0)
 			all->exit = 0; //comprobar que sea este el num salida
-		else
+		// else
 		{
 			ft_putstrshell_fd("bash: &: command not found", 2, all->node->args, all);
 			write(2, "\n", 1);

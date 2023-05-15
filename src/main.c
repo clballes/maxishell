@@ -26,7 +26,6 @@ char	*get_line(void)
 
 	// prompt = "Bienvenid@ a Maxishell: ";
 	// line = readline(prompt);
-	signal(SIGINT, signal_handler); //catch the signal here
 	line = readline("minishell $");
 	if (!line)
 	{
@@ -147,9 +146,6 @@ int	main(int argc, char **argv, char **env)
 		exit(0);
 	all->env = env;
 	init_struct(all);
-	// signal(SIGINT, signal_handler); //aixo nose si va aqui
-	signal(SIGQUIT, signal_handler); //aixo nose si va aqui
-    signal(SIGTSTP, signal_handler);
 	while (1)
 	{
 		all->all_line = get_line();

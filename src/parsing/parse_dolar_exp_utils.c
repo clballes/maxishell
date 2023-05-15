@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/15 17:17:35 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:39:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ char    *manage_dolar(char *str, t_all *all)
     j = 0;
 	result = NULL;
     // variable_len = 0;
-    while(str[j])
-    { 
-        if(str[j] =='$')
-        {
+    // while(str[j])
+    // { 
+        // if(str[j] =='$')
+        // {
 			
             // before_dolar = ft_substr(str, 0, j);
             // printf("before$$:%s\n", before_dolar);
@@ -99,10 +99,11 @@ char    *manage_dolar(char *str, t_all *all)
             // {
                 search_value = dolar_search_value(str + j + 1);						
                 expanded_value = search_in_env(all->list_env, search_value); 
+                
                 result = expanded_value;
-        }
-        j++;
-    }   
+        // }
+    //     j++;
+    // }   
     // }
     return(result);
 }
@@ -113,21 +114,24 @@ char	*expand_dolar(char *str, t_all *all)
 	char *before;
 	char *after;
 	int 	j;
-
+    char quo;
 	j = 0;
 	result = NULL;
+    all->quotes.found = '\0';
 	while(str[j] != '\0')
 	{
-		if(str[j]== '$' 
-		&&((is_in_quottes(str, all , j) && all->quotes.found == '\"') 
-		|| !is_in_quottes(str, all , j)))
+        quo = type_of_quottes(str, all , j);
+        printf("[%c]\n", quo);
+		if((str[j]== '$' && !is_in_quottes(str, all , j)) || (str[j]== '$' && quo =='\"' ) )
 		{
 			before = ft_substr(str, 0, j);
 			aux = manage_dolar(ft_strdup(str + j), all);
 			after = ft_strdup(str + j + len_search_value(str + j )+ 1);
 			printf("before$:%s, aux$:%s, after$:%s\n", before, aux, after);
 			result = ft_strjoin(before, aux);
+            printf("result:%s\n",result);
 			str = ft_strjoin(result, after);
+            j = -1;
 		}
 		j++;
 	}

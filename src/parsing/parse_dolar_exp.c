@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/15 17:17:42 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:37:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int len_search_value(char *str)
 void clean_tokenssss(t_all *all, t_cmd *node)
 {
 	int i;
-	int j;
+	// int j;
 	char *result;
 	// char *aux;
 	// char *before;
@@ -221,7 +221,7 @@ void clean_tokenssss(t_all *all, t_cmd *node)
 	
 	
 	i = 0;
-	j = 0;
+	// j = 0;
 	// result = '\0';
 	// aux = '\0';
 	result = NULL;

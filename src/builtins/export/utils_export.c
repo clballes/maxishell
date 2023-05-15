@@ -49,6 +49,8 @@ void	sort_list(t_env **list_env)
 	i = 0;
 	temp = *list_env;
 	temp2 = temp->next;
+	printf("el temp es %s\n", temp->name);
+	printf("el temp 2 es %s\n", temp2->name);
 	while (temp && temp->next)
 	{
 		if (ft_strncmp(temp->name, temp2->name,

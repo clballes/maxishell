@@ -134,7 +134,6 @@ void	exec_cmd(t_all *all)
 	}
 }
 
-
 int	main(int argc, char **argv, char **env)
 {
 	t_all	*all;

@@ -93,7 +93,8 @@ void	exec_export(t_all *all)
 		i++;
 	if (i == 1)
 	{
-		sort_list(&all->list_env);
+		printf("entres?\n");
+		// sort_list(&all->list_env);
 		print_list(&all->list_env);
 	}
 	else

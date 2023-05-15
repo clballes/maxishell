@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
@@ -26,7 +25,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 			i++;
 		}	
 		dst[i] = '\0';
-		printf("el str es %s\n", dst);
 	}
 	return (ft_strlen(src));
 }

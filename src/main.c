@@ -13,18 +13,20 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
+#include "../inc/interactive.h"
 #include <stdbool.h>
-#include <errno.h>
+// #include <errno.h>
 
 //Lee la linea del promps si algo falla sale y sino la devuelve para 
 // empezar a analizarla
-static char	*get_line(void)
+char	*get_line(void)
 {
 	char		*line;
 	// const char	*prompt;
 
 	// prompt = "Bienvenid@ a Maxishell: ";
 	// line = readline(prompt);
+	signal(SIGINT, signal_handler); //catch the signal here
 	line = readline("minishell $");
 	if (!line)
 	{
@@ -91,12 +93,14 @@ static int	analyze_line(char *all_line, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
+	int i;
+	i = -1;
 	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
 		exec_echo(all->node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
-		exec_pwd();
+		exec_pwd(all);
 	else if (ft_strncmp(all->node->cmd, "export", 7) == 0)
 		exec_export(all);
 	else if (ft_strncmp(all->node->cmd, "unset", 6) == 0)
@@ -107,15 +111,30 @@ void	exec_cmd(t_all *all)
 		exec_exit(all);
 	else
 	{
-		// if (search_path(all) == 0)
-			all->exit = 0; //comprobar que sea este el num salida
-		// else
+		while (all->node->args[0][i++])
 		{
-			ft_putstrshell_fd("bash: &: command not found", 2, all->node->args, all);
+			if (all->node->args[0][i] == '/')
+			{
+				all->absolute = 1;
+				break;
+			}
+		}
+		i = 0;
+		if (all->node->args[0][i] == '/' || all->absolute == 1)
+		{
+			fork_function(all, all->node->args[0]);
+			all->absolute = 0;
+		}
+		else if (search_path(all) == 0)
+			all->exit = 0; //comprobar que sea este el num salida
+		else
+		{
+			ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
 			write(2, "\n", 1);
 		}
 	}
 }
+
 
 int	main(int argc, char **argv, char **env)
 {
@@ -128,6 +147,9 @@ int	main(int argc, char **argv, char **env)
 		exit(0);
 	all->env = env;
 	init_struct(all);
+	// signal(SIGINT, signal_handler); //aixo nose si va aqui
+	signal(SIGQUIT, signal_handler); //aixo nose si va aqui
+    signal(SIGTSTP, signal_handler);
 	while (1)
 	{
 		all->all_line = get_line();

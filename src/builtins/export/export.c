@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 10:18:21 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:02:36 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	temp = all->list_env;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->name, arg, ft_strlen(temp->name))) == 0)
+		if ((ft_strncmp(temp->name, arg, ft_strlen(arg))) == 0)
 		{
 			if (all->list_env->concatenate == 1)
-			{
-				if (res == NULL)
-					return (1);
 				temp->content = ft_strjoin(temp->content, res); //ojo el
-			}
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
-				temp->print = 0;
+			{
+				if (temp->content) //si printejem hola=a i despres, hola, necessito q ess qedi el valor atnerior
+					temp->print = 1;		
+				else
+					temp->print = 0; 
+			}
 			else if ((all->list_env->concatenate == 0)
 				|| (all->node->equal != 0))
 			{

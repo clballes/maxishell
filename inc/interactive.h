@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   interactive.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/03 13:28:57 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/03 13:36:26 by albagarc         ###   ########.fr       */
+/*   Created: 2023/05/12 13:54:40 by clballes          #+#    #+#             */
+/*   Updated: 2023/05/12 13:54:41 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
 
-void	init_struct(t_all *all)
-{
-	all->quotes.has_quote = 0;
-	all->exit = 0;
-	all->bar = 0;
-	all->absolute = 0;
-	env_list(all);
-}
+#ifndef INTERACTIVE_H
+# define INTERACTIVE_H
+
+void	signal_handler(int sig);
+
+
+
+
+
+#endif

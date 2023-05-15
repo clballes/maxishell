@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:38:25 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:40:00 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:01:28 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ int	exec_option(char *args)
 	}
 	return (0);
 }
-
-// void	print(char *args)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while(args[i])
-// 	{
-// 		write(1, &args[i], 1);
-// 		i++;
-// 	}
-// }
 
 void	exec_echo(t_cmd *builtins)
 {

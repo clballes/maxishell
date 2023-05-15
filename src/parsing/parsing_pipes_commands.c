@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/08 13:31:51 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:19:27 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_in_quottes(char *line, t_all *all, int i)
 	j = 0;
 	while (j <= i)
 	{
-		if (line[j] == '\"' || line[j] == '\'')
+		if ((line[j] == '\"' || line[j] == '\'') )
 		{
 			if (!all->quotes.has_quote)
 			{

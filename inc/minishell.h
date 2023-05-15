@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/11 19:46:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:48:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_cmd
 	int			equal; //para saber si hay iguales dentr del export
 	bool		double_quote;
 	bool		single_quote;
+	int			*arr_print_quote;
     struct s_cmd *next;
 }   t_cmd;
 

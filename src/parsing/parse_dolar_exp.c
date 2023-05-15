@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/15 05:55:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/15 17:17:42 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,60 +215,68 @@ void clean_tokenssss(t_all *all, t_cmd *node)
 	int i;
 	int j;
 	char *result;
-	char *aux;
-	char *before;
-	char *after;
+	// char *aux;
+	// char *before;
+	// char *after;
 	
 	
 	i = 0;
 	j = 0;
-	result = '\0';
-	aux = '\0';
+	// result = '\0';
+	// aux = '\0';
+	result = NULL;
+	// aux = NULL;
 	if (!node->args[1])
 		return;
 	while (node->args[i])
 	{
-		j = 0;
-		while (node->args[i][j] != '\0')
-		{
-			if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, j))
-			{
-				before = ft_substr(node->args[i], 0, j);
-				aux = extract_in_quottes(node->args[i], j,'\"', node);
-				after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\"') + 2);
-				result = ft_strjoin(before, aux);
-				result = ft_strjoin(result, after);
-				node->args[i] = result;
-				j = 0;
-				// free(result_quottes);
+			result = expand_dolar(node->args[i], all);
+		// j = 0;
+		// while (node->args[i][j] != '\0')
+		// {
+		// 	// funcion que me devuelve un string con todo expandido 
+		// 	// funcion que me extrae lo que hay entre comillas
+		// 	printf("[%c]\n",node->args[i][j]);
+		// 	//TODO??? CAMBIAR LA CONDICICION DEL IS IN QUOTTES PARA QUE LA PRIMERA COMILLA ME LA DA NEGATIVA??
+		// 	if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, j)/*&&!node->single_quote*/)
+		// 	{
+		// 		before = ft_substr(node->args[i], 0, j);
+		// 		aux = extract_in_quottes(node->args[i], j,'\"', node);
+		// 		after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\"') + 2);
+		// 		printf("before\":%s, aux\":%s, after\":%s\n", before, aux, after);
+		// 		result = ft_strjoin(before, aux);
+		// 		result = ft_strjoin(result, after);
+		// 		node->args[i] = result;
+		// 		j = -1;
+		// 		// free(result_quottes);
 				
-			}
-			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j))
-			{
-				before = ft_substr(node->args[i], 0, j);
-				aux = extract_in_quottes(node->args[i], j,'\'', node);
-				after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\'') + 2);
-				result = ft_strjoin(before, aux);
-				result = ft_strjoin(result, after);
-				node->args[i] = result;
-				j = 0;
+		// 	}
+		// 	else if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j)/*&&!node->double_quote*/)
+		// 	{
+		// 		before = ft_substr(node->args[i], 0, j);
+		// 		aux = extract_in_quottes(node->args[i], j,'\'', node);
+		// 		after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\'') + 2);
+		// 		result = ft_strjoin(before, aux);
+		// 		result = ft_strjoin(result, after);
+		// 		node->args[i] = result;
+		// 		j = -1;
 				
-			}
-			if (node->args[i][j] == '$' && node->single_quote == false)
-			{ 
-				before = ft_substr(node->args[i], 0, j);
-				aux = manage_dolar(ft_strdup(node->args[i] +j), all);
-				after = ft_strdup(node->args[i] + j + len_search_value(node->args[i] + j )+ 1);
-				printf("before:%s, aux:%s, after:%s\n", before, aux, after);
-				result = ft_strjoin(before, aux);
-				result = ft_strjoin(result, after);
-				node->args[i] = result;
-				j = 0;
-			}
-			j++;
-		}
-		if(result)
-			node->args[i] = result;																
+		// 	}
+		// 	else if (node->args[i][j] == '$' && node->single_quote == false)
+		// 	{ 
+		// 		before = ft_substr(node->args[i], 0, j);
+		// 		aux = manage_dolar(ft_strdup(node->args[i] +j), all);
+		// 		after = ft_strdup(node->args[i] + j + len_search_value(node->args[i] + j )+ 1);
+		// 		printf("before$:%s, aux$:%s, after$:%s\n", before, aux, after);
+		// 		j = -1;
+		// 		result = ft_strjoin(before, aux);
+		// 		result = ft_strjoin(result, after);
+		// 		node->args[i] = result;
+		// 	}
+		// 	j++;
+		// }
+		
+		node->args[i] = result;																
 		i++;
 	}
 }

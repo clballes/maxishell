@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/15 05:53:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/15 17:17:35 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ char    *manage_dolar(char *str, t_all *all)
     
     
     j = 0;
+	result = NULL;
     // variable_len = 0;
-    // while(str[j])
-    // {
+    while(str[j])
+    { 
         if(str[j] =='$')
         {
+			
             // before_dolar = ft_substr(str, 0, j);
             // printf("before$$:%s\n", before_dolar);
             
@@ -98,10 +100,101 @@ char    *manage_dolar(char *str, t_all *all)
                 search_value = dolar_search_value(str + j + 1);						
                 expanded_value = search_in_env(all->list_env, search_value); 
                 result = expanded_value;
-            // }
-        }   
+        }
         j++;
+    }   
     // }
     return(result);
 }
+char	*expand_dolar(char *str, t_all *all)
+{
+	char *result;
+	char *aux;
+	char *before;
+	char *after;
+	int 	j;
 
+	j = 0;
+	result = NULL;
+	while(str[j] != '\0')
+	{
+		if(str[j]== '$' 
+		&&((is_in_quottes(str, all , j) && all->quotes.found == '\"') 
+		|| !is_in_quottes(str, all , j)))
+		{
+			before = ft_substr(str, 0, j);
+			aux = manage_dolar(ft_strdup(str + j), all);
+			after = ft_strdup(str + j + len_search_value(str + j )+ 1);
+			printf("before$:%s, aux$:%s, after$:%s\n", before, aux, after);
+			result = ft_strjoin(before, aux);
+			str = ft_strjoin(result, after);
+		}
+		j++;
+	}
+	// if(result)
+	// 	return(result);
+	return (str);
+}
+
+
+
+// int	how_many_quottes(char *s)
+// {
+// 	int i;
+// 	int count_quo;
+	
+// 	i = 0;
+// 	count_quo = 0;
+// 	while(s[i]!= '\0')
+// 	{
+// 		if(s[i] == '\"' || s[i] == '\'')
+// 		{
+// 			count_quo++;	
+// 		}
+// 		i++;
+// 	}
+// 	return (count_quo);
+// }
+
+// int	*array_printable_quotte(char *s, t_all*all)
+// {
+// 	int i;
+// 	int *print_quo;
+// 	int number_of_quottes;
+// 	int j;
+	
+// 	i = 0;
+// 	j = 0;
+// 	number_of_quottes = how_many_quottes(s);
+// 	print_quo = ft_calloc(number_of_quottes, sizeof(int));
+// 	if(!print_quo)
+// 		return NULL;//habra que poner error de malloc
+// 	while (s[i] != '\0')
+// 	{
+// 		if(s[i] == '\"' || s[i] == '\'')
+// 		{
+// 			if(is_in_quottes(s,all, i))
+// 			{
+// 				print_quo[j] = 1;
+// 				j++;
+// 			}
+// 			else
+// 			{
+// 				print_quo[j] = 0;
+// 				j++;
+// 			}
+// 		}
+// 		i++;
+				
+// 	}
+// 	return(print_quo);
+// }
+//NO ESTA BIEN
+// int	is_printable_quotte(int	*arr)
+// {
+// 	int *first;
+	
+// 	first = arr;
+// 	arr++;
+// 	return(*first);
+// }

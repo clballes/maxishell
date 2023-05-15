@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:57:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/15 04:29:59 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/15 16:42:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char    *manage_dolar(char *str, t_all *all);
 int     dolar_exp_len(char *token);
 char    *dolar_search_value(char *token);
 char    *search_in_env(t_env *env, char *search_value);
-int     has_dolar(char *s);
+// int     has_dolar(char *s);
+char	*expand_dolar(char *str, t_all *all);
+int		len_search_value(char *str);
 // int clean_all_line(char *all_line);
 #endif

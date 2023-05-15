@@ -25,6 +25,7 @@ void	init_env_i(t_all *all)
 	all->env[0] = ft_strjoin("PWD=", getcwd(pwd, sizeof(pwd)));
 	all->env[1] = ft_strjoin("SHLVL=", &level_sh);
 	all->env[2] = ft_strjoin("_=", "/usr/bin/env"); //mallocsss hevy
+	all->env[4] = NULL;
 	env_list(all);
 }
 

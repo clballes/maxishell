@@ -45,8 +45,6 @@ void	exec_env(t_env **list_env)
 	{
 		if (temp->print == 1)
 		{
-			if (temp->name == NULL) // con el env -i accede mas alla de valores incluso cuando esnull por eso eta condicion
-				break;
 			printf("%s=%s\n", temp->name, temp->content);
 		}
 		temp = temp->next;

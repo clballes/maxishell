@@ -42,11 +42,11 @@ void	change_var_list(char *content, t_env *temp)
 
 void	sort_list(t_env **list_env)
 {
-	int		i;
+	// int		i;
 	t_env	*temp;
 	t_env	*temp2;
 
-	i = 0;
+	// i = 0;
 	temp = *list_env;
 	temp2 = temp->next;
 	while (temp && temp->next)

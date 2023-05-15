@@ -37,9 +37,9 @@ void	env_list(t_all *all)
 void	exec_env(t_env **list_env)
 {
 	t_env	*temp;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	temp = *list_env;
 	while (temp)
 	{

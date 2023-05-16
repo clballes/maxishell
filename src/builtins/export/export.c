@@ -6,13 +6,12 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/12 11:07:17 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:02:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
-#include "string.h"
 
 int	ft_repeat(t_all *all, char *res, char *arg)
 {
@@ -21,22 +20,20 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	temp = all->list_env;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->name, arg, ft_strlen(temp->name))) == 0)
+		if ((ft_strncmp(temp->name, arg, ft_strlen(arg))) == 0)
 		{
 			if (all->list_env->concatenate == 1)
-			{
-				if (res == NULL)
-				{
-					printf("AIIII\n");
-					return (1);
-				}
 				temp->content = ft_strjoin(temp->content, res); //ojo el
-			}
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
-				temp->print = 0;
-			else if ((all->list_env->concatenate == 0) || (all->node->equal != 0))
 			{
-					printf("AIIII\n");
+				if (temp->content) //si printejem hola=a i despres, hola, necessito q ess qedi el valor atnerior
+					temp->print = 1;		
+				else
+					temp->print = 0; 
+			}
+			else if ((all->list_env->concatenate == 0)
+				|| (all->node->equal != 0))
+			{
 				change_var_list(res, temp);
 				temp->print = 1;
 			}
@@ -49,8 +46,8 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 
 void	add_equal_arg(t_all *all, char *arg)
 {
-	char **cont_name;
-	char *res;
+	char	**cont_name;
+	char	*res;
 
 	res = ft_strchr(arg, '=');
 	res++;

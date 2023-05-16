@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:23:05 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/04 10:20:15 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:59:59 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ void	print_list(t_env **list_env)
 	while (temp)
 	{
 		if (temp->print == 0)
-		{
 			printf("declare -x %s\n", temp->name);
-		}
 		else
 			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
 		temp = temp->next;

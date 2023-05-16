@@ -6,18 +6,20 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/11 19:46:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:58:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
+#include "../inc/interactive.h"
 #include <stdbool.h>
+// #include <errno.h>
 
 //Lee la linea del promps si algo falla sale y sino la devuelve para 
 // empezar a analizarla
-static char	*get_line(void)
+char	*get_line(void)
 {
 	char		*line;
 	const char	*prompt;
@@ -25,7 +27,13 @@ static char	*get_line(void)
 	prompt = "\x1b[0;35mBienvenid@ a Maxishell\x1b[0m: ";
 	line = readline(prompt);
 	if (!line)
-		exit(0); //funcion de error
+	{
+		if (isatty(STDIN_FILENO))
+			write(2, "exit\n", 6);
+		exit (0);
+	}
+	// if (!line)
+	// 	exit(0); //funcion de error
 	return (line);
 }
 
@@ -87,23 +95,48 @@ static int	analyze_line(char *all_line, t_all *all)
 
 void	exec_cmd(t_all *all)
 {
-	if (ft_strncmp(all->node->cmd, "echo", 4) == 0)
+	int i;
+	i = -1;
+	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
 		exec_echo(all->node);
-	else if (ft_strncmp(all->node->cmd, "cd", 2) == 0)
-		printf("he entradoooo CD\n");
-	else if (ft_strncmp(all->node->cmd, "pwd", 3) == 0)
-		exec_pwd();
-	else if (ft_strncmp(all->node->cmd, "export", 6) == 0)
+	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
+		exec_cd(all);
+	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
+		exec_pwd(all);
+	else if (ft_strncmp(all->node->cmd, "export", 7) == 0)
 		exec_export(all);
-	else if (ft_strncmp(all->node->cmd, "unset", 5) == 0)
-		printf("he entradoooo UNSET \n");
-	else if (ft_strncmp(all->node->cmd, "env", 3) == 0)
+	else if (ft_strncmp(all->node->cmd, "unset", 6) == 0)
+		exec_unset(all);
+	else if (ft_strncmp(all->node->cmd, "env", 4) == 0)
 		exec_env(&all->list_env);
-	else if (ft_strncmp(all->node->cmd, "exit", 4) == 0)
+	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
 	else
-		printf("hemos de encontar el path de los otros\n");
+	{
+		while (all->node->args[0][i++])
+		{
+			if (all->node->args[0][i] == '/')
+			{
+				all->absolute = 1;
+				break;
+			}
+		}
+		i = 0;
+		if (all->node->args[0][i] == '/' || all->absolute == 1)
+		{
+			fork_function(all, all->node->args[0]);
+			all->absolute = 0;
+		}
+		else if (search_path(all) == 0)
+			all->exit = 0; //comprobar que sea este el num salida
+		else
+		{
+			ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
+			write(2, "\n", 1);
+		}
+	}
 }
+
 
 int	main(int argc, char **argv, char **env)
 {

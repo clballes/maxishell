@@ -6,20 +6,21 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/15 12:48:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:59:35 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <stdio.h>
 # include "../libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdlib.h>
 #include <stdbool.h>
-
+#include <sys/types.h>
+#include <sys/stat.h>
 
 typedef struct s_cmd 
 {
@@ -52,6 +53,8 @@ typedef struct s_env
 	struct s_env	*temporal; //para saber la ultima osicion del env y enlazar el siguiente nodo de la lista
 	struct s_env	*next;
 	struct s_env	*previous;
+	char			*current_cd;
+	char			*new_cd;
 }					t_env;
 
 typedef struct s_all
@@ -62,9 +65,10 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
+	int		absolute; //to kno if its a absolute path 
+	int		bar; // esta es la cd //
     int 	n_pipes;
 }       			t_all;
-
 
 //line
 void	exec_cmd(t_all *all);
@@ -82,5 +86,11 @@ void	lst_add_back_env(t_env **first, t_env *new_el);
 t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
 void	env_list(t_all *all);
+char	*ft_strjoin_path(char const *s1, char const *s2);
+char	*get_line(void);
+
+//path
+int		search_path(t_all *all);
+void		fork_function(t_all *all, char *new_path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:38:25 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:40:00 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:01:28 by clballes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_echo(t_cmd *builtins)
 
 	i = 1;
 	res = 0;
-	while (ft_strncmp(builtins->args[i], "-n", 2) == 0)
+	while (builtins->args[i] && (ft_strncmp(builtins->args[i], "-n", 2) == 0))
 	{
 		if (exec_option(builtins->args[i]) != 1)
 		{

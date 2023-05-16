@@ -16,7 +16,7 @@ t_cmd	*lst_new(char *line)
 {
 	t_cmd	*new;
 
-	new = ft_calloc(1,sizeof(t_cmd));
+	new = ft_calloc(1, sizeof(t_cmd));
 	if (!new)
 		return (0);
 	new->line = line;
@@ -26,14 +26,14 @@ t_cmd	*lst_new(char *line)
 
 t_cmd	*lst_last(t_cmd **lst)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	temp = *lst;
 	if (temp != NULL)
+	{
 		while (temp->next != NULL)
-		{
 			temp = temp->next;
-		}
+	}
 	return (temp);
 }
 
@@ -53,7 +53,7 @@ void	lst_add_back(t_cmd **first, t_cmd *new_el)
 int	lst_size(t_cmd *lst)
 {
 	int	i;
-	
+
 	i = 0;
 	while (lst != NULL)
 	{

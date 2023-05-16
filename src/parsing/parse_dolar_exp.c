@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/16 18:59:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:10:19 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char *search_in_env(t_env *env, char *search_value)
 	while (env && ft_strlen(search_value)) // recorremos la lista
 	{
 		
-		if (ft_strncmp(env->name, search_value, ft_strlen(search_value)) == 0)
+		if (ft_strncmp(env->name, search_value, ft_strlen(search_value)+1) == 0)
 		{
 			free(search_value);
 			return (env->content); ///ft_strdup(env->content); y liberarla

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/15 17:37:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/16 18:59:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,9 @@ void clean_tokenssss(t_all *all, t_cmd *node)
 	while (node->args[i])
 	{
 			result = expand_dolar(node->args[i], all);
+			printf("resultado del dolar%s\n", result);
+			result = manage_quottes(result,  all);
+			
 		// j = 0;
 		// while (node->args[i][j] != '\0')
 		// {
@@ -296,6 +299,8 @@ int final_tokens_in_nodes(t_all *all)
 	{
 		clean_tokenssss(all, all->node);
 		lst_last(&all->node)->cmd = lst_last(&all->node)->args[0];
+		lst_last(&all->node)->double_quote = false;
+		lst_last(&all->node)->single_quote = false;
 		all->node = all->node->next;
 		// printf("p1:%p p2:%p \n", first_node, all->node);
 	}

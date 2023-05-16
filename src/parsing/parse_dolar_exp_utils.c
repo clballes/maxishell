@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dolar_exp_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/15 19:39:39 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/16 19:42:48 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,177 @@ int len_in_quottes(char *str, char quo)
 {
 	int i;
 
-	i = 1;
-	while(str[i]!= quo)
+	i = 0;
+	while(str[i]!= quo && str[i] != '\0')
 	{
+
+		// printf("entra?????\n");
 		i++;
 	}	
 	return (i);
 }
 
-char    *extract_in_quottes(char* str, int index, char quo, t_cmd *node)
+// char    *extract_in_quottes(char* str, int index, char quo, t_cmd *node)
+// {
+    
+//     int i;
+//     int len_in_quo;
+//     char * in_quottes;
+//     char *result;
+
+//     i = 0;
+    
+    
+//     if(quo == '\'')
+//         node->single_quote = true;
+//     else
+//         node->double_quote = true;
+//     while(str[i])
+//     {
+//         if(str[i] == quo)
+//         {
+//             len_in_quo = len_in_quottes(str + index +1, quo);
+//             printf("len:%d\n",len_in_quo);
+//             in_quottes = ft_substr(str , index + 1, len_in_quo);
+//             result = in_quottes;
+//             // free (before_quottes);
+//             // free(in_quottes); 
+//         }
+//         i++;
+//     }
+//     return(result); 
+// }
+
+
+char    *extract_in_quottes(char* str, char quo)
 {
     
     int i;
     int len_in_quo;
     char * in_quottes;
-    char *result;
 
     i = 0;
     
-    
-    if(quo == '\'')
-        node->single_quote = true;
-    else
-        node->double_quote = true;
+    in_quottes = NULL;
+    // if(quo == '\'')
+    //     node->single_quote = true;
+    // else
+    //     node->double_quote = true;
     while(str[i])
     {
         if(str[i] == quo)
         {
-            len_in_quo = len_in_quottes(str + index +1, quo);
-            printf("len:%d\n",len_in_quo);
-            in_quottes = ft_substr(str , index + 1, len_in_quo);
-            result = in_quottes;
+			printf("la i es=%d\n", i);
+            len_in_quo = len_in_quottes(str + i + 1, quo);
+			printf("len in quo=%d\n", len_in_quo);
+            in_quottes = ft_substr(str , i + 1, len_in_quo);
+			printf("in_quotes=%s\n", in_quottes);
+			break;
+            
             // free (before_quottes);
             // free(in_quottes); 
         }
         i++;
     }
-    return(result); 
+    return(in_quottes); 
 }
+// char    *extract_in_quottes(char* str, t_cmd *node)
+// {
+    
+//     int i;
+//     int len_in_quo;
+//     char * in_quottes;
+//     char *result;
+
+//     i = 0;
+// 	result = NULL;
+//     while(str[i])
+//     {
+//         if(str[i] == '\"' /*&& !node->single_quote && str[i + 1]!= '\0'*/)
+//         {
+// // 			if(node->double_quote)
+// // 				node->double_quote = false;
+// // 			if(!node->double_quote)
+// // 				node->double_quote = true;
+//             len_in_quo = len_in_quottes(str + i + 1, '\"');
+//             in_quottes = ft_substr(str , i + 1, len_in_quo);
+// //             result = in_quottes;
+// // 			i += len_in_quo
+// //             // free (before_quottes);
+// //             // free(in_quottes); 
+//         }
+// // 		if(str[i] == '\'' && !node->double_quote && str[i + 1]!= '\0')
+// //         {
+// // 			if(node->single_quote)
+// // 				node->single_quote = false;
+// // 			if(!node->single_quote)
+// // 				node->single_quote = true;
+// //             len_in_quo = len_in_quottes(str + i + 1, '\'');
+// //             in_quottes = ft_substr(str , i + 1, len_in_quo);
+// //             result = in_quottes;
+// //             // free (before_quottes);
+// //             // free(in_quottes); 
+// //         }
+// //         i++;
+	
+//     }
+// // 	if(result)
+// //     	return(result);
+// // 	return(str); 
+// }
+
+
+
+char 	*manage_quottes(char* str, t_all *all)
+{
+	char *result;
+	char *aux;
+	char *before;
+	char *after;
+	int 	j;
+	
+	j=0;
+	result = NULL;
+// 	node->single_quote = false;
+// 	node->double_quote = false;
+	
+	while(str[j])
+    {
+		printf("entra____[%c]\n", str[j]);
+		if(str[j] == '\"' && is_in_quottes(str, all, j))
+        {
+			printf("el string es:%sla jota es:%d\n", str, j );
+			before = ft_substr(str, 0, j);
+			aux = extract_in_quottes(str, '\"');
+			printf("aux%s\n",aux);
+			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\"') + 2);
+				printf("before:%s, aux:%s, after:%s\n", before, aux, after);
+			result = ft_strjoin(before, aux);
+			str = ft_strjoin(result, after);
+				printf("result:%s\n", result);
+// 			}
+			// j += len_in_quottes(str + j + 1, '\"') ;
+			printf("index str:%d\n",j);
+		}	
+		if(str[j] == '\'' && is_in_quottes(str, all, j))
+        {
+			
+			before = ft_substr(str, 0, j);
+			aux = extract_in_quottes(str, '\'');
+			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\'') + 2);
+			result = ft_strjoin(before, aux);
+			str = ft_strjoin(result, after);
+			// j += len_in_quottes(str + j + 1, '\'');
+			// printf("index str:%d",j);
+		}
+		j++;
+	}
+	// if(result)
+	// 	return(result);
+	return(str);
+}
+
+
 
 char    *manage_dolar(char *str, t_all *all)
 {
@@ -121,7 +254,6 @@ char	*expand_dolar(char *str, t_all *all)
 	while(str[j] != '\0')
 	{
         quo = type_of_quottes(str, all , j);
-        printf("[%c]\n", quo);
 		if((str[j]== '$' && !is_in_quottes(str, all , j)) || (str[j]== '$' && quo =='\"' ) )
 		{
 			before = ft_substr(str, 0, j);

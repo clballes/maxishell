@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/17 12:28:04 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:16:21 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,10 @@ char 	*manage_quottes(char* str, t_all *all)
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\"') + 2);
 			// printf("before:%s, aux:%s, after:%s\n", before, aux, after);
 			result = ft_strjoin(before, aux);
+			j += len_in_quottes(str + j + 1, '\"') - 2 ;
 			str = ft_strjoin(result, after);
 			printf("result:%s\n", result);
 // 			}
-			j += len_in_quottes(str + j + 1, '\"') -2 ;
 			printf("index str:%d\n",j);
 		}	
 		if(str[j] == '\'' && is_in_quottes(str, all, j))
@@ -176,8 +176,8 @@ char 	*manage_quottes(char* str, t_all *all)
 			aux = extract_in_quottes(str, '\'');
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\'') + 2);
 			result = ft_strjoin(before, aux);
-			str = ft_strjoin(result, after);
 			j += len_in_quottes(str + j + 1, '\'') -2 ;
+			str = ft_strjoin(result, after);
 			// j += len_in_quottes(str + j + 1, '\'');
 			// printf("index str:%d",j);
 		}

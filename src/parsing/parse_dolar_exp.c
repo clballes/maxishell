@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/17 12:16:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:02:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void clean_tokenssss(t_all *all, t_cmd *node)
 
 	i = 0;
 
-	if (!node->args[1])
-		return;
+	// if (!node->args[1])
+	// 	return;
 	while (node->args[i])
 	{
 		result = expand_dolar(node->args[i], all);

@@ -23,6 +23,11 @@ SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
 
+RL_DIR := ${HOME}/.brew/opt/readline/
+
+RL_LIB = -L$(RL_DIR)lib
+RL_INCDIR = -I$(RL_DIR)include/readline
+
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)
 		mkdir -p $(OBJ_DIR)$(INTERACTIVE_DIR)
@@ -42,7 +47,7 @@ bonus:
 -include $(DEPS)
 $(NAME) : $(LIBFT_DIR)/libft.a $(OBJ) Makefile
 		make -sC $(LIBFT_DIR)
-		$(CC) $(CFLAGS)  $(FSANITIZE) $(OBJ) -o $(NAME) -lreadline $(LIBFT_DIR)/libft.a
+		$(CC) $(CFLAGS)  $(FSANITIZE) $(OBJ) -o $(NAME) $(RL_INCDIR) $(RL_LIB) -lreadline -lhistory $(LIBFT_DIR)/libft.a
 
 clean:
 		$(RM) -r $(OBJ_DIR) $(DEPS)

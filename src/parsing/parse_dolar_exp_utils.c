@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/16 19:42:48 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/17 12:28:04 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,20 +154,19 @@ char 	*manage_quottes(char* str, t_all *all)
 	
 	while(str[j])
     {
-		printf("entra____[%c]\n", str[j]);
+		
 		if(str[j] == '\"' && is_in_quottes(str, all, j))
         {
-			printf("el string es:%sla jota es:%d\n", str, j );
+			
 			before = ft_substr(str, 0, j);
 			aux = extract_in_quottes(str, '\"');
-			printf("aux%s\n",aux);
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\"') + 2);
-				printf("before:%s, aux:%s, after:%s\n", before, aux, after);
+			// printf("before:%s, aux:%s, after:%s\n", before, aux, after);
 			result = ft_strjoin(before, aux);
 			str = ft_strjoin(result, after);
-				printf("result:%s\n", result);
+			printf("result:%s\n", result);
 // 			}
-			// j += len_in_quottes(str + j + 1, '\"') ;
+			j += len_in_quottes(str + j + 1, '\"') -2 ;
 			printf("index str:%d\n",j);
 		}	
 		if(str[j] == '\'' && is_in_quottes(str, all, j))
@@ -178,6 +177,7 @@ char 	*manage_quottes(char* str, t_all *all)
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\'') + 2);
 			result = ft_strjoin(before, aux);
 			str = ft_strjoin(result, after);
+			j += len_in_quottes(str + j + 1, '\'') -2 ;
 			// j += len_in_quottes(str + j + 1, '\'');
 			// printf("index str:%d",j);
 		}

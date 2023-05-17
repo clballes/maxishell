@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/16 20:10:19 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/17 12:16:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 // cuenta solo los valores validos para una variable que son letras
 // barra baja _
 // numeros si no estan en la primera posicion
+
+
 int dolar_exp_len(char *token)
 {
 	int i;
@@ -82,120 +84,7 @@ char *search_in_env(t_env *env, char *search_value)
 	return (ft_strdup(""));
 	// return(0);
 }
-static int len_in_quottes(char *str, char quo)
-{
-	int i;
 
-	i = 1;
-	while(str[i]!= quo)
-	{
-		i++;
-	}	
-	return (i);
-}
-// Ya tenemos los argumentos guardados pero con comillas y sin hacer expansiones
-void clean_tokens(t_all *all, t_cmd *node)
-{
-	int i;
-	int j;
-	char *search_value;	  // se hace el malloc en dolar_search_value y se libera en env_search
-	char *expanded_value; // es el puntero que apunta a la lista de env asi que no lo liberamos.
-	char *before_dolar;
-	char *result;
-	int	variable_len;
-	char *before_quottes;
-	int  quo_len;
-	char *in_quottes;//malloc con el substring
-	
-	i = 0;
-	j = 0;
-	if (!node->args[1])
-		return;
-	while (node->args[i])
-	{
-		j= 0;
-		while (node->args[i][j] != '\0')
-		{
-			//tengo que poner de alguna manera el node->double_quote a 0
-			// printf("caracter:%c is in quotes?:%d single:%d double:%d\n", node->args[i][j], is_in_quottes(node->args[i], all, i), node->single_quote, node->double_quote );
-			if(!is_in_quottes(node->args[i], all, j))
-			{
-				node->double_quote = false;
-				node->single_quote = false;
-			}
-			printf("valor [%c] esta en comillas o no:%d\n",node->args[i][j],is_in_quottes(node->args[i], all, j));
-			if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, j))
-			{
-				// node->single_quote = false;
-				before_quottes = ft_substr(node->args[i], 0, j);
-				// calculamos la len de lo que hay en quottes
-				node->double_quote = true;
-				j++;
-				quo_len = len_in_quottes(node->args[i] + j, '\"');
-				in_quottes = ft_substr(node->args[i], j, quo_len);
-				if(node->args[i][j]!= '$')
-				{
-					result = ft_strjoin(before_quottes,in_quottes);
-					node->args[i] = result;
-					printf("len entre comillas:%d estring entre comillas:%s result:%s\n",quo_len, in_quottes, result);
-				}
-			}
-			if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j))
-			{
-				// node->double_quote = false;
-				before_quottes = ft_substr(node->args[i], 0, j);
-				node->single_quote = true;
-				j++;
-				quo_len = len_in_quottes(node->args[i] + j, '\'');
-				in_quottes = ft_substr(node->args[i], j, quo_len);
-				if(node->args[i][j]!= '$')
-				{
-					result = ft_strjoin(before_quottes,in_quottes);
-					node->args[i] = result;
-				}
-				
-			}
-			
-			if (node->args[i][j] == '$' && node->single_quote == false)
-			{
-				before_dolar = ft_substr(node->args[i], 0, j);									//si no hay nada porque pasamos 0 y 0 nose devuelve un string vacio
-				if(ft_is_space(node->args[i][j + 1]) || node->args[i][j + 1] == '\0')
-				{
-					node->args[i] = ft_strjoin( before_dolar, ft_strdup("$"));
-					return ;
-				}
-				j++;
-				if (node->args[i][j] >= '0' && node->args[i][j] <= '9')
-				{
-					j++;
-					result = ft_strjoin(before_dolar, node->args[i] + j);		
-				}
-				else if (node->args[i][j] == '?')
-				{
-					j++;
-					result = ft_strjoin(before_dolar, ft_itoa(all->exit));		
-				}
-				else
-				{
-					search_value = dolar_search_value(node->args[i] + j);
-					printf("search_value:%s\n", search_value); 							//search value es USER
-					variable_len = ft_strlen(search_value);											//QUIERO LA longitud de USER para avanzar el puntero
-					expanded_value = search_in_env(all->list_env, search_value); 
-					printf("expanded value: %s\n", expanded_value);							//Busca el search_value (USER) en la lista de env y devuelve albagarc
-					expanded_value = ft_strjoin(expanded_value, node->args[i] + j + variable_len);
-					
-					result = ft_strjoin(before_dolar, expanded_value);//hay que liberar dentro del join	
-				}
-				printf("guardamos[%s]\n", node->args[i]);
-				node->args[i] = result;																//habria que hacer free de result????Creo que no porque liberamos el dela lista
-			}
-			j++;
-			// node->single_quote = 0;
-			// node->double_quote = 0;
-		}
-		i++;
-	}
-}
 
 int len_search_value(char *str)
 {
@@ -213,83 +102,21 @@ int len_search_value(char *str)
 void clean_tokenssss(t_all *all, t_cmd *node)
 {
 	int i;
-	// int j;
 	char *result;
-	// char *aux;
-	// char *before;
-	// char *after;
-	
-	
+
 	i = 0;
-	// j = 0;
-	// result = '\0';
-	// aux = '\0';
-	result = NULL;
-	// aux = NULL;
+
 	if (!node->args[1])
 		return;
 	while (node->args[i])
 	{
-			result = expand_dolar(node->args[i], all);
-			printf("resultado del dolar%s\n", result);
-			result = manage_quottes(result,  all);
-			
-		// j = 0;
-		// while (node->args[i][j] != '\0')
-		// {
-		// 	// funcion que me devuelve un string con todo expandido 
-		// 	// funcion que me extrae lo que hay entre comillas
-		// 	printf("[%c]\n",node->args[i][j]);
-		// 	//TODO??? CAMBIAR LA CONDICICION DEL IS IN QUOTTES PARA QUE LA PRIMERA COMILLA ME LA DA NEGATIVA??
-		// 	if (node->args[i][j] == '\"' && is_in_quottes(node->args[i], all, j)/*&&!node->single_quote*/)
-		// 	{
-		// 		before = ft_substr(node->args[i], 0, j);
-		// 		aux = extract_in_quottes(node->args[i], j,'\"', node);
-		// 		after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\"') + 2);
-		// 		printf("before\":%s, aux\":%s, after\":%s\n", before, aux, after);
-		// 		result = ft_strjoin(before, aux);
-		// 		result = ft_strjoin(result, after);
-		// 		node->args[i] = result;
-		// 		j = -1;
-		// 		// free(result_quottes);
-				
-		// 	}
-		// 	else if (node->args[i][j] == '\'' && is_in_quottes(node->args[i], all, j)/*&&!node->double_quote*/)
-		// 	{
-		// 		before = ft_substr(node->args[i], 0, j);
-		// 		aux = extract_in_quottes(node->args[i], j,'\'', node);
-		// 		after = ft_strdup(node->args[i] + j + len_in_quottes(node->args[i] + j + 1, '\'') + 2);
-		// 		result = ft_strjoin(before, aux);
-		// 		result = ft_strjoin(result, after);
-		// 		node->args[i] = result;
-		// 		j = -1;
-				
-		// 	}
-		// 	else if (node->args[i][j] == '$' && node->single_quote == false)
-		// 	{ 
-		// 		before = ft_substr(node->args[i], 0, j);
-		// 		aux = manage_dolar(ft_strdup(node->args[i] +j), all);
-		// 		after = ft_strdup(node->args[i] + j + len_search_value(node->args[i] + j )+ 1);
-		// 		printf("before$:%s, aux$:%s, after$:%s\n", before, aux, after);
-		// 		j = -1;
-		// 		result = ft_strjoin(before, aux);
-		// 		result = ft_strjoin(result, after);
-		// 		node->args[i] = result;
-		// 	}
-		// 	j++;
-		// }
-		
+		result = expand_dolar(node->args[i], all);
+		printf("resultado del dolar%s\n", result);
+		result = manage_quottes(result,  all);
 		node->args[i] = result;																
 		i++;
 	}
 }
-
-
-
-
-
-
-
 
 int final_tokens_in_nodes(t_all *all)
 {

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/16 20:02:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/17 12:33:56 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	temp = all->list_env;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->name, arg, ft_strlen(arg))) == 0)
+		if ((ft_strncmp(temp->name, arg, ft_strlen(arg) + 1)) == 0) 
 		{
 			if (all->list_env->concatenate == 1)
 				temp->content = ft_strjoin(temp->content, res); //ojo el

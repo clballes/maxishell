@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/17 15:02:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/18 11:59:35 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void clean_tokenssss(t_all *all, t_cmd *node)
 	{
 		result = expand_dolar(node->args[i], all);
 		printf("resultado del dolar%s\n", result);
-		result = manage_quottes(result,  all);
+		result = manage_quottes(result);
 		node->args[i] = result;																
 		i++;
 	}

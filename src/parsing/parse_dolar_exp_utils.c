@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/17 15:16:21 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/18 12:44:50 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ char    *extract_in_quottes(char* str, char quo)
 
 
 
-char 	*manage_quottes(char* str, t_all *all)
+char 	*manage_quottes(char* str)
 {
 	char *result;
 	char *aux;
@@ -155,29 +155,33 @@ char 	*manage_quottes(char* str, t_all *all)
 	while(str[j])
     {
 		
-		if(str[j] == '\"' && is_in_quottes(str, all, j))
+		if(str[j] == '\"' /*&& is_in_quottes(str, all, j)*/)
         {
 			
 			before = ft_substr(str, 0, j);
-			aux = extract_in_quottes(str, '\"');
+			aux = extract_in_quottes(str + j, '\"');
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\"') + 2);
-			// printf("before:%s, aux:%s, after:%s\n", before, aux, after);
+			printf("before:%s, aux:%s, after:%s\n", before, aux, after);
 			result = ft_strjoin(before, aux);
-			j += len_in_quottes(str + j + 1, '\"') - 2 ;
+			//j += len_in_quottes(str + j + 1, '\"') - 1 ;
 			str = ft_strjoin(result, after);
-			printf("result:%s\n", result);
+			j = ft_strlen(result)-1;
+			printf("result:%s char[%c]\n", result, str[j]);
 // 			}
 			printf("index str:%d\n",j);
 		}	
-		if(str[j] == '\'' && is_in_quottes(str, all, j))
+		else if(str[j] == '\'' /*&& is_in_quottes(str, all, j)*/)
         {
 			
 			before = ft_substr(str, 0, j);
-			aux = extract_in_quottes(str, '\'');
+			aux = extract_in_quottes(str + j, '\'');
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\'') + 2);
 			result = ft_strjoin(before, aux);
-			j += len_in_quottes(str + j + 1, '\'') -2 ;
+			// j += len_in_quottes(str + j + 1, '\'') -1 ;
 			str = ft_strjoin(result, after);
+			j = ft_strlen(result)-1;
+			printf("result:%s char[%c]\n", result, str[j]);
+
 			// j += len_in_quottes(str + j + 1, '\'');
 			// printf("index str:%d",j);
 		}
@@ -254,8 +258,10 @@ char	*expand_dolar(char *str, t_all *all)
 	while(str[j] != '\0')
 	{
         quo = type_of_quottes(str, all , j);
-		if((str[j]== '$' && !is_in_quottes(str, all , j)) || (str[j]== '$' && quo =='\"' ) )
+		if(((str[j]== '$' && !is_in_quottes(str, all , j)) || (str[j]== '$' && quo =='\"' )))
 		{
+			if((str[j + 1] == '\0' || str[j + 1] == '\''))
+				return(str);
 			before = ft_substr(str, 0, j);
 			aux = manage_dolar(ft_strdup(str + j), all);
 			after = ft_strdup(str + j + len_search_value(str + j )+ 1);

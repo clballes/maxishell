@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_pipes_commands.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/15 19:15:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/05/18 18:12:30 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	type_of_quottes(char *line, t_all *all, int i)
 {
 	int	j;
 
+	all->quotes.found = '\0';
 	all->quotes.has_quote = 0;
 	j = 0;
 	while (j <= i)
@@ -47,6 +48,7 @@ int	is_in_quottes(char *line, t_all *all, int i)
 	int	j;
 
 	all->quotes.has_quote = 0;
+	all->quotes.found = '\0';
 	j = 0;
 	while (j <= i)
 	{

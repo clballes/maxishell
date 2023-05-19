@@ -78,22 +78,14 @@ static int analyze_line(char *all_line, t_all *all)
 		else
 			temp = lst_new(content_list(all_line, false, all));
 		if(temp == NULL)
-		{
-			lstfree_cmd(&all->node);
-			lstfree_env(&all->list_env);
-			free(all_line);
-		}
+			free_lists_and_line(all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
-		lst_last(&all->node)->double_quote = false;
-		lst_last(&all->node)->single_quote = false;
 
-		// printf("numero de args = %d\n", all->node->n_args);
 		i++;
 	}
 	final_tokens_in_nodes(all);
-
 	return (0);
 	// free (all->node->args) while (array doble puntero)
 	// free (all->node) while (lista)

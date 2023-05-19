@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/18 18:31:12 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:53:52 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,13 @@ char *search_in_env(t_env *env, char *search_value)
 		
 		if (ft_strncmp(env->name, search_value, ft_strlen(search_value)+1) == 0)
 		{
-			free(search_value);
-			return (env->content); ///ft_strdup(env->content); y liberarla
+			// free(search_value);
+			return (ft_strdup(env->content)); ///ft_strdup(env->content); y liberarla
 		}
 		env = env->next;
-		// printf("p1:%p p2:%p \n", first_node, env);
 	}
 	env = first_node;
-	free(search_value);
+	// free(search_value);
 	return (ft_strdup(""));
 	// return(0);
 }
@@ -94,27 +93,30 @@ int len_search_value(char *str)
 	variable_len = 0;
 	search_value = dolar_search_value(str + 1);
 	variable_len = ft_strlen(search_value);	
-
+	free(search_value);
 	return(variable_len);										
 
 }
 
-void clean_tokenssss(t_all *all, t_cmd *node)
+void clean_tokens(t_all *all, t_cmd *node)
 {
 	int i;
 	char *result;
-
+	(void)all;
 	i = 0;
 
 	// if (!node->args[1])
 	// 	return;
 	while (node->args[i])
 	{
-		result = expand_dolar(node->args[i], all);
+
+		result = expand_dolar(ft_strdup(node->args[i]), all);
 		//split result en tokens again
 		printf("resultado del dolar%s\n", result);
-		result = manage_quottes(result);
+		// result = manage_quottes(result);
+		free(node->args[i]);
 		node->args[i] = result;																
+		printf("NODE_ARGS:%p la i es:%d\n", node->args[i], i);
 		i++;
 	}
 }
@@ -125,12 +127,9 @@ int final_tokens_in_nodes(t_all *all)
 	first_node = all->node;
 	while (all->node) // recorremos la lista
 	{
-		clean_tokenssss(all, all->node);
+		clean_tokens(all, all->node);
 		lst_last(&all->node)->cmd = lst_last(&all->node)->args[0];
-		lst_last(&all->node)->double_quote = false;
-		lst_last(&all->node)->single_quote = false;
 		all->node = all->node->next;
-		// printf("p1:%p p2:%p \n", first_node, all->node);
 	}
 	all->node = first_node;
 	return (0);

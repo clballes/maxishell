@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 13:33:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:05:00 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	bool		double_quote;
-	bool		single_quote;
-	int			*arr_print_quote;
     struct s_cmd *next;
 }   t_cmd;
 
@@ -93,5 +90,5 @@ char	*get_line(void);
 //path
 int		search_path(t_all *all);
 void		fork_function(t_all *all, char *new_path);
-
+void	free_lists_and_line(t_all *all);
 #endif

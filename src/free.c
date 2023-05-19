@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 12:59:19 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:14:56 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	lstfree_cmd(t_cmd **lst)
 		temp = *lst;
 		while (temp != NULL)
 		{
+			printf("free_node_Args:%p \n", temp->args[1]);
+			if(temp->args != NULL)
+				free_arr(temp->args);
+			if(temp->line)
+				free(temp->line);
+			// if(temp->cmd)
+			// 	free(temp->cmd);
 			free (temp);
 			temp = temp->next;
 		}
@@ -60,4 +67,11 @@ void	free_arr(char **array)
 		i++;
 	}
 	free (array);
+}
+
+void	free_lists_and_line(t_all *all)
+{
+	lstfree_cmd(&all->node);
+	lstfree_env(&all->list_env);
+	free(all->all_line);	
 }

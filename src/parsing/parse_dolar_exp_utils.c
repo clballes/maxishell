@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/19 12:42:13 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 17:31:43 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,21 @@ int	is_valid_char(char c)
 char *manage_dolar_exit(char *str, t_all *all)
 {
 	char *after;
+	
 	after = NULL;
 	after = ft_strjoin(ft_itoa(all->exit), str + 2, 1, 0);
 	return(after);
 }
 char *manage_dolar_env(char *str, t_all *all)
 {
-	int     j;
     char    *search_value;
     char    *expanded_value;
     char    *after;
     
-    j = 0;       
-	search_value = dolar_search_value(str + j + 1);				
+	search_value = dolar_search_value(str +  1);				
 	expanded_value = search_in_env(all->list_env, search_value); 	//es el valor de la lista
-	after = ft_strjoin(expanded_value, str + j + len_search_value(str + j ) + 1, 0, 0);
-	// free(search_value);
-	
+	after = ft_strjoin(expanded_value, str + len_search_value(str) + 1, 1, 0);
+	free(search_value);
     return(after);
 }
 char *manage_dolar_number(char *str)
@@ -123,7 +121,7 @@ char *manage_dolar_number(char *str)
 	
 	j = 0;
 	after= str + 2;		
-	return(after);
+	return(ft_strdup(after));
 }
 
 
@@ -142,7 +140,7 @@ char	*expand_dolar(char *str, t_all *all)
         quo = type_of_quottes(str, all , j);
 		if(str[j]== '$' && (!is_in_quottes(str, all , j) || quo =='\"'))
 		{
-			before = ft_substr(str, 0, j);
+			before = ft_substr(str, 0, j);	//if before == NULL liberamos listenv listcmd y all_line
 			if(str[j + 1] == '?')
 				after = manage_dolar_exit(str + j, all);
 			else if(str[j + 1] >= '0' && str[j + 1] <= '9')
@@ -151,9 +149,9 @@ char	*expand_dolar(char *str, t_all *all)
 				after = manage_dolar_env(str + j, all);
 			else
 				continue;
-			str = ft_strjoin(before, after, 0, 0);
-			free(before);
-			free(after);
+			free(str);
+			str = ft_strjoin(before, after, 1, 1);
+			// printf("before:%p after:%p\n", before, after);
 			if(str[j] == '$')
 			 	j--;
 		}

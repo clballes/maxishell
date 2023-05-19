@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/18 18:30:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 12:42:13 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ char 	*manage_quottes(char* str)
 			before = ft_substr(str, 0, j);
 			aux = extract_in_quottes(str + j, '\"');
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\"') + 2);
-			result = ft_strjoin(before, aux);
-			str = ft_strjoin(result, after);
+			result = ft_strjoin(before, aux, 0, 0);
+			str = ft_strjoin(result, after, 0, 0);
 			j = ft_strlen(result)-1;
 		}	
 		else if(str[j] == '\'')
@@ -78,8 +78,8 @@ char 	*manage_quottes(char* str)
 			before = ft_substr(str, 0, j);
 			aux = extract_in_quottes(str + j, '\'');
 			after = ft_strdup(str + j + len_in_quottes(str + j + 1, '\'') + 2);
-			result = ft_strjoin(before, aux);
-			str = ft_strjoin(result, after);
+			result = ft_strjoin(before, aux, 0, 0);
+			str = ft_strjoin(result, after, 0, 0);
 			j = ft_strlen(result)-1;
 		}
 		j++;
@@ -98,7 +98,7 @@ char *manage_dolar_exit(char *str, t_all *all)
 {
 	char *after;
 	after = NULL;
-	after = ft_strjoin(ft_strdup(ft_itoa(all->exit)), str + 2);
+	after = ft_strjoin(ft_itoa(all->exit), str + 2, 1, 0);
 	return(after);
 }
 char *manage_dolar_env(char *str, t_all *all)
@@ -109,9 +109,10 @@ char *manage_dolar_env(char *str, t_all *all)
     char    *after;
     
     j = 0;       
-	search_value = dolar_search_value(str + j + 1);						
-	expanded_value = search_in_env(all->list_env, search_value); 	
-	after = ft_strjoin(expanded_value, str + j + len_search_value(str + j ) + 1);
+	search_value = dolar_search_value(str + j + 1);				
+	expanded_value = search_in_env(all->list_env, search_value); 	//es el valor de la lista
+	after = ft_strjoin(expanded_value, str + j + len_search_value(str + j ) + 1, 0, 0);
+	// free(search_value);
 	
     return(after);
 }
@@ -136,7 +137,7 @@ char	*expand_dolar(char *str, t_all *all)
 	
 	j = -1;
 	after = NULL;
-	while(str[j++] != '\0')
+	while(str[++j] != '\0')
 	{
         quo = type_of_quottes(str, all , j);
 		if(str[j]== '$' && (!is_in_quottes(str, all , j) || quo =='\"'))
@@ -150,9 +151,12 @@ char	*expand_dolar(char *str, t_all *all)
 				after = manage_dolar_env(str + j, all);
 			else
 				continue;
-			str = ft_strjoin(before, after);
+			str = ft_strjoin(before, after, 0, 0);
+			free(before);
+			free(after);
+			if(str[j] == '$')
+			 	j--;
 		}
-		
 	}
 	return (str);
 }

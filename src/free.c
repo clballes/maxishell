@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:46:32 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/19 12:59:19 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	lstfree(t_cmd **lst)
+void	lstfree_cmd(t_cmd **lst)
 {
 	t_cmd	*temp;
 

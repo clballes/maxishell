@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:49:53 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/12 14:01:59 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:01:55 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	error_msg(t_all *all) //free malloc perq faig un join
 	char		*new_cd;
 
 	if (all->node->args[1][0] != '/')
-		new_cd = ft_strjoin_path(all->list_env->current_cd,
+		new_cd = ft_strjoin_path(all->list_env->current_cd, \
 				all->node->args[1]);
 	else
-		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1]);
+		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1], 0, 0);
 	if (stat(new_cd, &path_stat) == 0)
 	{
 		if (S_ISREG(path_stat.st_mode))

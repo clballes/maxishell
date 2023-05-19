@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/17 12:33:56 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:02:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 		if ((ft_strncmp(temp->name, arg, ft_strlen(arg) + 1)) == 0) 
 		{
 			if (all->list_env->concatenate == 1)
-				temp->content = ft_strjoin(temp->content, res); //ojo el
+				temp->content = ft_strjoin(temp->content, res, 0, 0); //ojo el
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
 			{
 				if (temp->content) //si printejem hola=a i despres, hola, necessito q ess qedi el valor atnerior

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/16 19:59:35 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 13:33:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 
 typedef struct s_cmd 
 {
@@ -73,7 +74,7 @@ typedef struct s_all
 //line
 void	exec_cmd(t_all *all);
 //free
-void	lstfree(t_cmd **lst);
+void	lstfree_cmd(t_cmd **lst);
 void	lstfree_env(t_env **lst);
 void	free_arr(char **array);
 //utils list

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/19 16:53:52 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 18:35:35 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ void clean_tokens(t_all *all, t_cmd *node)
 	{
 
 		result = expand_dolar(ft_strdup(node->args[i]), all);
-		//split result en tokens again
-		printf("resultado del dolar%s\n", result);
-		// result = manage_quottes(result);
+		//SPLIT result en tokens again
+		// printf("resultado del dolar%s\n", result);
+		result = manage_quottes(result);
 		free(node->args[i]);
 		node->args[i] = result;																
-		printf("NODE_ARGS:%p la i es:%d\n", node->args[i], i);
+		// printf("NODE_ARGS:%p la i es:%d\n", node->args[i], i);
 		i++;
 	}
 }

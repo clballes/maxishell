@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/19 17:31:43 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 17:38:59 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,10 @@ char	*expand_dolar(char *str, t_all *all)
 				after = manage_dolar_number(str + j);
 			else if(is_valid_char(str[j+1]))
 				after = manage_dolar_env(str + j, all);
-			else
+			else{
+				free(before);
 				continue;
+			}
 			free(str);
 			str = ft_strjoin(before, after, 1, 1);
 			// printf("before:%p after:%p\n", before, after);

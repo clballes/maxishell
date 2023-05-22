@@ -19,6 +19,7 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parse_and_split \
 				$(PARSING_DIR)parse_dolar_exp \
 				$(PARSING_DIR)parse_dolar_exp_utils \
+				$(PARSING_DIR)parse_quottes \
 				init
 
 

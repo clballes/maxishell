@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/19 18:35:35 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:50:49 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,12 @@ char *search_in_env(t_env *env, char *search_value)
 		
 		if (ft_strncmp(env->name, search_value, ft_strlen(search_value)+1) == 0)
 		{
-			// free(search_value);
-			return (ft_strdup(env->content)); ///ft_strdup(env->content); y liberarla
+			return (ft_strdup(env->content)); 
 		}
 		env = env->next;
 	}
 	env = first_node;
-	// free(search_value);
 	return (ft_strdup(""));
-	// return(0);
 }
 
 
@@ -97,22 +94,41 @@ int len_search_value(char *str)
 	return(variable_len);										
 
 }
-
+char *	join_tokens(char **splitted)
+{
+	int i;
+	char *joined;
+	i = 1;
+	joined = ft_strdup(splitted[0]);
+	while(splitted[i])
+	{
+		
+		joined = ft_strjoin(joined," ", 1 , 0);
+		joined = ft_strjoin(joined,splitted[i], 1 , 1);
+		
+		i++;
+	}
+	free(splitted[0]);
+	free(splitted);
+	return (joined);
+}
 void clean_tokens(t_all *all, t_cmd *node)
 {
 	int i;
 	char *result;
-	(void)all;
+	char **splitted;
 	i = 0;
 
 	// if (!node->args[1])
 	// 	return;
+	result = NULL;
 	while (node->args[i])
 	{
 
 		result = expand_dolar(ft_strdup(node->args[i]), all);
-		//SPLIT result en tokens again
-		// printf("resultado del dolar%s\n", result);
+		splitted = ft_split_tokens(result, ' ', all);
+		free(result);
+		result = join_tokens(splitted);
 		result = manage_quottes(result);
 		free(node->args[i]);
 		node->args[i] = result;																

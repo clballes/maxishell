@@ -6,27 +6,25 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:28:11 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/22 14:41:42 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:21:28 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 #include "../inc/minishell.h"
 
+//Devuelve la len que hay entre comillas
 int len_in_quottes(char *str, char quo)
 {
 	int i;
 
 	i = 0;
 	while(str[i]!= quo && str[i] != '\0')
-	{
-
-		// printf("entra?????\n");
-		i++;
-	}	
+		i++;	
 	return (i);
 }
 
+//Extrae el string entre comillas y devuelve un puntero a este string
 char    *extract_in_quottes(char* str, char quo)
 {
     
@@ -50,6 +48,7 @@ char    *extract_in_quottes(char* str, char quo)
     return(in_quottes); 
 }
 
+//Extrae lo que haya antes de comillas y lo que hay entre comillas y lo junta
 char	*quottes_processed(char *str, char quo, int j)
 {
 	char *result;
@@ -62,6 +61,7 @@ char	*quottes_processed(char *str, char quo, int j)
 	return(result);
 }
 
+//Analiza el tipo de comillas y devuelve el string sin las comillas que no tienen que estar
 char 	*manage_quottes(char* str)
 {
 	char *before_and_quo;

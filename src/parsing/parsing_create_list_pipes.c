@@ -1,74 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_pipes_commands.c                           :+:      :+:    :+:   */
+/*   parsing_create_list_pipes.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/18 18:12:30 by albagarc         ###   ########.fr       */
+/*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
+/*   Updated: 2023/05/22 17:05:27 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
-#include <stdbool.h>
 
-char	type_of_quottes(char *line, t_all *all, int i)
-{
-	int	j;
-
-	all->quotes.found = '\0';
-	all->quotes.has_quote = 0;
-	j = 0;
-	while (j <= i)
-	{
-		if ((line[j] == '\"' || line[j] == '\'') )
-		{
-			if (!all->quotes.has_quote)
-			{
-				all->quotes.has_quote = 1;
-				all->quotes.found = line[j];
-			}
-			else if (all->quotes.has_quote && line[j] == all->quotes.found)
-			{
-				all->quotes.has_quote = 0;
-				all->quotes.found = ' ';
-			}
-		}
-		j++;
-	}
-	return (all->quotes.found);
-}
-// Esta funcion examina desde el inicio hasta el caracter con index i si 
-// encuentra que ese caracter esta entre comillas activa has_quote y 
-//devuelve 1 sino esta  entre comillas devuelve 0
-int	is_in_quottes(char *line, t_all *all, int i)
-{
-	int	j;
-
-	all->quotes.has_quote = 0;
-	all->quotes.found = '\0';
-	j = 0;
-	while (j <= i)
-	{
-		if ((line[j] == '\"' || line[j] == '\'') )
-		{
-			if (!all->quotes.has_quote)
-			{
-				all->quotes.has_quote = 1;
-				all->quotes.found = line[j];
-			}
-			else if (all->quotes.has_quote && line[j] == all->quotes.found)
-			{
-				all->quotes.has_quote = 0;
-				all->quotes.found = ' ';
-			}
-		}
-		j++;
-	}
-	return (all->quotes.has_quote);
-}
 
 // Esta funcion me extrae el comando que separan los pipes dependiendo 
 // si es el ultimo o no
@@ -117,19 +61,51 @@ char	*content_list(char *line, bool init, t_all *all)
 		}
 		i++;
 	}
-	// printf("linea %s\n", line_split_by_pipes);
 	return (line_split_by_pipes);
 }
+// Cuenta los pipes reales que hay, si hay pipes entre comillas no lo cuenta.
+// Con el numero de pipes sabremos el numero de t_cmd que necesitamos para
+// el malloc.
+int number_of_pipes(char *line, t_all *all)
+{
+	int i;
+	int count;
 
-// void	divide_in_tokens(t_all *all)
-// {
-// 	char	c;
+	i = 0;
+	count = 0;
+	all->quotes.has_quote = 0;
+	while (line[i] != '\0')
+	{
+		all->quotes.has_quote = is_in_quottes(line, all, i);
+		if (line[i] == '|' && !all->quotes.has_quote)
+		{
+			count++;
+		}
+		i++;
+	}
+	return (count);
+}
 
-// 	c = ' ';
-// 	while (all->node)
-// 	{
-// 		all->node->args = ft_split_tokens(all->node->line, c, all);
-// 		printf("%s\n", all->node->args[1]);
-// 		all->node = all->node->next;
-// 	}
-// }
+void create_list_pipes(char *all_line, t_all *all)
+{
+	int i;
+	t_cmd *temp;
+
+	i = 0;
+
+	all->n_pipes = number_of_pipes(all_line, all);
+	while (i < (all->n_pipes + 1))									//solo tenemos demomento la linea all_line malloc
+	{
+		if (i == 0)
+			temp = lst_new(content_list(all_line, true, all));		//si temp es null entonces liberas todo
+		else
+			temp = lst_new(content_list(all_line, false, all));
+		if(temp == NULL)
+			free_lists_and_line(all);
+		temp->line = ft_strtrim_free_s1(temp->line, " ");
+		lst_add_back(&all->node, temp);
+		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
+		i++;
+	}
+	final_tokens_in_nodes(all);
+}

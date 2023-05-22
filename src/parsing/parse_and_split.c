@@ -6,13 +6,14 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/09 12:37:45 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/22 16:27:15 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 
+//Cuenta el numero de palabras
 static int	ft_count_words(char *s, char c, t_all *all)
 {
 	int	count;
@@ -32,6 +33,7 @@ static int	ft_count_words(char *s, char c, t_all *all)
 	return (n_word);
 }
 
+// libera las palabras si algo falla y luego libera el doble puntero
 static char	**ft_free(char **result, int n_word)
 {
 	while (n_word > 0)
@@ -43,12 +45,13 @@ static char	**ft_free(char **result, int n_word)
 	return (0);
 }
 
+//te devuelve un doble puntero con tantos strings como palabras separadas
+//  por espacios que no esten entre comillas haya en el string
 static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 {
 	int		n_word;
 	int		i;
 	int		start;
-	// t_cmd	*last_node;
 
 	n_word = 0;
 	i = 0;
@@ -62,7 +65,6 @@ static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 			|| s[i + 1] == '\0'))
 		{
 			result[n_word] = ft_substr(s, start, i - start + 1);
-			// printf("cada token[%d]:%s\n", n_word, result[n_word]);
 			if (!result[n_word])
 				return (ft_free(result, n_word));
 			n_word++;
@@ -70,26 +72,11 @@ static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 		i++;
 	}
 	result[n_word] = NULL;
-	// printf("n_word:%d\n", n_word);
-	// printf("ANTES %d\n",lst_last(&all->node)->n_args);
 	lst_last(&all->node)->n_args = n_word;
-	// printf("DESPUES %d\n",lst_last(&all->node)->n_args);
 	return (result);
 }
 
-int	double_pointer_len(char **args)
-{
-	int i;
-
-	i = 0;
-	while (args[i])
-	{
-		i++;	
-	}
-	return (i);
-}
-
-
+//limpia el string de espacios por delante y por detras y te lo devuelve
 char	*ft_strtrim_free_s1(char *s1, char const *set)
 {
 	char	*new;

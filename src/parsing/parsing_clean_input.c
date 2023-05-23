@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/15 12:53:18 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:52:18 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ int	have_open_close_quotes(char *line, t_all *all)
 // Devuelve uno si el caracter analizado es un espacio 
 int	ft_is_space(char c)
 {
-	if(c == 32 || c == '\f'|| c =='\n' || c == '\r' || c == '\t' || c == '\v')
-		return(1);
+	if (c == 32 || c == '\f' || c == '\n' || c == '\r' \
+		|| c == '\t' || c == '\v')
+		return (1);
 	return (0);
 }
 
 //limpia la linea de comandos  si encuentra 
 void	clean_spaces_line(char *all_line, t_all *all)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	j = 0;
 	i = 0;
 	while (all_line[i])
 	{
-		
 		if (ft_is_space(all_line[i]) && !is_in_quottes(all_line, all, i))
 		{
 			all_line[j] = 32;
@@ -57,11 +57,11 @@ void	clean_spaces_line(char *all_line, t_all *all)
 		}
 		while (ft_is_space(all_line[i]) && !is_in_quottes(all_line, all, i))
 			i++;
-		all_line[j]= all_line[i];
+		all_line[j] = all_line[i];
 		j++;
-		i++; 
+		i++;
 	}
-	all_line[j] =  '\0';
+	all_line[j] = '\0';
 }
 
 // limpia la linea y analiza si es correcta
@@ -69,6 +69,6 @@ int	valid_clean_line(char *all_line, t_all *all)
 {
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);
-	clean_spaces_line(all->all_line, all);	
+	clean_spaces_line(all->all_line, all);
 	return (0);
 }

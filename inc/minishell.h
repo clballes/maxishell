@@ -53,6 +53,7 @@ typedef struct s_env
 	struct s_env	*previous;
 	char			*current_cd;
 	char			*new_cd;
+	int				print_oldpwd; //saber cuando printar le old pwd
 }					t_env;
 
 typedef struct s_all
@@ -63,6 +64,7 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
+	int		cd; //para saber si nos movemos
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
     int 	n_pipes;

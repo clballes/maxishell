@@ -14,7 +14,7 @@
 # define BUILTINS_H
 
 void	exec_echo(t_cmd *builtins);
-void	exec_env(t_env **list_env);
+void	exec_env(t_all *all);
 void	env_list(t_all *all);
 int		exec_pwd(t_all *all);
 int		exec_cd(t_all *all);

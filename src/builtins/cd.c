@@ -68,11 +68,22 @@ int	exec_cd(t_all *all)
 	{
 		if (chdir(all->node->args[1]) == -1)
 			error_msg(all);
+		else
+			all->cd = 1;
 	}
 	else
-		chdir(getenv("HOME"));
+	{
+		if (chdir(getenv("HOME")) == -1)
+		{
+			all->exit = 1;
+			ft_putstrshell_fd("bash: cd: HOME not set", 2, all, 1);
+			write(2, "\n", 1);
+		}
+		else
+			all->cd = 1;
+	}
 	all->list_env->new_cd = getcwd(NULL, 0);
 	change_env(all);
-	printf("el exit es %d\n", all->exit);
+	// printf("el exit es %d\n", all->exit);
 	return (0);
 }

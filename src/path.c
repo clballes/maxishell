@@ -71,9 +71,10 @@ int	search_path(t_all *all)
 	char	**split_path;
 	int		i;
 	char	*new_path;
-
 	i = 0;
 	res = getenv("PATH");
+	if (res == NULL)
+		return (1);
 	split_path = ft_split(res, ':'); //mallocs
 	while (split_path[i])
 	{

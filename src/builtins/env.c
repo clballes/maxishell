@@ -34,17 +34,23 @@ void	env_list(t_all *all)
 	}
 }
 
-void	exec_env(t_env **list_env)
+void	exec_env(t_all *all)
 {
 	t_env	*temp;
-	// int		i;
 
-	// i = 0;
-	temp = *list_env;
+	temp = all->list_env;
 	while (temp)
 	{
 		if (temp->print == 1)
 		{
+			if (ft_strncmp("OLDPWD",
+				temp->name, ft_strlen(temp->name)) == 0 && (all->cd == 0))
+				{
+					if (temp->next == NULL)
+						break;
+					temp = temp->next;
+
+				}
 			printf("%s=%s\n", temp->name, temp->content);
 		}
 		temp = temp->next;

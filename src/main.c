@@ -92,8 +92,6 @@ void exec_cmd(t_all *all)
 {
 	int i;
 	i = -1;
-	// printf("all node arg es %s\n", all->node->cmd);
-	// printf("all node arg es %s\n", all->node->args[0]);
 	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
 		exec_echo(all->node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
@@ -105,16 +103,13 @@ void exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "unset", 6) == 0)
 		exec_unset(all);
 	else if (ft_strncmp(all->node->cmd, "env", 4) == 0)
-		exec_env(&all->list_env);
+		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
 	else
 	{
-		printf("hola ESTOY EN EL else\n");
-		printf("all node arg es %s\n", all->node->args[0]);
 		while (all->node->args[0][i++])
 		{
-			printf("hola ESTOY EN EL WHLIE\n");
 			if (all->node->args[0][i] == '/')
 			{
 				all->absolute = 1;
@@ -124,18 +119,13 @@ void exec_cmd(t_all *all)
 		i = 0;
 		if (all->node->args[0][i] == '/' || all->absolute == 1)
 		{
-			printf("hola\n");
 			fork_function(all, all->node->args[0]);
 			all->absolute = 0;
 		}
 		else if (search_path(all) == 0)
-		{
-			printf("hola bixuu\n");
 			all->exit = 0; //comprobar que sea este el num salida
-		}
 		else
 		{
-			printf("holaaaa que \n");
 			ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
 			write(2, "\n", 1);
 		}
@@ -171,7 +161,6 @@ int main(int argc, char **argv, char **env)
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node);
-		
 	}
 	return (0);
 }

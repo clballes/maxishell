@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 13:04:27 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/22 17:10:55 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:53:27 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	type_of_quottes(char *line, t_all *all, int i)
 	j = 0;
 	while (j <= i)
 	{
-		if ((line[j] == '\"' || line[j] == '\'') )
+		if ((line[j] == '\"' || line[j] == '\''))
 		{
 			if (!all->quotes.has_quote)
 			{
@@ -40,6 +40,7 @@ char	type_of_quottes(char *line, t_all *all, int i)
 	}
 	return (all->quotes.found);
 }
+
 // Esta funcion examina desde el inicio hasta el caracter con index i si 
 // encuentra que ese caracter esta entre comillas activa has_quote y 
 //devuelve 1 sino esta  entre comillas devuelve 0
@@ -52,7 +53,7 @@ int	is_in_quottes(char *line, t_all *all, int i)
 	j = 0;
 	while (j <= i)
 	{
-		if ((line[j] == '\"' || line[j] == '\'') )
+		if ((line[j] == '\"' || line[j] == '\''))
 		{
 			if (!all->quotes.has_quote)
 			{
@@ -69,5 +70,3 @@ int	is_in_quottes(char *line, t_all *all, int i)
 	}
 	return (all->quotes.has_quote);
 }
-
-

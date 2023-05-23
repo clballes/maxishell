@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/22 17:05:27 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:57:25 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,10 @@ int number_of_pipes(char *line, t_all *all)
 
 void create_list_pipes(char *all_line, t_all *all)
 {
-	int i;
-	t_cmd *temp;
+	int		i;
+	t_cmd	*temp;
 
 	i = 0;
-
 	all->n_pipes = number_of_pipes(all_line, all);
 	while (i < (all->n_pipes + 1))									//solo tenemos demomento la linea all_line malloc
 	{
@@ -100,7 +99,7 @@ void create_list_pipes(char *all_line, t_all *all)
 			temp = lst_new(content_list(all_line, true, all));		//si temp es null entonces liberas todo
 		else
 			temp = lst_new(content_list(all_line, false, all));
-		if(temp == NULL)
+		if (temp == NULL)
 			free_lists_and_line(all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		lst_add_back(&all->node, temp);

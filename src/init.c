@@ -38,5 +38,5 @@ void	init_struct(t_all *all)
 	if (all->env[0] != NULL)
 		env_list(all);
 	else
-		init_env_i(all);		
+		init_env_i(all);
 }

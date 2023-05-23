@@ -67,17 +67,28 @@ void	sort_list(t_env **list_env)
 	}
 }
 
-void	print_list(t_env **list_env)
+void	print_list(t_all *all)
 {
 	t_env	*temp;
 
-	temp = *list_env;
+	temp = all->list_env;
 	while (temp)
 	{
-		if (temp->print == 0)
+		if (temp->print == 0 || (all->cd == 0 && (ft_strncmp(temp->name, "OLDPWD",
+				ft_strlen(temp->name)) == 0)))
 			printf("declare -x %s\n", temp->name);
 		else
+		{
+			if ((ft_strncmp(temp->name, "_",
+				ft_strlen(temp->name)) == 0) && (ft_strncmp(temp->content, "/usr/bin/env",
+				ft_strlen(temp->content)) == 0))
+				{
+				if (temp->next == NULL)
+						break;
+					temp = temp->next;
+				}
 			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+		}
 		temp = temp->next;
 	}
 }

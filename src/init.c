@@ -19,13 +19,13 @@ void	init_env_i(t_all *all)
 	char	level_sh;
 
 	i = 0;
-	level_sh = 48; //el numeor 1 tenir en compte quan creem un minishell dintre dun minishel
+	level_sh = 49; //el numeor 1 tenir en compte quan creem un minishell dintre dun minishel
 	all->env = ft_calloc(4 + 1, sizeof(char *));
 	all->env[0] = getcwd(pwd, sizeof(pwd));
 	all->env[3] = ft_strjoin("OLDPWD=", all->env[0], 0, 0);
 	all->env[0] = ft_strjoin("PWD=", getcwd(pwd, sizeof(pwd)), 0, 0);
 	all->env[1] = ft_strjoin("SHLVL=", &level_sh, 0, 0);
-	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0); //mallocsss hevy
+	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0);
 	all->env[4] = NULL;
 	env_list(all);
 	free_arr(all->env);

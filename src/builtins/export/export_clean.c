@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	check_arg(t_all *all, char *arg)
+int	check_arg(t_all *all, char *arg)
 {
 	int	i;
 
@@ -29,11 +29,12 @@ void	check_arg(t_all *all, char *arg)
 				all->list_env->concatenate) == 1)
 		{
 			printf("bash: export: %s: not a valid identifier\n", arg);
-			return ;
+			return (1);
 		}
 		else
 			i++;
 	}
+	return (0);
 }
 
 int	ft_prohibited(char c, int index, int equal, int concat)
@@ -52,25 +53,25 @@ int	ft_prohibited(char c, int index, int equal, int concat)
 	return (0);
 }
 
-char *extract_var_value(char *arg)
+char	*extract_var_value(char *arg)
 {
-	char *var_value;
-	int i;
+	char	*var_value;
+	int		i;
 
 	i = 0;
-	while(*arg != '=' && *arg != '+' && *arg != '\0')
+	while (*arg != '=' && *arg != '+' && *arg != '\0')
 		arg++;
 	if (*arg == '+')
 		arg++;
 	if (*arg == '=')
 		arg++;
 	if (*arg == '\0')
-		return NULL;
-	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+		return (NULL);
+	while (arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
 		i++;
 	var_value = malloc(sizeof(char) * i + 1);
 	i = 0;
-	while(arg[i] != '\0')
+	while (arg[i] != '\0')
 	{
 		var_value[i] = arg[i];
 		i++;
@@ -79,16 +80,17 @@ char *extract_var_value(char *arg)
 	return (var_value);
 }
 
-char *extract_var_name(char *arg)
+char	*extract_var_name(char *arg)
 {
-	char *var_name;
-	int i;
+	char	*var_name;
+	int		i;
 
 	i = 0;
-	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+	while (arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
 		i++;
 	var_name = malloc(sizeof(char) * i + 1);
-	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+	i = 0;
+	while (arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
 	{
 		var_name[i] = arg[i];
 		i++;

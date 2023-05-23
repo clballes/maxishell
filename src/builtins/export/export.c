@@ -20,16 +20,16 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	temp = all->list_env;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->name, arg, ft_strlen(arg) + 1)) == 0) 
+		if ((ft_strncmp(temp->name, arg, ft_strlen(arg) + 1)) == 0)
 		{
 			if (all->list_env->concatenate == 1)
-				temp->content = ft_strjoin(temp->content, res, 0, 0); //ojo el
+				temp->content = ft_strjoin(temp->content, res, 0, 0);
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
 			{
-				if (temp->content) //si printejem hola=a i despres, hola, necessito q ess qedi el valor atnerior
-					temp->print = 1;		
+				if (temp->content)
+					temp->print = 1;
 				else
-					temp->print = 0; 
+					temp->print = 0;
 			}
 			else if ((all->list_env->concatenate == 0)
 				|| (all->node->equal != 0))
@@ -69,6 +69,7 @@ void	exec_export(t_all *all)
 {
 	int		i;
 	int		j;
+
 	all->list_env->concatenate = 0;
 	i = 0;
 	j = 1;
@@ -77,15 +78,17 @@ void	exec_export(t_all *all)
 	if (i == 1)
 	{
 		sort_list(&all->list_env);
-		print_list(&all->list_env);
+		print_list(all);
 	}
 	else
 	{
 		while (all->node->args[j])
 		{
-			check_arg(all, all->node->args[j]); //em diu sihi han iguals
-			add_new(all, all->node->args[j]);
-			all->list_env->concatenate = 0;
+			if (check_arg(all, all->node->args[j]) == 0)
+			{
+				add_new(all, all->node->args[j]);
+				all->list_env->concatenate = 0;
+			}
 			j++;
 		}
 	}

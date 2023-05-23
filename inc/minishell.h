@@ -64,6 +64,7 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
+	int		minishell; //flag para minishell dentro de minishell
 	int		cd; //para saber si nos movemos
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //

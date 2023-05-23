@@ -87,11 +87,36 @@ char *get_line(void)
 // 	final_tokens_in_nodes(all);
 // 	return (0);
 // }
+void	other_cmd(t_all *all)
+{
+	int	i;
+
+	i = -1;
+	while (all->node->args[0][i++])
+	{
+		if (all->node->args[0][i] == '/')
+		{
+			all->absolute = 1;
+			break;
+		}
+	}
+	i = 0;
+	if (all->node->args[0][i] == '/' || all->absolute == 1)
+	{
+		fork_function(all, all->node->args[0]);
+		all->absolute = 0;
+	}
+	else if (search_path(all) == 0)
+		all->exit = 0; //comprobar que sea este el num salida
+	else
+	{
+		ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
+		write(2, "\n", 1);
+	}
+}
 
 void exec_cmd(t_all *all)
 {
-	int i;
-	i = -1;
 	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
 		exec_echo(all->node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
@@ -107,29 +132,7 @@ void exec_cmd(t_all *all)
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
 	else
-	{
-		while (all->node->args[0][i++])
-		{
-			if (all->node->args[0][i] == '/')
-			{
-				all->absolute = 1;
-				break;
-			}
-		}
-		i = 0;
-		if (all->node->args[0][i] == '/' || all->absolute == 1)
-		{
-			fork_function(all, all->node->args[0]);
-			all->absolute = 0;
-		}
-		else if (search_path(all) == 0)
-			all->exit = 0; //comprobar que sea este el num salida
-		else
-		{
-			ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
-			write(2, "\n", 1);
-		}
-	}
+		other_cmd(all);
 }
 
 int main(int argc, char **argv, char **env)

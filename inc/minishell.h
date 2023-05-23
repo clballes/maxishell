@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/08 13:35:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:05:00 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+
 typedef struct s_cmd 
 {
     char		*cmd;
@@ -31,8 +32,6 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	bool	double_quote;
-	bool	single_quote;
     struct s_cmd *next;
 }   t_cmd;
 
@@ -72,7 +71,7 @@ typedef struct s_all
 //line
 void	exec_cmd(t_all *all);
 //free
-void	lstfree(t_cmd **lst);
+void	lstfree_cmd(t_cmd **lst);
 void	lstfree_env(t_env **lst);
 void	free_arr(char **array);
 //utils list
@@ -91,5 +90,5 @@ char	*get_line(void);
 //path
 int		search_path(t_all *all);
 void		fork_function(t_all *all, char *new_path);
-
+void	free_lists_and_line(t_all *all);
 #endif

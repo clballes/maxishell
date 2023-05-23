@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:50:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:51:00 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/19 13:09:21 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ t_env	*lst_new_env(char *name, char *content)
 {
 	t_env	*new;
 
-	new = malloc(sizeof(t_env));
+	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
+	{
+		// lstfree_env()
 		return (0);
+	}
 	new->name = name;
 	new->content = content;
 	new->next = NULL;

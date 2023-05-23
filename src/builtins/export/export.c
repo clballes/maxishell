@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/12 14:02:36 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:49:13 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	temp = all->list_env;
 	while (temp)
 	{
-		if ((ft_strncmp(temp->name, arg, ft_strlen(arg))) == 0)
+		if ((ft_strncmp(temp->name, arg, ft_strlen(arg) + 1)) == 0) 
 		{
 			if (all->list_env->concatenate == 1)
-				temp->content = ft_strjoin(temp->content, res); //ojo el
+				temp->content = ft_strjoin(temp->content, res, 0, 0); //ojo el
 			else if ((all->list_env->concatenate == 0) && (res == NULL))
 			{
 				if (temp->content) //si printejem hola=a i despres, hola, necessito q ess qedi el valor atnerior
@@ -43,6 +43,56 @@ int	ft_repeat(t_all *all, char *res, char *arg)
 	}
 	return (0);
 }
+
+// //Esto abria que revisarlo mejor 
+// char *extract_var_value(char *arg)
+// {
+// 	char *var_value;
+// 	int i;
+
+// 	i = 0;
+// 	while(*arg != '=' && *arg != '+' && *arg != '\0')
+// 		arg++;
+// 	if (*arg == '+')
+// 		arg++;
+// 	if (*arg == '=')
+// 		arg++;
+// 	if (*arg == '\0')
+// 		return NULL;
+// 	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+// 		i++;
+	
+// 	var_value = malloc(sizeof(char) * i + 1);
+// 	i = 0;
+// 	while(arg[i] != '\0')
+// 	{
+// 		var_value[i] = arg[i];
+// 		i++;
+// 	}
+// 	var_value[i] = '\0';
+// 	return (var_value);
+// }
+
+// char *extract_var_name(char *arg)
+// {
+// 	char *var_name;
+// 	int i;
+
+// 	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+// 		i++;
+// 	var_name = malloc(sizeof(char) * i + 1);
+// 	i = 0;
+// 	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+// 	{
+// 		var_name[i] = arg[i];
+// 		i++;
+// 	}
+// 	var_name[i] = '\0';
+// 	return (var_name);
+// }
+//en vez de con split hacer una funcion que devuelva el nombre y otra que devuelva solo 
+//el contenido 
+//NO TENEMOS MALLOC PARA EL RES por eso cada vez se me guarda una cosa 
 
 void	add_equal_arg(t_all *all, char *arg)
 {

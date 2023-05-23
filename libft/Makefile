@@ -23,7 +23,7 @@ $(NAME) : $(OBJ) $(HEADER)
 	 ar -rcs $(NAME) $(OBJ) 
 
 %.o: %.c $(HEADER)
-	$(CC) -c $(CFLAGS -I $(HEADER)) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 bonus: $(OBJ) $(OBJ_BONUS) $(HEADER)
 	ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)

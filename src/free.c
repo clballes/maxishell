@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:46:32 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/19 17:58:49 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	lstfree(t_cmd **lst)
+void	lstfree_cmd(t_cmd **lst)
 {
 	t_cmd	*temp;
 
@@ -22,6 +22,12 @@ void	lstfree(t_cmd **lst)
 		temp = *lst;
 		while (temp != NULL)
 		{
+			if(temp->args != NULL)
+				free_arr(temp->args);
+			if(temp->line)
+				free(temp->line);
+			// if(temp->cmd)
+			// 	free(temp->cmd);
 			free (temp);
 			temp = temp->next;
 		}
@@ -60,4 +66,11 @@ void	free_arr(char **array)
 		i++;
 	}
 	free (array);
+}
+
+void	free_lists_and_line(t_all *all)
+{
+	lstfree_cmd(&all->node);
+	lstfree_env(&all->list_env);
+	free(all->all_line);	
 }

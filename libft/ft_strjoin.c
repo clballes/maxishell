@@ -3,39 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagarc <albagarc@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:44:23 by albagarc          #+#    #+#             */
-/*   Updated: 2022/05/27 15:59:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/19 10:53:46 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2, int free_s1, int free_s2)
 {
-	char	*new;
-	size_t	i;
-	size_t	j;
-	size_t	count;
+	size_t	total;
+	char	*str;
 
-	count = 0;
-	i = ft_strlen(s1);
-	j = ft_strlen(s2);
-	new = malloc(sizeof(char) * (i + j + 1));
-	if (!new)
-		return (0);
-	while (s1[count] != '\0')
-	{
-		new[count] = s1[count];
-		count++;
-	}
-	count = 0;
-	while (s2[count] != '\0')
-	{
-		new[count + i] = s2[count];
-		count++;
-	}
-	new[count + i] = '\0';
-	return (new);
+	total = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = ft_calloc(total, 1);
+	if (!str)
+		return (NULL);
+	ft_strlcat(str, s1, total);
+	ft_strlcat(str, s2, total);
+	if(free_s1)
+		free(s1);
+	if(free_s2)
+		free(s2);
+	return (str);
 }

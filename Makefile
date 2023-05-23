@@ -10,14 +10,31 @@ BUILTINS_DIR = builtins/
 INTERACTIVE_DIR = interactive/
 PARSING_DIR = parsing/
 RM = rm -f
-# FSANITIZE	:= -fsanitize=address -g3
+# FSANITIZE	:= -fsanitize=address
+
+
 SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset path
-SRC_FILES	+= $(PARSING_DIR)parsing_clean_input $(PARSING_DIR)parsing_pipes_commands $(PARSING_DIR)parse_and_split $(PARSING_DIR)parse_dolar_exp init
+SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
+				$(PARSING_DIR)parsing_clean_input2 \
+				$(PARSING_DIR)parsing_create_list_pipes \
+				$(PARSING_DIR)parse_and_split \
+				$(PARSING_DIR)parse_dolar_and_quottes \
+				$(PARSING_DIR)parse_dolar_exp_utils \
+				$(PARSING_DIR)parse_dolar_exp_utils2 \
+				$(PARSING_DIR)parse_quottes \
+				init
+
+
 SRC_FILES	+= $(INTERACTIVE_DIR)signal 
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
+
+RL_DIR := ${HOME}/.brew/opt/readline/
+
+RL_LIB = -L$(RL_DIR)lib
+RL_INCDIR = -I$(RL_DIR)include/readline
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)
@@ -38,7 +55,7 @@ bonus:
 -include $(DEPS)
 $(NAME) : $(LIBFT_DIR)/libft.a $(OBJ) Makefile
 		make -sC $(LIBFT_DIR)
-		$(CC) $(CFLAGS)  $(FSANITIZE) $(OBJ) -o $(NAME) -lreadline $(LIBFT_DIR)/libft.a
+		$(CC) $(CFLAGS)  $(FSANITIZE) $(OBJ) -o $(NAME) $(RL_INCDIR) $(RL_LIB) -lreadline -lhistory $(LIBFT_DIR)/libft.a
 
 clean:
 		$(RM) -r $(OBJ_DIR) $(DEPS)

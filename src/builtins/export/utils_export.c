@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:23:05 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/12 13:59:59 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:11:20 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	change_var_list(char *content, t_env *temp)
 
 void	sort_list(t_env **list_env)
 {
-	int		i;
+	// int		i;
 	t_env	*temp;
 	t_env	*temp2;
 
-	i = 0;
+	// i = 0;
 	temp = *list_env;
 	temp2 = temp->next;
 	printf("el temp es %s\n", temp->name);

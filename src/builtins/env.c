@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:35:30 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/27 16:49:08 by clballes         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:42:04 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	env_list(t_all *all)
 void	exec_env(t_env **list_env)
 {
 	t_env	*temp;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	temp = *list_env;
 	while (temp)
 	{

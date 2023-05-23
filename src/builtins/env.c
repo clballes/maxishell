@@ -49,7 +49,6 @@ void	exec_env(t_all *all)
 					if (temp->next == NULL)
 						break;
 					temp = temp->next;
-
 				}
 			printf("%s=%s\n", temp->name, temp->content);
 		}

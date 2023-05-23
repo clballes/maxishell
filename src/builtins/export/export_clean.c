@@ -35,21 +35,13 @@ void	check_arg(t_all *all, char *arg)
 			i++;
 	}
 }
-//export hola=a a mhauria de crear variable a la a
-// mha odnat una seg fault raro
-// si posem hola=a i despres hola el valor sharuai de quedar
+
 int	ft_prohibited(char c, int index, int equal, int concat)
 {
 	if (c == '=' && (index != 0))
 		return (0);
 	else if ((index == 0) && (!(ft_isalpha(c))))
 		return (1);
-	// else if ((c == '=' || c == ' ' || ) && (index == 0))
-	// 	return (1);
-	// else if ((index == 0) && (concat == 0)
-	// 	&& (equal == 0) && ((c >= 33 && c <= 64)
-	// 		|| (c >= 91 && c <= 96) || (c >= 123 && c <= 126)))
-	// 	return (1);
 	else if ((index != 0) && (equal == 0)
 		&& (concat == 0) && ((c >= 34 && c <= 47)
 			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
@@ -58,4 +50,49 @@ int	ft_prohibited(char c, int index, int equal, int concat)
 	else if ((equal == 1) && (index != 0) && (concat == 1))
 		return (0);
 	return (0);
+}
+
+char *extract_var_value(char *arg)
+{
+	char *var_value;
+	int i;
+
+	i = 0;
+	while(*arg != '=' && *arg != '+' && *arg != '\0')
+		arg++;
+	if (*arg == '+')
+		arg++;
+	if (*arg == '=')
+		arg++;
+	if (*arg == '\0')
+		return NULL;
+	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+		i++;
+	var_value = malloc(sizeof(char) * i + 1);
+	i = 0;
+	while(arg[i] != '\0')
+	{
+		var_value[i] = arg[i];
+		i++;
+	}
+	var_value[i] = '\0';
+	return (var_value);
+}
+
+char *extract_var_name(char *arg)
+{
+	char *var_name;
+	int i;
+
+	i = 0;
+	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+		i++;
+	var_name = malloc(sizeof(char) * i + 1);
+	while(arg[i] != '=' && arg[i] != '+' && arg[i] != '\0')
+	{
+		var_name[i] = arg[i];
+		i++;
+	}
+	var_name[i] = '\0';
+	return (var_name);
 }

@@ -13,6 +13,7 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
+#include "../inc/heredoc.h"
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
 #include <stdbool.h>
@@ -157,11 +158,11 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		add_history(all->all_line);
+		// heredoc(all);
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line,all);
 			exec_cmd(all);
-			heredoc(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node);

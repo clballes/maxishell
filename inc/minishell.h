@@ -95,6 +95,4 @@ int		search_path(t_all *all);
 void		fork_function(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
 
-//heredoc
-void	heredoc(t_all *all);
 #endif

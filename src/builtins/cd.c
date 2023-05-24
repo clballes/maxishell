@@ -20,10 +20,21 @@ void	change_env(t_all *all)
 	temp = all->list_env;
 	while (temp)
 	{
-		if (ft_strncmp(temp->name, "PWD", ft_strlen(temp->name)) == 0)
-			temp->content = all->list_env->new_cd;
-		if (ft_strncmp(temp->name, "OLDPWD", ft_strlen(temp->name)) == 0)
-			temp->content = all->list_env->current_cd;
+		if (all->minishell > 48)
+		{
+			if (ft_strncmp(temp->name, "SHLVL", ft_strlen(temp->name)) == 0)
+			{
+				temp->content = &all->minishell;
+				break;
+			}
+		}
+		else
+		{
+			if (ft_strncmp(temp->name, "PWD", ft_strlen(temp->name)) == 0)
+				temp->content = all->list_env->new_cd;
+			if (ft_strncmp(temp->name, "OLDPWD", ft_strlen(temp->name)) == 0)
+				temp->content = all->list_env->current_cd;
+		}
 		temp = temp->next;
 	}
 }
@@ -73,7 +84,7 @@ int	exec_cd(t_all *all)
 	}
 	else
 	{
-		if (chdir(getenv("HOME")) == -1)
+		if (chdir(path_direction(all, "HOME")) == -1)
 		{
 			all->exit = 1;
 			ft_putstrshell_fd("bash: cd: HOME not set", 2, all, 1);
@@ -84,6 +95,5 @@ int	exec_cd(t_all *all)
 	}
 	all->list_env->new_cd = getcwd(NULL, 0);
 	change_env(all);
-	// printf("el exit es %d\n", all->exit);
 	return (0);
 }

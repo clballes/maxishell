@@ -65,14 +65,29 @@ void	fork_function(t_all *all, char *new_path)
 		waitpid(pid, &all->exit, 0);
 }
 
+char	*path_direction(t_all *all, char *direction)
+{
+	t_env	*temp;
+
+	temp = all->list_env;
+	while (temp)
+	{
+		if (ft_strncmp(direction, temp->name, ft_strlen(temp->name)) == 0)
+			return (temp->content);
+		temp = temp->next;
+	}
+	return (NULL); //exit que ha fallat
+}
+
 int	search_path(t_all *all)
 {
 	char	*res;
 	char	**split_path;
 	int		i;
 	char	*new_path;
+
 	i = 0;
-	res = getenv("PATH");
+	res = path_direction(all, "PATH");
 	if (res == NULL)
 		return (1);
 	split_path = ft_split(res, ':'); //mallocs

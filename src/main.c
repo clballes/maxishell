@@ -132,6 +132,11 @@ void exec_cmd(t_all *all)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
+	else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
+	{
+		all->minishell++;
+		change_env(all);
+	}
 	else
 		other_cmd(all);
 }

@@ -35,4 +35,9 @@ int     check_arg(t_all *all, char *arg);
 void	change_var_list(char *content, t_env *temp);
 char	*extract_var_value(char *arg);
 char	*extract_var_name(char *arg);
+
+//path
+char	*path_direction(t_all *all, char *direction);
+void	change_env(t_all *all);
+
 #endif

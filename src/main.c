@@ -161,6 +161,7 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			exec_cmd(all);
+			heredoc(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node);

@@ -73,7 +73,6 @@ int	search_path(t_all *all)
 	char	*new_path;
 	i = 0;
 	res = getenv("PATH");
-	printf("el path es %s\n", res);
 	if (res == NULL)
 		return (1);
 	split_path = ft_split(res, ':'); //mallocs

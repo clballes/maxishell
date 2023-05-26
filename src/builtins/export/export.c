@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/22 15:49:13 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/26 10:05:45 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	exec_export(t_all *all)
 {
 	int		i;
 	int		j;
-
+	printf("n_args:%d\n", lst_last(&all->node)->n_args);
 	all->list_env->concatenate = 0;
 	i = 0;
 	j = 1;

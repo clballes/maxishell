@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/23 12:57:55 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:04:19 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ void	clean_tokens(t_all *all, t_cmd *node)
 	}
 }
 
+int	double_array_len(char **array)
+{
+	int i;
+	
+	i = 0;
+	while (array[i]!= NULL)
+	{
+
+		i++;
+	}
+	return(i);
+}
+
 int	final_tokens_in_nodes(t_all *all)
 {
 	t_cmd	*first_node;
@@ -61,8 +74,11 @@ int	final_tokens_in_nodes(t_all *all)
 	first_node = all->node;
 	while (all->node)
 	{
+		all->node->n_args  = 0;
 		clean_tokens(all, all->node);
-		lst_last(&all->node)->cmd = lst_last(&all->node)->args[0];
+		all->node->cmd = all->node->args[0];
+		all->node->n_args = double_array_len(all->node->args);
+		printf("cmd:%s\n",all->node->cmd);
 		all->node = all->node->next;
 	}
 	all->node = first_node;

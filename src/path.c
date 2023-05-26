@@ -47,7 +47,7 @@ void	fork_function(t_all *all, char *new_path)
 	pid_t	pid;
 
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 	{
 		// all->exit = 1
 		printf("error en el fork\n");
@@ -59,6 +59,7 @@ void	fork_function(t_all *all, char *new_path)
 			ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
 			write(2, "\n", 1);
 			// all->exit = 1
+			exit(all->exit);
 		}
 	}
 	else
@@ -73,7 +74,6 @@ int	search_path(t_all *all)
 	char	*new_path;
 	i = 0;
 	res = getenv("PATH");
-	printf("el path es %s\n", res);
 	if (res == NULL)
 		return (1);
 	split_path = ft_split(res, ':'); //mallocs

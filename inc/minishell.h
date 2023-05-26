@@ -32,6 +32,7 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
+	int			fd[2];	
     struct s_cmd *next;
 }   t_cmd;
 
@@ -94,4 +95,7 @@ char	*get_line(void);
 int		search_path(t_all *all);
 void		fork_function(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
+
+// pipes
+void	pipes(t_all *all);
 #endif

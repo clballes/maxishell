@@ -39,7 +39,6 @@ void	init_struct(t_all *all)
 	all->bar = 0;
 	all->cd = 0;
 	all->absolute = 0;
-	
 	if (all->env[0] != NULL)
 		env_list(all);
 	else

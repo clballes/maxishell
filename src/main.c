@@ -26,6 +26,8 @@ char *get_line(void)
 	char *line;
 	const char *prompt;
 
+	
+	printf("GET LINE\n");
 	prompt = "\x1b[0;35mBienvenid@ a Maxishell\x1b[0m: ";
 	line = readline(prompt);
 	if (!line)
@@ -160,7 +162,10 @@ int main(int argc, char **argv, char **env)
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line,all);
-			exec_cmd(all);
+			// if (all->n_pipes)
+			// 	pipes(all);
+			// else
+				exec_cmd(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node);

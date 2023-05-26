@@ -7,13 +7,14 @@ INC_DIR = inc
 OBJ_DIR = obj/
 SRC_DIR = src/
 BUILTINS_DIR = builtins/
+HEREDOC_DIR = heredoc/
 INTERACTIVE_DIR = interactive/
 PARSING_DIR = parsing/
 RM = rm -f
 # FSANITIZE	:= -fsanitize=address
 
 
-SRC_FILES	= main utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset path pipes
+SRC_FILES	= main pipes $(HEREDOC_DIR)heredoc utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset path
 SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parsing_clean_input2 \
 				$(PARSING_DIR)parsing_create_list_pipes \
@@ -39,6 +40,7 @@ RL_INCDIR = -I$(RL_DIR)include/readline
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)
 		mkdir -p $(OBJ_DIR)$(INTERACTIVE_DIR)
+		mkdir -p $(OBJ_DIR)$(HEREDOC_DIR)
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)export/
 		mkdir -p $(OBJ_DIR)$(PARSING_DIR) 
 		$(CC)   -c $(CFLAGS) -MMD -I $(INC_DIR)  $< -o $@

@@ -13,6 +13,7 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
+#include "../inc/heredoc.h"
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
 #include <stdbool.h>
@@ -133,6 +134,11 @@ void exec_cmd(t_all *all)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
+	else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
+	{
+		all->minishell++;
+		change_env(all);
+	}
 	else
 		other_cmd(all);
 }
@@ -159,6 +165,7 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		add_history(all->all_line);
+		// heredoc(all);
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line,all);

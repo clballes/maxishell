@@ -65,7 +65,7 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
-	int		minishell; //flag para minishell dentro de minishell
+	char	minishell; //flag para minishell dentro de minishell
 	int		cd; //para saber si nos movemos
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
@@ -96,6 +96,9 @@ int		search_path(t_all *all);
 void		fork_function(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
 
+<<<<<<< HEAD
 // pipes
 void	pipes(t_all *all);
+=======
+>>>>>>> heredoc
 #endif

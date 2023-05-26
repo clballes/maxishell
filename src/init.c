@@ -16,15 +16,14 @@ void	init_env_i(t_all *all)
 {
 	int		i;
 	char	pwd[1024];
-	char	level_sh;
 
 	i = 0;
-	level_sh = 49; //el numeor 1 tenir en compte quan creem un minishell dintre dun minishel
+ 	all->minishell = all->minishell - 1;
 	all->env = ft_calloc(4 + 1, sizeof(char *));
 	all->env[0] = getcwd(pwd, sizeof(pwd));
 	all->env[3] = ft_strjoin("OLDPWD=", all->env[0], 0, 0);
 	all->env[0] = ft_strjoin("PWD=", getcwd(pwd, sizeof(pwd)), 0, 0);
-	all->env[1] = ft_strjoin("SHLVL=", &level_sh, 0, 0);
+	all->env[1] = ft_strjoin("SHLVL=", &all->minishell, 0, 0);
 	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0);
 	all->env[4] = NULL;
 	env_list(all);
@@ -39,6 +38,7 @@ void	init_struct(t_all *all)
 	all->bar = 0;
 	all->cd = 0;
 	all->absolute = 0;
+	all->minishell = 50;
 	if (all->env[0] != NULL)
 		env_list(all);
 	else

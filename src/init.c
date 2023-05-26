@@ -14,10 +14,8 @@
 
 void	init_env_i(t_all *all)
 {
-	int		i;
 	char	pwd[1024];
 
-	i = 0;
  	all->minishell = all->minishell - 1;
 	all->env = ft_calloc(4 + 1, sizeof(char *));
 	all->env[0] = getcwd(pwd, sizeof(pwd));

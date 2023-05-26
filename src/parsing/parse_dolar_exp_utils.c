@@ -44,10 +44,8 @@ char	*manage_dolar_env(char *str, t_all *all)
 
 char	*manage_dolar_number(char *str)
 {	
-	int		j;
 	char	*after;
 
-	j = 0;
 	after = str + 2;
 	return (ft_strdup(after));
 }

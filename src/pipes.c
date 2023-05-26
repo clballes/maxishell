@@ -13,6 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+
 void	pipes(t_all *all)
 {
 	pid_t *pid;

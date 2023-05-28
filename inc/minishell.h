@@ -23,6 +23,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+# define READ	0
+# define WRITE	1
 
 typedef struct s_cmd 
 {
@@ -33,7 +35,8 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	int			fd[2];	
+	int			fd[2];
+	pid_t		pid;	
     struct s_cmd *next;
 }   t_cmd;
 

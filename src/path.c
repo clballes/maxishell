@@ -54,8 +54,8 @@ void	fork_function(t_all *all, char *new_path)
 	}
 	else if (pid == 0)
 	{
-		// printf("HOLA\n");
-		// printf("new path:%s all->node->args[0]:%s\n", new_path, all->node->args[0]);
+		printf("HOLA\n");
+		printf("new path:%s all->node->args[0]:%s\n", new_path, all->node->args[0]);
 		if (execve(new_path, &all->node->args[0], NULL) != 0)
 		{
 			ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);

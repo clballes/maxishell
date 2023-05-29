@@ -121,7 +121,9 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			if (all->n_pipes)
+			{
 				pipes(all);
+			}
 			else
 				exec_cmd(all);
 		}

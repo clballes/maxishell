@@ -42,10 +42,17 @@ void	pipes(t_all *all)
 		all->node = all->node->next;
 		
 	}
-		close(all->fd[WRITE]);
-		close(all->fd[READ]);
+
+	close(all->fd[WRITE]);
+	close(all->fd[READ]);
+	while(all->node)
+	{
 		waitpid(-1, NULL, 0);
+		all->node = all->node->next;
+
+	}
 	
+	// waitpid(-1, NULL, 0);
 	
 }
 
@@ -63,6 +70,7 @@ int	set_fd_for_pipes(t_cmd *node,t_all *all)
 		dup2(all->fd[WRITE], STDOUT_FILENO);
 		close(all->fd[READ]);
 		close(all->fd[WRITE]);
+		
 	}
 	if(node->previous && node->next == NULL)
 	{
@@ -70,6 +78,7 @@ int	set_fd_for_pipes(t_cmd *node,t_all *all)
 		dup2(all->fd[READ], STDIN_FILENO);
 		close(all->fd[WRITE]);
 		close(all->fd[READ]);
+		
 	}
 	
 	// fd_new = dup2(fd_write, STDOUT_FILENO);

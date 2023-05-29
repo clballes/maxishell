@@ -78,6 +78,7 @@ typedef struct s_all
 	int		bar; // esta es la cd //
     int 	n_pipes;
 	int			fd[2];
+	// pid_t	pid;
 }       			t_all;
 
 //line

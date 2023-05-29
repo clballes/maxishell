@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 16:05:00 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:07:50 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_cmd
 	int			fd[2];
 	pid_t		pid;	
     struct s_cmd *next;
+	struct s_cmd *previous;
 }   t_cmd;
 
 typedef struct s_quo

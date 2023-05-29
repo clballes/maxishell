@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/26 11:04:19 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:07:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	final_tokens_in_nodes(t_all *all)
 	first_node = all->node;
 	while (all->node)
 	{
+		
 		all->node->n_args  = 0;
 		clean_tokens(all, all->node);
 		all->node->cmd = all->node->args[0];

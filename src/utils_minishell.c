@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:30:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 13:11:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/29 09:37:26 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_cmd	*lst_new(char *line)
 		return (0);
 	new->line = line;
 	new->next = NULL;
+	new->previous = NULL;
 	return (new);
 }
 
@@ -59,6 +60,7 @@ void	lst_add_back(t_cmd **first, t_cmd *new_el)
 	{
 		temp = lst_last(first);
 		temp->next = new_el;
+		new_el->previous = temp;
 	}
 }
 

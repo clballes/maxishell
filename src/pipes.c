@@ -22,7 +22,7 @@ void	pipes(t_all *all)
 	
 	while (all->node)
 	{
-		pipe(all->node->fd);
+		pipe(all->fd);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();
 		if (all->node->pid == -1)
@@ -42,35 +42,34 @@ void	pipes(t_all *all)
 		all->node = all->node->next;
 		
 	}
-		close(all->node->fd[WRITE]);
-	
-	
+		close(all->fd[WRITE]);
+		close(all->fd[READ]);
 		waitpid(-1, NULL, 0);
+	
+	
 }
 
 int	set_fd_for_pipes(t_cmd *node,t_all *all)
 {
-	int	fd_write;
-	int	fd_read;
-	int	fd_new;
+	// int	fd_write;
+	// int	fd_read;
+	// int	fd_new;
 	
 	(void)all;
-	fd_write = STDOUT_FILENO;
-	fd_read = STDIN_FILENO;
+	// fd_write = STDOUT_FILENO;
+	// fd_read = STDIN_FILENO;
 	if(node->next != NULL)
 	{
-		close(node->fd[READ]);
-		fd_write = node->fd[WRITE];
-		fd_new = dup2(STDOUT_FILENO, fd_write);
-		close(node->fd[WRITE]);
+		dup2(all->fd[WRITE], STDOUT_FILENO);
+		close(all->fd[READ]);
+		close(all->fd[WRITE]);
 	}
 	if(node->previous && node->next == NULL)
 	{
 	
-		close(node->fd[WRITE]);
-		fd_read = node->previous->fd[READ];
-		fd_new = dup2(STDIN_FILENO, fd_read);
-		close(node->fd[READ]);
+		dup2(all->fd[READ], STDIN_FILENO);
+		close(all->fd[WRITE]);
+		close(all->fd[READ]);
 	}
 	
 	// fd_new = dup2(fd_write, STDOUT_FILENO);

@@ -35,7 +35,7 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	int			fd[2];
+	// int			fd[2];
 	pid_t		pid;	
     struct s_cmd *next;
 	struct s_cmd *previous;
@@ -77,6 +77,7 @@ typedef struct s_all
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
     int 	n_pipes;
+	int			fd[2];
 }       			t_all;
 
 //line

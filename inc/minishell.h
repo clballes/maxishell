@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/30 17:43:55 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:38:12 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@
 typedef struct s_cmd 
 {
     char		*cmd;
-    // t_token *args;
     char		**args;
     char		*line;
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	// int			fd[2];
 	pid_t		pid;	
     struct s_cmd *next;
 	struct s_cmd *previous;
@@ -84,9 +82,6 @@ typedef struct s_all
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
     int 	n_pipes;
-	// int		fd[2];
-	// int		fd_temp;
-	// pid_t	pid;
 }       			t_all;
 
 //line

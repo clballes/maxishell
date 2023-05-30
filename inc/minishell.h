@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/30 10:14:00 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:15:15 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef struct s_all
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
     int 	n_pipes;
-	int			fd[2];
+	int		fd[2];
+	int		fd_temp;
 	// pid_t	pid;
 }       			t_all;
 

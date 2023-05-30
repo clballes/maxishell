@@ -6,28 +6,27 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/30 16:53:22 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:40:38 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
-int	set_fd_for_pipes_child(t_cmd *node, t_all *all);
+int	set_fd_for_pipes(t_cmd *node, t_all *all);
 
 void	pipes(t_all *all)
 {
 	int i;
 	i = 0;
-	
 	// printf("num pipes %d\n", all->n_pipes);
 	//creamos los pipes en funcion a los nodos que tenemos
-	all->fd_temp = dup(STDIN_FILENO);
+	
+	pipe(all->fd);
 	while (all->node)
 	{
-		pipe(all->fd);
 		i++;
 	
-		printf("inicio pipe: fd[0]:%d fd[1]:%d temp:%d\n", all->fd[0], all->fd[1], all->fd_temp);
+		printf("inicio pipe: fd[0]:%d fd[1]:%d\n", all->fd[0], all->fd[1]);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();
 		if (all->node->pid == -1)
@@ -37,45 +36,36 @@ void	pipes(t_all *all)
 		}
 		if (all->node->pid == 0)
 		{ 
-			set_fd_for_pipes_child(all->node, all);
+			set_fd_for_pipes(all->node, all);
 			printf("entro en el hijo\n");
 			exit (0);
 		}
-		if(all->node->next != NULL)// nodo 1
-		{
-			close(all->fd_temp);
-			all->fd_temp = all->fd[READ];
-		}
-		if(all->node->next == NULL)//me encuentro en el ultimo nodo
-			{
-				close(all->fd[READ]);
-				close(all->fd_temp);
-			}
+		if(all->node->next == NULL)
+			close(all->fd[READ]);
 		close(all->fd[WRITE]);
-		
 		all->node = all->node->next;
 	}
 	printf("soy el padre\n");
+	close(all->fd[READ]);
 	while (i--)
 		waitpid(-1, NULL, 0);
 }
 
-int	set_fd_for_pipes_child(t_cmd *node,t_all *all)
+int	set_fd_for_pipes(t_cmd *node,t_all *all)
 {
-	if(node->next != NULL)//nodo 1
+	if(node->next != NULL)
 	{
 		dup2(all->fd[WRITE], STDOUT_FILENO);
 		close(all->fd[READ]);
 		close(all->fd[WRITE]);
-		dup2(all->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
-		close(all->fd_temp);
+		
 	}
 	if(node->previous && node->next == NULL)
 	{
+
+		dup2(all->fd[READ], STDIN_FILENO);
 		close(all->fd[WRITE]);
 		close(all->fd[READ]);
-		dup2(all->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
-		close(all->fd_temp);
 		
 	}
 	exec_cmd(all);

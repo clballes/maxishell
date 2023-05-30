@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:47:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/29 11:25:03 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:01:58 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 
 void	fork_function(t_all *all, char *new_path)
 {
-	pid_t	pid;
+	// pid_t	pid;
 
-	pid = fork();
-	if (pid == -1)
-	{
-		// all->exit = 1
-		printf("error en el fork\n");
-	}
-	else if (pid == 0)
-	{
-		printf("HOLA\n");
-		printf("new path:%s all->node->args[0]:%s\n", new_path, all->node->args[0]);
+	// pid = fork();
+	// if (pid == -1)
+	// {
+	// 	// all->exit = 1
+	// 	printf("error en el fork\n");
+	// }
+	// else if (pid == 0)
+	// {
+
+		fprintf(stderr,"new path:%s all->node->args[0]:%s\n", new_path, all->node->args[0]);
 		if (execve(new_path, &all->node->args[0], NULL) != 0)
 		{
 			ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
@@ -63,9 +63,9 @@ void	fork_function(t_all *all, char *new_path)
 			// all->exit = 1
 			exit(all->exit);
 		}
-	}
-	else
-		waitpid(pid, &all->exit, 0);
+	// }
+	// else
+	// 	waitpid(pid, &all->exit, 0);
 }
 
 char	*path_direction(t_all *all, char *direction)

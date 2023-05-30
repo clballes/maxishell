@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/29 14:10:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:34:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ int	set_fd_for_pipes(t_cmd *node, t_all *all);
 
 void	pipes(t_all *all)
 {
-
+	int i;
+	i = 0;
 	// printf("num pipes %d\n", all->n_pipes);
 	//creamos los pipes en funcion a los nodos que tenemos
 	
+	pipe(all->fd);
 	while (all->node)
 	{
-		pipe(all->fd);
+		i++;
+		printf("inicio pipe: fd[0]:%d fd[1]:%d\n", all->fd[0], all->fd[1]);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();
 		if (all->node->pid == -1)
@@ -32,39 +35,23 @@ void	pipes(t_all *all)
 		}
 		if (all->node->pid == 0)
 		{ 
-			printf("entro en el hijo\n");
 			set_fd_for_pipes(all->node, all);
-			
-			exit (0); //se nos cierran los hijos pero no acaba de salir bien el prompt
+			printf("entro en el hijo\n");
+			exit (0);
 		}
-		printf("soy el padre\n");
-	
+		if(all->node->next == NULL)
+			close(all->fd[READ]);
+		close(all->fd[WRITE]);
 		all->node = all->node->next;
-		
 	}
-
-	close(all->fd[WRITE]);
+	printf("soy el padre\n");
 	close(all->fd[READ]);
-	while(all->node)
-	{
+	while (i--)
 		waitpid(-1, NULL, 0);
-		all->node = all->node->next;
-
-	}
-	
-	// waitpid(-1, NULL, 0);
-	
 }
 
 int	set_fd_for_pipes(t_cmd *node,t_all *all)
 {
-	// int	fd_write;
-	// int	fd_read;
-	// int	fd_new;
-	
-	(void)all;
-	// fd_write = STDOUT_FILENO;
-	// fd_read = STDIN_FILENO;
 	if(node->next != NULL)
 	{
 		dup2(all->fd[WRITE], STDOUT_FILENO);
@@ -74,17 +61,12 @@ int	set_fd_for_pipes(t_cmd *node,t_all *all)
 	}
 	if(node->previous && node->next == NULL)
 	{
-	
+
 		dup2(all->fd[READ], STDIN_FILENO);
 		close(all->fd[WRITE]);
 		close(all->fd[READ]);
 		
 	}
-	
-	// fd_new = dup2(fd_write, STDOUT_FILENO);
-	// fd_new = dup2(fd_read, STDIN_FILENO);//protecciones de si falla
-	
-	
 	exec_cmd(all);
 	return(0);
 }

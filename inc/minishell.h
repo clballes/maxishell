@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/30 18:38:12 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:22:34 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,23 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+//fd pipes
 # define READ	0
 # define WRITE	1
+
+//Redirecciones
+# define OUTPUT_APPEND		0
+# define OUTPUT_TRUNCATED	1
+# define INPUT				2
+# define HEREDOC			3
+
+typedef struct s_redir 
+{
+    char		*file_name;// nombre del archivo 
+	int			type; 		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
+    struct s_cmd *next;
+
+}   t_redir;
 
 typedef struct s_cmd 
 {
@@ -34,7 +49,8 @@ typedef struct s_cmd
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
-	pid_t		pid;	
+	pid_t		pid;
+	t_redir		*redir;	
     struct s_cmd *next;
 	struct s_cmd *previous;
 }   t_cmd;

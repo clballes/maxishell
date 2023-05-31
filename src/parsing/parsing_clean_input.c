@@ -6,13 +6,14 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/23 13:52:18 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:36:21 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
-//Esta funcion comprueba si hay comillas abiertas y panda un error si es que hay
+
+//Esta funcion comprueba si hay comillas abiertas y manda un error si es que hay
 int	have_open_close_quotes(char *line, t_all *all)
 {
 	all->quotes.index = 0;

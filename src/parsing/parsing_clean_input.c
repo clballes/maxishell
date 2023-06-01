@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/01 12:03:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:03:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ int	syntax_pipes_ok(char *line, t_all *all)
 	while (line[i] )
 	{
 		if(line[i] == '|' && !is_in_quottes(line, all, i))
+		{
 			i++;
-		while(ft_is_space(line[i]))
-			i++;
+			while(ft_is_space(line[i]))
+				i++;
+		}
 		if(line[i] == '\0')
 		{
 			printf("> syntax error: Please write something after '|'\n");
@@ -93,9 +95,9 @@ int	valid_clean_line(char *all_line, t_all *all)
 {
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);
-	if (syntax_pipes_ok(all_line, all) != 0)
-		return(1);
 	if (syntax_redir_ok(all_line, all) != 0)
+		return(1);
+	if (syntax_pipes_ok(all_line, all) != 0)
 		return(1);
 	clean_spaces_line(all->all_line, all);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/31 15:22:51 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 10:54:31 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,51 +102,9 @@ void create_list_pipes(char *all_line, t_all *all)
 		if (temp == NULL)
 			free_lists_and_line(all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
-		// temp->line = syntax_redir_ok(temp->line, all);
-		//tenemos que meter aqui una funcion que nos mire si hay redirecciones y actue en consecuencia
-		// si temp->line = echo hola > file1 adios tenemos que conseguir que temp->line sea echo hola adios
-		// y guardar el tipo de redireccion y el nombre de archivo
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
 	}
 	final_tokens_in_nodes(all);
 }
-
-//primero que la redireccion este bien si nos encontramos < y justo depues > o < y justo depues > entonces hay que lanzar un error 
-// minishell: syntax error near unexpected token `<'
-
-// char *syntax_redir_ok(char *line, t_all *all)
-// {
-// 	int i;
-// 	char redi;
-// 	char redi_opp;
-// 	i = 0;
-// 	while (line[i] != '\0')
-// 	{
-// 		if((line[i] == '<' || line[i] == '>')&& !is_in_quottes(line, all, i))
-// 			{
-// 				if(line[i]== '<')
-// 				{
-// 					redi = '<';
-// 					redi_opp = '>';	
-// 				}
-// 				if(line[i]== '>')
-// 				{
-// 					redi = '>';
-// 					redi_opp = '<';	
-// 				}
-// 				while(ft_is_space(line[i]))
-// 					i++;
-// 				if(line[i]== redi_opp)
-// 				{
-					
-// 					printf("minishell: syntax error near unexpected token `<'\n");	
-// 					break;
-// 					///freee 
-// 				}
-// 			}
-// 		i++;
-// 	}
-// 	return(line);
-// }

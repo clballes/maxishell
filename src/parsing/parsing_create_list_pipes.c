@@ -6,14 +6,14 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/01 10:54:31 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:00:33 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 
-char *syntax_redir_ok(char *line, t_all *all);
+
 // Esta funcion me extrae el comando que separan los pipes dependiendo 
 // si es el ultimo o no
 char	*save_line_depends_on_position(char *line, int start, int i)
@@ -102,9 +102,15 @@ void create_list_pipes(char *all_line, t_all *all)
 		if (temp == NULL)
 			free_lists_and_line(all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
+		printf("%s\n",temp->line);
+		// temp->line = syntax_redir_ok(temp->line, all);
+		//tenemos que meter aqui una funcion que nos mire si hay redirecciones y actue en consecuencia
+		// si temp->line = echo hola > file1 adios tenemos que conseguir que temp->line sea echo hola adios
+		// y guardar el tipo de redireccion y el nombre de archivo
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
 	}
 	final_tokens_in_nodes(all);
 }
+

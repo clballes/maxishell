@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/31 14:36:21 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:18:26 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,14 @@ void	clean_spaces_line(char *all_line, t_all *all)
 	all_line[j] = '\0';
 }
 
+
 // limpia la linea y analiza si es correcta
 int	valid_clean_line(char *all_line, t_all *all)
 {
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);
+	if (syntax_redir_ok(all_line, all) != 0)
+		return(1);
 	clean_spaces_line(all->all_line, all);
 	return (0);
 }

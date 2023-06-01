@@ -23,6 +23,7 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parse_dolar_exp_utils \
 				$(PARSING_DIR)parse_dolar_exp_utils2 \
 				$(PARSING_DIR)parse_quottes \
+				$(PARSING_DIR)parsing_redir_syntax \
 				init
 
 

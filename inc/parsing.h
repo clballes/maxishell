@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:57:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/22 17:06:21 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:19:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ int		len_search_value(char *str);
 char	type_of_quottes(char *line, t_all *all, int i);
 char    *extract_in_quottes(char* str, char quo);
 char 	*manage_quottes(char* str);
+int		syntax_redir_ok(char *line, t_all *all);
 #endif

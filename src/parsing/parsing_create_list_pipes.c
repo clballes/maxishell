@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/01 11:50:04 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 19:37:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,11 @@ void create_list_pipes(char *all_line, t_all *all)
 		if (temp == NULL)
 			free_lists_and_line(all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
+		
 		//tenemos que meter aqui una funcion que nos mire si hay redirecciones y actue en consecuencia
 		// si temp->line = echo hola > file1 adios tenemos que conseguir que temp->line sea echo hola adios
 		// y guardar el tipo de redireccion y el nombre de archivo
+		
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
@@ -112,3 +114,13 @@ void create_list_pipes(char *all_line, t_all *all)
 	final_tokens_in_nodes(all);
 }
 
+
+// int number_of_redirs(char *line)
+// {
+	
+// }
+// create_list_redir(t_cmd *cmd)
+// {
+	
+	
+// }

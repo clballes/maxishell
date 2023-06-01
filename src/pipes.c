@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/31 12:21:50 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:33:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	pipes(t_all *all)
 	{
 		pipe(pipes.fd);
 		i++;
-	
 		printf("inicio pipe: fd[0]:%d fd[1]:%d temp:%d\n", pipes.fd[0], pipes.fd[1], pipes.fd_temp);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();

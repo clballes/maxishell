@@ -64,7 +64,7 @@ void	other_cmd(t_all *all)
 		all->exit = 0; //comprobar que sea este el num salida
 	else
 	{
-		ft_putstrshell_fd("bash: &: command not found", 2, all, 0);
+		ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
 		write(2, "\n", 1);
 	}
 }

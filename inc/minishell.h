@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/31 13:22:34 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:26:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,9 @@ void	free_lists_and_line(t_all *all);
 
 // pipes
 void	pipes(t_all *all);
+
+//print functions
+void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
+void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
+
 #endif

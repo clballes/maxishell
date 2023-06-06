@@ -27,7 +27,7 @@ void	pipes(t_all *all)
 	{
 		pipe(pipes.fd);
 		i++;
-		printf("inicio pipe: fd[0]:%d fd[1]:%d temp:%d\n", pipes.fd[0], pipes.fd[1], pipes.fd_temp);
+		// printf("inicio pipe: fd[0]:%d fd[1]:%d temp:%d\n", pipes.fd[0], pipes.fd[1], pipes.fd_temp);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();
 		if (all->node->pid == -1)

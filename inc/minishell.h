@@ -14,6 +14,7 @@
 # define MINISHELL_H
 # include "../libft/libft.h"
 # include <stdio.h>
+#include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
@@ -35,8 +36,8 @@
 
 typedef struct s_redir 
 {
-    char		*file_name;// nombre del archivo 
-	int			type; 		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
+    char		*file_name; // nombre del archivo 
+	int			type;		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
     struct s_cmd *next;
 
 }   t_redir;
@@ -54,8 +55,6 @@ typedef struct s_cmd
     struct s_cmd *next;
 	struct s_cmd *previous;
 }   t_cmd;
-
-
 
 typedef struct s_quo
 {
@@ -131,4 +130,6 @@ void	pipes(t_all *all);
 void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
 void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
 
+//truncate
+int	redir_truncate(t_all *all);
 #endif

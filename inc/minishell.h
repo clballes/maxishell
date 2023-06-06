@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/01 18:26:17 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:38:58 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,22 @@
 # define WRITE	1
 
 //Redirecciones
-# define OUTPUT_APPEND		0
-# define OUTPUT_TRUNCATED	1
-# define INPUT				2
-# define HEREDOC			3
+# define OUTPUT_TRUNCATED	1 // >
+# define OUTPUT_APPEND		2 // >>
+# define INPUT				3 // <
+# define HEREDOC			4 // <<
 
 typedef struct s_redir 
 {
-    char		*file_name;// nombre del archivo 
-	int			type; 		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
-    struct s_cmd *next;
+    char			*file_name;// nombre del archivo 
+	int				type; 		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
+    struct s_redir 	*next;
 
 }   t_redir;
 
 typedef struct s_cmd 
 {
+	int			n_redir;
     char		*cmd;
     char		**args;
     char		*line;
@@ -121,7 +122,7 @@ char	*get_line(void);
 
 //path
 int		search_path(t_all *all);
-void		fork_function(t_all *all, char *new_path);
+void	fork_function(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
 
 // pipes

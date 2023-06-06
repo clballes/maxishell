@@ -28,8 +28,8 @@
 # define WRITE	1
 
 //Redirecciones
-# define OUTPUT_APPEND		0
-# define OUTPUT_TRUNCATED	1
+# define OUTPUT_TRUNCATED	0
+# define OUTPUT_APPEND		1
 # define INPUT				2
 # define HEREDOC			3
 

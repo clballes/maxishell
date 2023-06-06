@@ -124,7 +124,7 @@ int main(int argc, char **argv, char **env)
 		
 		}
 		free(all->all_line);
-		lstfree_cmd(&all->node);
+		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
 	}
 	return (0);
 }

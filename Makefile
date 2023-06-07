@@ -10,6 +10,7 @@ BUILTINS_DIR = builtins/
 HEREDOC_DIR = heredoc/
 INTERACTIVE_DIR = interactive/
 PARSING_DIR = parsing/
+REDIR_DIR = redirections/
 RM = rm -f
 # FSANITIZE	:= -fsanitize=address
 
@@ -24,8 +25,8 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parse_dolar_exp_utils2 \
 				$(PARSING_DIR)parse_quottes \
 				$(PARSING_DIR)parsing_redir_syntax \
-				redirections_list \
-				utils_redirections \
+				$(REDIR_DIR)redirections_list \
+				$(REDIR_DIR)utils_redirections \
 				init
 
 
@@ -46,6 +47,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(HEREDOC_DIR)
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)export/
 		mkdir -p $(OBJ_DIR)$(PARSING_DIR) 
+		mkdir -p $(OBJ_DIR)$(REDIR_DIR)
 		$(CC)   -c $(CFLAGS) -MMD -I $(INC_DIR)  $< -o $@
 
 all: makelibft

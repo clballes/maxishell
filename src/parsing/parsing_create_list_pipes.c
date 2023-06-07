@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/07 10:39:25 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:42:55 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,76 +119,3 @@ void create_list_pipes(char *all_line, t_all *all)
 	}
 	final_tokens_in_nodes(all);
 }
-
-// int number_of_redirs(char *line, t_all *all)
-// {
-// 	int i;
-// 	int n_redir;
-	
-// 	i = 0;
-// 	n_redir = 0;
-// 	while(line[i])
-// 	{
-// 		if((line[i] == '>' || line[i] == '<')&& !all->quotes.has_quote)
-// 		{
-// 			n_redir++;
-// 			if((line[i] == '>' || line[i] == '<')&& !all->quotes.has_quote)
-// 				i++;
-// 		}
-// 		i++;
-// 	}	
-// 	return(n_redir);
-// }
-
-// t_cmd *create_redir_list(t_cmd *node, t_all *all)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	t_redir *temp;
-// 	node->n_redir = number_of_redirs(node->line, all);
-// 	while(node->n_redir)
-// 	{
-// 		temp = lst_new_redir(file_name(node->line, all), redir_type(node->line, all));
-// 		if (temp == NULL)
-// 			free_lists_and_line(all);
-// 		lst_add_back_redir(&node->redir, temp);
-// 		node->line = clean_line_redir(node->line, all);
-// 		node->n_redir--;
-// 	}
-// 	return(node);
-// }
-
-
-// char *clean_line_redir(char *line, t_all *all)
-// {
-// 	int i;
-// 	char *before;
-// 	char *new_line;
-	
-// 	i = 0;
-// 	new_line = NULL;
-// 	while(line[i])
-// 	{
-// 		if((line[i] == '>' || line[i] == '<')&& !all->quotes.has_quote)
-// 		{
-// 			before = ft_substr(line, 0, i);
-// 			i++;
-// 			if (line[i] == '>' || line[i] == '<')
-// 				i++;
-// 			while(ft_is_space(line[i]))
-// 				i++;
-// 			while(!ft_is_space(line[i]) && line[i] != '\0'  && line[i]!= '<' && line[i]!= '>')
-// 				i++;
-// 			// if(line[i])
-// 			new_line = ft_strjoin(before, line + i, 0, 0);
-// 			// else
-// 			// 	new_line = ft_strjoin(before, "", 0, 0);
-// 			break;
-// 		}
-// 		i++;
-// 	}
-// 	if(new_line)
-// 		return(new_line);
-// 	return(line);
-// }

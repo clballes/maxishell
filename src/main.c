@@ -122,12 +122,17 @@ int main(int argc, char **argv, char **env)
 			// if (pipes)
 			// {
 				create_list_pipes(all->all_line,all);
+				redir_truncate(all);	
 				pipes(all);
 			// }
-			redir_truncate(all);	
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
 	}
 	return (0);
 }
+// ejecutar minishell{
+// 	if(existe lista de redir)
+// 		redir_truncate(all)
+// 	pipes(all);
+// }

@@ -1,6 +1,0 @@
-echo hola > > h
-echo hola >< h
-echo hi > > > > > > ju
-echo hi > < ju
- echo jkj <<<< a //error amb 4 <<<< pero amb 3 be
-echo yuhu <> klk //te la pilla bien

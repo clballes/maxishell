@@ -71,7 +71,8 @@ int	redir_truncate(t_all *all, int type)
         return 1;
     }
 	//cuando hay mas d un nodo ejecutar comadno
-	exec_cmd(all);
+	if (all->node->redir->next == NULL)
+		exec_cmd(all);
     // Restore the standard output
     if (dup2(stdout_copy, STDOUT_FILENO) == -1)
 	{

@@ -130,8 +130,5 @@ void	pipes(t_all *all);
 void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
 void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
 
-//truncate
-int	redir_truncate(t_all *all);
-int	redir_append(t_all *all);
-// int 
+
 #endif

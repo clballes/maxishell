@@ -25,8 +25,11 @@ void	pipes(t_all *all)
 	pipes.fd_temp = dup(STDIN_FILENO);
 	while (all->node)
 	{
+		if (all->node->redir)
+			redir_bucle(all);
 		pipe(pipes.fd);
 		i++;
+
 		// printf("inicio pipe: fd[0]:%d fd[1]:%d temp:%d\n", pipes.fd[0], pipes.fd[1], pipes.fd_temp);
 		//si falla pipe hay que liberar todo
 		all->node->pid = fork();

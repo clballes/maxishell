@@ -17,52 +17,52 @@
 #include "../inc/interactive.h"
 
 //funcion para hacer '>' esto es 0_TRUNCATE
-void	access_path(t_all *all) //li passem el filename
+int	access_path(char *filename) //li passem el filename
 {
-	const char *name = "myfile.txt";
 	struct stat info;
 
-    if (stat(name, &info) == 0) {
+    if (stat(filename, &info) == 0)
+	{
         if (S_ISREG(info.st_mode)) {
 			//si ja existeix el file > hem de sobreesciure
 			// si es laltre hem de fer el append
-            printf("%s is a regular file.\n", name);
+            printf("%s is a regular file.\n", filename);
+			return(0);
         } else {
+			// all->exit = 1;
 			//tirar error de es un directorio o el q sigui
-            printf("%s exists, but it is not a regular file.\n", name);
+            printf("%s exists, but it is not a regular file.\n", filename);
+			return(1);
         }
     } else {
 		// funcion de access permisos
 		// if (si es append o truncate)
 		// redir(all);
 		//fer el open i afegir la info ens dona igual qun metode seguir
-        printf("%s does not exist or cannot be accessed.\n", name);
+		// if(access not permited)
+		// 	return(1);
+        printf("%s does not exist or cannot be accessed.\n", filename);
+		return(2);
     }
 }
 
 int	redir_truncate(t_all *all)
 {
-	// if (o_truncate)
-	access_path(all);
-   	int fd = open(all->node->args[2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    // int fd = open(all->node->redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	printf("el filename es %s\n", all->node->redir->file_name);
+    int fd = open(all->node->redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd == -1)
 	{
         perror("open");
         return 1;
     }
-    // Save the current standard output
     int stdout_copy = dup(STDOUT_FILENO);
-	// printf("el in es %d\n", stdout_copy);
-    // Redirect the standard output to the file
     if (dup2(fd, STDOUT_FILENO) == -1)
 	{
         perror("dup2");
         return 1;
     }
-    // Execute the command
+	//cuando hay mas d un nodo
 	exec_cmd(all);
-
     // Restore the standard output
     if (dup2(stdout_copy, STDOUT_FILENO) == -1)
 	{
@@ -76,14 +76,34 @@ int	redir_truncate(t_all *all)
     return 0;
 }
 
-//funcion para hacer <
-// int	redir_append(t_all *all)
-// {
+int	redir_bucle(t_cmd *node)
+{
+	while(node->redir)
+	{
+		if(access_path(node->redir->file_name) != 1)
+		{
+			if (access_path(node->redir->file_name) == 2)
+			{
+				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
+				//llamar a truncate
+			}
+			else
+			{
+				if (node->redir->type == OUTPUT_TRUNCATED)
+				{
+					redir_truncate();
+				}
+				if (node->redir->type == OUTPUT_APPEND)
+				if (node->redir->type == INPUT)
+				if (node->redir->type == HEREDOC)
 
-
-
-
-
-// }
+			}
+		}
+		// else
+		// 	liberar todo
+		// 	salir del bucle
+		node->redir = node->redir->next;
+	}
+}
 //funcion para hacer >>
 //funcion para hacer << HEREDOC

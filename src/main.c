@@ -119,12 +119,8 @@ int main(int argc, char **argv, char **env)
 		// heredoc(all);
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
-			// if (pipes)
-			// {
-				create_list_pipes(all->all_line,all);
-				redir_truncate(all);	
-				pipes(all);
-			// }
+			create_list_pipes(all->all_line,all);
+			pipes(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

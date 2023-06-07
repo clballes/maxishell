@@ -26,7 +26,7 @@ int	access_path(char *filename) //li passem el filename
         if (S_ISREG(info.st_mode)) {
 			//si ja existeix el file > hem de sobreesciure
 			// si es laltre hem de fer el append
-            printf("%s is a regular file.\n", filename);
+            printf("%s FILE EXISTS AND IT is a regular file.\n", filename);
 			return(0);
         } else {
 			// all->exit = 1;
@@ -41,15 +41,24 @@ int	access_path(char *filename) //li passem el filename
 		//fer el open i afegir la info ens dona igual qun metode seguir
 		// if(access not permited)
 		// 	return(1);
-        printf("%s does not exist or cannot be accessed.\n", filename);
+        printf("%s does not exist, so we need to create ---- \n", filename);
 		return(2);
     }
 }
 
-int	redir_truncate(t_all *all)
+int	redir_truncate(t_all *all, int type)
 {
-	printf("el filename es %s\n", all->node->redir->file_name);
-    int fd = open(all->node->redir->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	int fd;
+	fd = 0;
+	// printf("holaaaa que tal entru\n");
+	// printf("el filename es %s\n", all->node->redir->file_name);
+	if (type == '\0' || type == OUTPUT_TRUNCATED)
+    	fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
+	else if (type == OUTPUT_APPEND)
+	{
+		printf("entruuuuuu\n");
+    	fd = open(all->node->redir->file_name, O_WRONLY | O_APPEND, 0644);
+	}
     if (fd == -1)
 	{
         perror("open");
@@ -61,7 +70,7 @@ int	redir_truncate(t_all *all)
         perror("dup2");
         return 1;
     }
-	//cuando hay mas d un nodo
+	//cuando hay mas d un nodo ejecutar comadno
 	exec_cmd(all);
     // Restore the standard output
     if (dup2(stdout_copy, STDOUT_FILENO) == -1)
@@ -76,26 +85,28 @@ int	redir_truncate(t_all *all)
     return 0;
 }
 
-int	redir_bucle(t_cmd *node)
+int	redir_bucle(t_cmd *node, t_all *all)
 {
+	int access;
+	access = 0;
 	while(node->redir)
 	{
-		if(access_path(node->redir->file_name) != 1)
+		access = access_path(node->redir->file_name);
+		if(access != 1)
 		{
-			if (access_path(node->redir->file_name) == 2)
+			if (access == 2)
 			{
 				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
-				//llamar a truncate
+				redir_truncate(all, '\0');
 			}
 			else
 			{
-				if (node->redir->type == OUTPUT_TRUNCATED)
-				{
-					redir_truncate();
-				}
-				if (node->redir->type == OUTPUT_APPEND)
+				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND )
+					redir_truncate(all, all->node->redir->type);
 				if (node->redir->type == INPUT)
+					printf("hola4");
 				if (node->redir->type == HEREDOC)
+					printf("hola5");
 
 			}
 		}
@@ -104,6 +115,7 @@ int	redir_bucle(t_cmd *node)
 		// 	salir del bucle
 		node->redir = node->redir->next;
 	}
+	return (0);
 }
 //funcion para hacer >>
 //funcion para hacer << HEREDOC

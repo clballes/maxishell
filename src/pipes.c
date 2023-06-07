@@ -12,6 +12,7 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
+#include "../inc/redirections.h"
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 
@@ -26,7 +27,7 @@ void	pipes(t_all *all)
 	while (all->node)
 	{
 		if (all->node->redir)
-			redir_bucle(all);
+			redir_bucle(all->node, all);
 		pipe(pipes.fd);
 		i++;
 

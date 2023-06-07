@@ -19,9 +19,9 @@ void		lst_add_back_redir(t_redir **first, t_redir *new_el);
 t_cmd 		*create_redir_list(t_cmd *node, t_all *all);
 void	access_path(t_all *all); //li passem el filename
 //truncate
-int	redir_truncate(t_all *all);
-int	redir_append(t_all *all);
-int	redir_bucle(t_cmd *node);
+int	redir_truncate(t_all *all, int type);
+// int	redir_append(t_all *all);
+int	redir_bucle(t_cmd *node, t_all *all);
 // int 
 
 #endif

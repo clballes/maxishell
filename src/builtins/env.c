@@ -53,12 +53,12 @@ void	exec_env(t_all *all)
 		if (temp->print == 1)
 		{
 			if (ft_strncmp("OLDPWD",
-				temp->name, ft_strlen(temp->name)) == 0 && (all->cd == 0))
-				{
-					if (temp->next == NULL)
-						break;
-					temp = temp->next;
-				}
+					temp->name, ft_strlen(temp->name)) == 0 && (all->cd == 0))
+			{
+				if (temp->next == NULL)
+					break ;
+				temp = temp->next;
+			}
 			printf("%s=%s\n", temp->name, temp->content);
 		}
 		temp = temp->next;

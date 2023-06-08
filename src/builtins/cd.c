@@ -25,12 +25,10 @@ void	change_env(t_all *all)
 			if (ft_strncmp(temp->name, "SHLVL", ft_strlen(temp->name)) == 0)
 			{
 				printf("el minishell temp es %s\n", temp->content);
-				
 				// temp->content = &all->minishell;
 				printf("el minishell es %d\n", all->minishell);
 				printf("el minishell es %s\n", temp->content);
-
-				break;
+				break ;
 			}
 		}
 		else

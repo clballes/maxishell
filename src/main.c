@@ -69,10 +69,10 @@ void	other_cmd(t_all *all)
 	}
 }
 
-void exec_cmd(t_all *all)
+void exec_cmd(t_all *all, t_cmd *node)
 {
-	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
-		exec_echo(all->node);
+	if (ft_strncmp(node->cmd, "echo", 5) == 0)
+		exec_echo(node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)

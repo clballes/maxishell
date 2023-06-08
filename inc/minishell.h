@@ -100,7 +100,7 @@ typedef struct s_all
 }       			t_all;
 
 //line
-void	exec_cmd(t_all *all);
+void	exec_cmd(t_all *all, t_cmd *temp);
 //free
 void	lstfree_cmd(t_cmd **lst);
 void	lstfree_env(t_env **lst);

@@ -38,10 +38,16 @@ int	access_path(char *filename, t_all *all)
 			if (access(filename, W_OK) == 0)
 				return(0); // si existe y tenemos acceso, haremos el open
 			else
-				return (write_err(all , 1)); // existe fichero pero no tenemos acceso
+			{
+				write_err(all, 0); // is a directory
+				exit(all->exit);
+			}
         }
 		else
-			return (write_err(all, 0)); // is a directory
+		{
+			write_err(all, 0); // is a directory
+			exit(all->exit);
+		}
     }
 	else
 		return(2); // necesitamos crear el fichero
@@ -50,18 +56,19 @@ int	access_path(char *filename, t_all *all)
 int	redir_output(t_all *all, int type)
 {
 	int fd;
+	int stdout_copy;
 
 	fd = 0;
+    stdout_copy = dup(STDOUT_FILENO);
 	if (type == 0 || type == OUTPUT_TRUNCATED)
     	fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
 	else if (type == OUTPUT_APPEND)
     	fd = open(all->node->redir->file_name, O_WRONLY | O_APPEND, 0644);
-    if (fd == -1)
+	if (fd == -1)
 	{
         perror("open");
         return 1;
     }
-    int stdout_copy = dup(STDOUT_FILENO);
     if (dup2(fd, STDOUT_FILENO) == -1)
 	{
         perror("dup2");
@@ -69,12 +76,12 @@ int	redir_output(t_all *all, int type)
     }
 	//cuando hay mas d un nodo ejecutar comadno al final
 	if (all->node->redir->next == NULL)
-		exec_cmd(all);
-    if (dup2(stdout_copy, STDOUT_FILENO) == -1)
-	{
-        perror("dup2");
-        return 1;
-    }
+		exec_cmd(all, all->node);
+    // if (dup2(stdout_copy, STDOUT_FILENO) == -1) esto lo hemos de hacer si no es forkabloe TODO
+	// {
+    //     perror("dup2");
+    //     return 1;
+    // }
     // if (close(fd) == -1) {
     //     perror("close");
     //     return 1;
@@ -115,18 +122,24 @@ int	redir_loop(t_cmd *node, t_all *all)
 	access = 0;
 	while (node->redir)
 	{
+		printf("otro	 print\n");
 		access = access_path(node->redir->file_name, all);
 		if (access != 1)
 		{
 			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
 				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
+				printf("entro\n");
 				redir_output(all, 0);
 			}
 			else
 			{
-				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND )
+				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND)
+				{
+					printf("entro en el if \n");
 					redir_output(all, all->node->redir->type);
+
+				}
 				if (node->redir->type == INPUT)
 					redir_input(all);
 				if (node->redir->type == HEREDOC)

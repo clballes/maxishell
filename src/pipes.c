@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 #include "../inc/redirections.h"
-int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes);
+int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 
 void	pipes(t_all *all)
@@ -24,28 +24,35 @@ void	pipes(t_all *all)
 	temp = all->node;
 	
 	i = 0;
-	//creamos los pipes en funcion a los nodos que tenemos
+	// //creamos los pipes en funcion a los nodos que tenemos
+	// if(!temp->next && is_not_forkable())
+	// {
+	// 	// REDIR export hola=hola > x
+	// 	// EXEC - cd env export unset exit
+	// 	return ;
+	// }
 	pipes.fd_temp = dup(STDIN_FILENO);
 	while (temp)
 	{
-		if (all->node->redir)
-			redir_loop(all->node, all);
 		pipe(pipes.fd);
 		i++;
 		//si falla pipe hay que liberar todo
-		all->node->pid = fork();
-		if (all->node->pid == -1)
+		temp->pid = fork();
+		
+		if (temp->pid == -1)
 		{
 			printf("ERROR EN EL FORK\n");
 			return ;
 		}
-		if (all->node->pid == 0)
+		if (temp->pid == 0)
 		{ 
-			set_fd_for_pipes_child( all, &pipes);
+			all->node = temp;
+			set_fd_for_pipes_child( all, &pipes, temp);
+	
 			// printf("entro en el hijo\n");
 			exit (0);
 		}
-		set_fd_for_pipes_father( all->node, &pipes);
+		set_fd_for_pipes_father( temp, &pipes);
 		// all->node = all->node->next;
 		temp = temp->next;
 	}
@@ -70,9 +77,9 @@ int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes)
 	return(0);
 }
 
-int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes)
+int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 {
-	if(all->node->next != NULL)//nodo 1 o siguientes del HIJO
+	if(temp->next != NULL)//nodo 1 o siguientes del HIJO
 	{
 		dup2(pipes->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
 		dup2(pipes->fd[WRITE], STDOUT_FILENO);
@@ -85,6 +92,12 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes)
 		close(pipes->fd[WRITE]);
 		close(pipes->fd[READ]);
 	}
-	exec_cmd(all);
+	printf(" -------- \n");
+	if (temp->redir)
+	{
+		redir_loop(all->node, all);
+		return 0;
+	}
+	exec_cmd(all, temp);
 	return(0);
 }

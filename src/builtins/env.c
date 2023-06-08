@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:35:30 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/09 17:42:04 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:03:52 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,29 @@ void	exec_env(t_all *all)
 		}
 		temp = temp->next;
 	}
+}
+
+
+char	**list_to_double_pointer(t_env **list)
+{
+	t_env *temp;
+	char **env_array;
+	char *aux;
+	char *result;
+	int i;
+
+	i = lst_size_env(list);
+	env_array = ft_calloc(i + 1 ,sizeof(char *));
+	i = 0;
+	temp = *list;
+	while(temp)
+	{
+		aux = ft_strjoin(temp->name, "=", 0, 0);
+		result = ft_strjoin(aux, temp->content, 1, 0);
+		env_array[i] = result;
+		i++;
+		temp = temp->next;
+	}
+	env_array[i] = NULL;
+	return(env_array);
 }

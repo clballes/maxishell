@@ -69,6 +69,7 @@ void	exec_export(t_all *all)
 {
 	int		i;
 	int		j;
+
 	printf("n_args:%d\n", lst_last(&all->node)->n_args);
 	all->list_env->concatenate = 0;
 	i = 0;

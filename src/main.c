@@ -55,7 +55,7 @@ void	other_cmd(t_all *all)
 		}
 	}
 	i = 0;
-	if (all->node->args[0][i] == '/' || all->absolute == 1)
+	if (all->node->args[0][i] == '/' || all->absolute == 1 || all->node->args[0][i] == '.')
 	{
 		fork_function(all, all->node->args[0]);
 		all->absolute = 0;
@@ -69,10 +69,10 @@ void	other_cmd(t_all *all)
 	}
 }
 
-void exec_cmd(t_all *all)
+void exec_cmd(t_all *all, t_cmd *node)
 {
-	if (ft_strncmp(all->node->cmd, "echo", 5) == 0)
-		exec_echo(all->node);
+	if (ft_strncmp(node->cmd, "echo", 5) == 0)
+		exec_echo(node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
@@ -85,11 +85,16 @@ void exec_cmd(t_all *all)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
-	else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
-	{
-		all->minishell++;
-		change_env(all);
-	}
+	// else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
+	// {
+	// 	printf("holaaaa\n");
+
+	// 	// env_list(all);
+	// 	// printf("el antes minishell es %d\n", all->minishell);
+	// 	// all->minishell++;
+	// 	// printf("el despues minishell es %d\n", all->minishell);
+	// 	// change_env(all);
+	// }
 	else
 		other_cmd(all);
 }
@@ -121,7 +126,6 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			pipes(all);
-		
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

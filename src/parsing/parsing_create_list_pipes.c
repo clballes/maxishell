@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 11:31:53 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:25:59 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ void create_list_pipes(char *all_line, t_all *all)
 		else
 			temp = lst_new(content_list(all_line, false, all));
 		if (temp == NULL)
-			free_lists_and_line(all);
-		printf("puntero temp t_cmd %p\n", temp);//este puntero no lo estamos liberando
-		
+			free_lists_and_line(all);	
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		temp = create_redir_list(temp, all);
 		printf("line despues de redir clean = %s\n", temp->line);
@@ -114,5 +112,4 @@ void create_list_pipes(char *all_line, t_all *all)
 	}
 
 	final_tokens_in_nodes(all);
-	// free(temp);//por que si o libero aqui funciona y si lo libero una linea antes me da segmentation fault????
 }

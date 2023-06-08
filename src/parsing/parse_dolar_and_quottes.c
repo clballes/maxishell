@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 11:21:58 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:26:58 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	final_tokens_in_nodes(t_all *all)
 		all->node->n_args  = 0;
 		clean_tokens(all, all->node);
 		all->node->cmd = all->node->args[0];
-		printf("puntero all->node->cmd %p\n", all->node->cmd);//LEAK
 		all->node->n_args = double_array_len(all->node->args);
 		printf("cmd:%s\n",all->node->cmd);
 		all->node = all->node->next;

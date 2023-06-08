@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:47:05 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 12:10:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:26:34 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_cmd	*create_redir_list(t_cmd *node, t_all *all)
 	{
 		temp = lst_new_redir(file_name(node->line, all), \
 			redir_type(node->line, all));
-		printf("puntero temp t_redir %p\n", temp);
 		if (temp == NULL)
 			free_lists_and_line(all);
 		lst_add_back_redir(&node->redir, temp);
@@ -67,7 +66,6 @@ char	*clean_line_redir(char *line, t_all *all)
 		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
 		{
 			before = ft_substr(line, 0, i);
-			printf("punter de before = %p\n", before);
 			new_line = join_line_without_redir(line + i, before);
 			break ;
 		}

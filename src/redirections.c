@@ -16,31 +16,38 @@
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
 
-//funcion para hacer '>' esto es 0_TRUNCATE
-int	access_path(char *filename) //li passem el filename
+int	access_path(char *filename)
 {
 	struct stat info;
 
     if (stat(filename, &info) == 0)
 	{
-        if (S_ISREG(info.st_mode)) {
-			//si ja existeix el file > hem de sobreesciure
-			// si es laltre hem de fer el append
-            printf("%s FILE EXISTS AND IT is a regular file.\n", filename);
-			return(0);
-        } else {
+        if (S_ISREG(info.st_mode))
+		{
+			if (access(filename, R_OK | W_OK | X_OK) == 0) //modes del file ne el acess R - read W - write - Execute
+			{
+            	printf("%s FILE EXISTS AND IT is a regular file with all permision guaranteed \n", filename);
+				return(0);
+			}
+			else
+			{
+				// all->exit = 1
+				// bash: readme.md: Permission denied
+				ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
+				write(2, "\n", 1);
+				return (1);
+			}
+        }
+		else
+		{
 			// all->exit = 1;
-			//tirar error de es un directorio o el q sigui
-            printf("%s exists, but it is not a regular file.\n", filename);
+            // printf("%s exists, but it is not a regular file.\n", filename);
+			ft_putstrshell_fd("minishell: &: Is a directory", 2, all, 0);
+			write(2, "\n", 1);
 			return(1);
         }
     } else {
-		// funcion de access permisos
-		// if (si es append o truncate)
-		// redir(all);
-		//fer el open i afegir la info ens dona igual qun metode seguir
-		// if(access not permited)
-		// 	return(1);
+
         printf("%s does not exist, so we need to create ---- \n", filename);
 		return(2);
     }
@@ -49,9 +56,8 @@ int	access_path(char *filename) //li passem el filename
 int	redir_truncate(t_all *all, int type)
 {
 	int fd;
+
 	fd = 0;
-	// printf("holaaaa que tal entru\n");
-	// printf("el filename es %s\n", all->node->redir->file_name);
 	if (type == '\0' || type == OUTPUT_TRUNCATED)
     	fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
 	else if (type == OUTPUT_APPEND)
@@ -70,10 +76,9 @@ int	redir_truncate(t_all *all, int type)
         perror("dup2");
         return 1;
     }
-	//cuando hay mas d un nodo ejecutar comadno
+	//cuando hay mas d un nodo ejecutar comadno al final
 	if (all->node->redir->next == NULL)
 		exec_cmd(all);
-    // Restore the standard output
     if (dup2(stdout_copy, STDOUT_FILENO) == -1)
 	{
         perror("dup2");
@@ -89,11 +94,12 @@ int	redir_truncate(t_all *all, int type)
 int	redir_bucle(t_cmd *node, t_all *all)
 {
 	int access;
+
 	access = 0;
-	while(node->redir)
+	while (node->redir)
 	{
 		access = access_path(node->redir->file_name);
-		if(access != 1)
+		if (access != 1)
 		{
 			if (access == 2)
 			{
@@ -118,5 +124,7 @@ int	redir_bucle(t_cmd *node, t_all *all)
 	}
 	return (0);
 }
+
+
 //funcion para hacer >>
 //funcion para hacer << HEREDOC

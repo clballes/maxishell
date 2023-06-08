@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/07 12:42:55 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:31:53 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,16 @@ void create_list_pipes(char *all_line, t_all *all)
 			temp = lst_new(content_list(all_line, false, all));
 		if (temp == NULL)
 			free_lists_and_line(all);
-		//printear %p para saber si es el mismo puntero el temp 
+		printf("puntero temp t_cmd %p\n", temp);//este puntero no lo estamos liberando
+		
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		temp = create_redir_list(temp, all);
-		// temp->line = clean_line_redir(temp->line, all);//liberar el temp->line dentroo
-		//printear %p para saber si es el mismo puntero el temp 
-		//tenemos que meter aqui una funcion que nos mire si hay redirecciones y actue en consecuencia
-		// si temp->line = echo hola > file1 adios tenemos que conseguir que temp->line sea echo hola adios
-		// y guardar el tipo de redireccion y el nombre de archivo
-		printf("line_despues de redir clean = %s\n", temp->line);
+		printf("line despues de redir clean = %s\n", temp->line);
 		lst_add_back(&all->node, temp);
-		//printear %p para saber si es el mismo puntero el temp 
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
 	}
+
 	final_tokens_in_nodes(all);
+	// free(temp);//por que si o libero aqui funciona y si lo libero una linea antes me da segmentation fault????
 }

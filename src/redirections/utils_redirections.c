@@ -6,13 +6,11 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:37:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/06 19:41:41 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:15:20 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-
 
 t_redir	*lst_new_redir(char *file_name, int redir)
 {
@@ -24,7 +22,6 @@ t_redir	*lst_new_redir(char *file_name, int redir)
 	new->file_name = file_name;
 	new->type = redir;
 	new->next = NULL;
-	// new->previous = NULL;
 	return (new);
 }
 
@@ -51,6 +48,5 @@ void	lst_add_back_redir(t_redir **first, t_redir *new_el)
 	{
 		temp = lst_last_redir(first);
 		temp->next = new_el;
-		// new_el->previous = temp;
 	}
 }

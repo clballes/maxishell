@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/01 16:05:37 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:29:38 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	pipes(t_all *all)
 {
 	int i;
 	t_pipe pipes;
+	t_cmd *temp;
+	temp = all->node;
 	
 	i = 0;
 	//creamos los pipes en funcion a los nodos que tenemos
 	pipes.fd_temp = dup(STDIN_FILENO);
-	while (all->node)
+	while (temp)
 	{
 		pipe(pipes.fd);
 		i++;
@@ -42,7 +44,8 @@ void	pipes(t_all *all)
 			exit (0);
 		}
 		set_fd_for_pipes_father( all->node, &pipes);
-		all->node = all->node->next;
+		// all->node = all->node->next;
+		temp = temp->next;
 	}
 	// printf("soy el padre\n");
 	while (i--)
@@ -69,22 +72,16 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes)
 {
 	if(all->node->next != NULL)//nodo 1 o siguientes del HIJO
 	{
-		//El dup2 cierra el filedescriptor viejo;
 		dup2(pipes->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
 		dup2(pipes->fd[WRITE], STDOUT_FILENO);
 		close(pipes->fd[READ]);
-		
-		// if(close(pipes->fd[WRITE]) == -1)
-			// fprintf(stderr, "hola\n");
-		// close(pipes->fd_temp);
+
 	}
 	else//ultimo nodo hijo
 	{
 		dup2(pipes->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
 		close(pipes->fd[WRITE]);
 		close(pipes->fd[READ]);
-		// close(pipes->fd_temp);
-		
 	}
 	exec_cmd(all);
 	return(0);

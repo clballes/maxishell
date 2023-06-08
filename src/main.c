@@ -123,6 +123,7 @@ int main(int argc, char **argv, char **env)
 			pipes(all);
 		
 		}
+		printf("all->node:%p\n", all->node);
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
 	}

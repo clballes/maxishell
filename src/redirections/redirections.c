@@ -128,16 +128,12 @@ int	redir_loop(t_cmd *node, t_all *all)
 			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
 				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
-				printf("entro\n");
 				redir_output(all, 0);
 			}
 			else
 			{
 				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND)
-				{
-					printf("entro en el if \n");
 					redir_output(all, all->node->redir->type);
-				}
 				if (node->redir->type == INPUT)
 					redir_input(all);
 				if (node->redir->type == HEREDOC)

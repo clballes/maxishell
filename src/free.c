@@ -6,33 +6,49 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 17:58:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/08 11:32:08 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+void	lstfree_redir(t_redir **lst);
+
 void	lstfree_cmd(t_cmd **lst)
 {
 	t_cmd	*temp;
-
-	while (*lst != NULL)
+	temp = *lst;
+	while (temp != NULL)
 	{
+		// if(temp->args != NULL)
+			free_arr(temp->args);
+		// if(temp->line)
+			free(temp->line);
+		// if(temp->redir)
+			lstfree_redir(&temp->redir);
+		// if(temp->cmd)
+			// free(temp->cmd);
+		free (temp);
+		temp = temp->next;
+	}
+	*lst = NULL;
+}
+
+void	lstfree_redir(t_redir **lst)
+{
+	t_redir	*temp;
+
+
 		temp = *lst;
 		while (temp != NULL)
 		{
-			if(temp->args != NULL)
-				free_arr(temp->args);
-			if(temp->line)
-				free(temp->line);
-			// if(temp->cmd)
-			// 	free(temp->cmd);
+			if(temp->file_name != NULL)
+				free(temp->file_name);
 			free (temp);
 			temp = temp->next;
 		}
 		*lst = NULL;
-	}
 }
 
 void	lstfree_env(t_env **lst)

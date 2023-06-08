@@ -55,7 +55,7 @@ void	other_cmd(t_all *all)
 		}
 	}
 	i = 0;
-	if (all->node->args[0][i] == '/' || all->absolute == 1)
+	if (all->node->args[0][i] == '/' || all->absolute == 1 || all->node->args[0][i] == '.')
 	{
 		fork_function(all, all->node->args[0]);
 		all->absolute = 0;
@@ -85,11 +85,16 @@ void exec_cmd(t_all *all)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
-	else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
-	{
-		all->minishell++;
-		change_env(all);
-	}
+	// else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
+	// {
+	// 	printf("holaaaa\n");
+
+	// 	// env_list(all);
+	// 	// printf("el antes minishell es %d\n", all->minishell);
+	// 	// all->minishell++;
+	// 	// printf("el despues minishell es %d\n", all->minishell);
+	// 	// change_env(all);
+	// }
 	else
 		other_cmd(all);
 }
@@ -127,8 +132,3 @@ int main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-// ejecutar minishell{
-// 	if(existe lista de redir)
-// 		redir_truncate(all)
-// 	pipes(all);
-// }

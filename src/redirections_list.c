@@ -71,7 +71,7 @@ static char *file_name(char *line, t_all *all)
 			while(!ft_is_space(line[i]) && line[i] != '\0' && line[i]!= '<' && line[i]!= '>')
 				i++;
 			file_name = ft_substr(line, start, i - start);
-			printf("file_name : %s\n",file_name);
+			// printf("file_name : %s\n",file_name);
 			return(file_name);//FREEEEEEE
 		}
 		i++;

@@ -20,8 +20,16 @@ void	ft_putcharshell_fd(char c, int fd, t_all *all, int j)
 	i = 0;
 	if (c == '&')
 	{
-		while (all->node->args[j][i])
-			write(fd, &all->node->args[j][i++], 1);
+		if (j == 2)
+		{
+			while (all->node->redir->file_name[i])
+				write(fd, &all->node->redir->file_name[i++], 1);
+		}
+		else
+		{
+			while (all->node->args[j][i])
+				write(fd, &all->node->args[j][i++], 1);
+		}
 	}
 	else
 		write(fd, &c, 1);

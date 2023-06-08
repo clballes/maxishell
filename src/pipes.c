@@ -27,7 +27,7 @@ void	pipes(t_all *all)
 	while (all->node)
 	{
 		if (all->node->redir)
-			redir_bucle(all->node, all);
+			redir_loop(all->node, all);
 		pipe(pipes.fd);
 		i++;
 

@@ -52,7 +52,7 @@ int	syntax_redir_ok(char *line, t_all *all)
 	char redi_opp;
 	char redi;
 	i = -1;
-	printf("la line es %s\n", line);
+	// printf("la line es %s\n", line);
 	while (line[++i] != '\0')
 	{
 		if((line[i] == '<' || line[i] == '>')&& !is_in_quottes(line, all, i))

@@ -16,7 +16,18 @@
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
 
-int	access_path(char *filename)
+int	write_err(t_all *all, int j)
+{
+	all->exit = 1;
+	if (j == 1)
+		ft_putstrshell_fd("minishell: &: Permission denied", 2, all, 2);
+	else
+		ft_putstrshell_fd("minishell: &: Is a directory", 2, all, 2);
+	write(2, "\n", 1);
+	return (1);
+}
+
+int	access_path(char *filename, t_all *all)
 {
 	struct stat info;
 
@@ -24,47 +35,27 @@ int	access_path(char *filename)
 	{
         if (S_ISREG(info.st_mode))
 		{
-			if (access(filename, R_OK | W_OK | X_OK) == 0) //modes del file ne el acess R - read W - write - Execute
-			{
-            	printf("%s FILE EXISTS AND IT is a regular file with all permision guaranteed \n", filename);
-				return(0);
-			}
+			if (access(filename, W_OK) == 0)
+				return(0); // si existe y tenemos acceso, haremos el open
 			else
-			{
-				// all->exit = 1
-				// bash: readme.md: Permission denied
-				ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
-				write(2, "\n", 1);
-				return (1);
-			}
+				return (write_err(all , 1)); // existe fichero pero no tenemos acceso
         }
 		else
-		{
-			// all->exit = 1;
-            // printf("%s exists, but it is not a regular file.\n", filename);
-			ft_putstrshell_fd("minishell: &: Is a directory", 2, all, 0);
-			write(2, "\n", 1);
-			return(1);
-        }
-    } else {
-
-        printf("%s does not exist, so we need to create ---- \n", filename);
-		return(2);
+			return (write_err(all, 0)); // is a directory
     }
+	else
+		return(2); // necesitamos crear el fichero
 }
 
-int	redir_truncate(t_all *all, int type)
+int	redir_output(t_all *all, int type)
 {
 	int fd;
 
 	fd = 0;
-	if (type == '\0' || type == OUTPUT_TRUNCATED)
+	if (type == 0 || type == OUTPUT_TRUNCATED)
     	fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
 	else if (type == OUTPUT_APPEND)
-	{
-		printf("entruuuuuu\n");
     	fd = open(all->node->redir->file_name, O_WRONLY | O_APPEND, 0644);
-	}
     if (fd == -1)
 	{
         perror("open");
@@ -91,30 +82,55 @@ int	redir_truncate(t_all *all, int type)
     return 0;
 }
 
-int	redir_bucle(t_cmd *node, t_all *all)
+int	redir_input(t_all *all)
+{
+	int fd;
+	fd = open(all->node->redir->file_name, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Failed to open the input file.\n");
+		return 1;
+	}
+	// Redirect the standard input to the input file
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		printf("Failed to redirect standard input.\n");
+		return 1;
+	}
+	
+	// Read input from the redirected standard input
+	char buffer[256];
+	fgets(buffer, sizeof(buffer), stdin);
+	printf("Input: %s", buffer);
+	
+	// Close the input file
+	close(fd);
+	return 0;
+}
+
+int	redir_loop(t_cmd *node, t_all *all)
 {
 	int access;
 
 	access = 0;
 	while (node->redir)
 	{
-		access = access_path(node->redir->file_name);
+		access = access_path(node->redir->file_name, all);
 		if (access != 1)
 		{
-			if (access == 2)
+			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
 				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
-				redir_truncate(all, '\0');
+				redir_output(all, 0);
 			}
 			else
 			{
 				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND )
-					redir_truncate(all, all->node->redir->type);
+					redir_output(all, all->node->redir->type);
 				if (node->redir->type == INPUT)
-					printf("hola4");
+					redir_input(all);
 				if (node->redir->type == HEREDOC)
 					printf("hola5");
-
 			}
 		}
 		// else
@@ -124,7 +140,3 @@ int	redir_bucle(t_cmd *node, t_all *all)
 	}
 	return (0);
 }
-
-
-//funcion para hacer >>
-//funcion para hacer << HEREDOC

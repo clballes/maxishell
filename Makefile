@@ -15,7 +15,7 @@ RM = rm -f
 # FSANITIZE	:= -fsanitize=address
 
 
-SRC_FILES	= main pipes $(HEREDOC_DIR)heredoc utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset path
+SRC_FILES	= main minishell_starts $(HEREDOC_DIR)heredoc utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)utils_env $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)unset path
 SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parsing_clean_input2 \
 				$(PARSING_DIR)parsing_create_list_pipes \

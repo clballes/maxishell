@@ -57,7 +57,7 @@ void	other_cmd(t_all *all)
 	i = 0;
 	if (all->node->args[0][i] == '/' || all->absolute == 1 || all->node->args[0][i] == '.')
 	{
-		fork_function(all, all->node->args[0]);
+		execve_path(all, all->node->args[0]);
 		all->absolute = 0;
 	}
 	else if (search_path(all) == 0)
@@ -85,16 +85,6 @@ void exec_cmd(t_all *all, t_cmd *node)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
 		exec_exit(all);
-	// else if (ft_strncmp(all->node->cmd, "./minishell", 12) == 0)
-	// {
-	// 	printf("holaaaa\n");
-
-	// 	// env_list(all);
-	// 	// printf("el antes minishell es %d\n", all->minishell);
-	// 	// all->minishell++;
-	// 	// printf("el despues minishell es %d\n", all->minishell);
-	// 	// change_env(all);
-	// }
 	else
 		other_cmd(all);
 }
@@ -116,8 +106,8 @@ int main(int argc, char **argv, char **env)
 		if (all->all_line[0] == '\0')
 		{
 			free(all->all_line);
-			system("leaks minishell");
-			exit(0);
+		// 	system("leaks minishell");
+		// 	exit(0);
 			continue;
 		}
 		add_history(all->all_line);
@@ -125,7 +115,7 @@ int main(int argc, char **argv, char **env)
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line,all);
-			pipes(all);
+			minishell_starts(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

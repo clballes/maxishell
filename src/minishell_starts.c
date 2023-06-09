@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes.c                                            :+:      :+:    :+:   */
+/*   minishell_starts.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,7 +16,7 @@
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 
-void	pipes(t_all *all)
+void	minishell_starts(t_all *all)
 {
 	int i;
 	t_pipe pipes;
@@ -38,7 +38,6 @@ void	pipes(t_all *all)
 		i++;
 		//si falla pipe hay que liberar todo
 		temp->pid = fork();
-		
 		if (temp->pid == -1)
 		{
 			printf("ERROR EN EL FORK\n");
@@ -79,12 +78,11 @@ int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes)
 
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 {
-	if(temp->next != NULL)//nodo 1 o siguientes del HIJO
+	if (temp->next != NULL)//nodo 1 o siguientes del HIJO
 	{
 		dup2(pipes->fd_temp, STDIN_FILENO);//lo que tengo en fd lo pongo en STDIN
 		dup2(pipes->fd[WRITE], STDOUT_FILENO);
 		close(pipes->fd[READ]);
-
 	}
 	else//ultimo nodo hijo
 	{
@@ -92,7 +90,6 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 		close(pipes->fd[WRITE]);
 		close(pipes->fd[READ]);
 	}
-	printf(" -------- \n");
 	if (temp->redir)
 	{
 		redir_loop(all->node, all);

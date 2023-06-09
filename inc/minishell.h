@@ -92,7 +92,7 @@ typedef struct s_all
     char 	**env;
     char 	*all_line;
 	int		exit;
-	char	minishell; //flag para minishell dentro de minishell
+	char	minishell; //flag para minishell dentro de minishell VA FUERA
 	int		cd; //para saber si nos movemos
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //
@@ -109,6 +109,7 @@ void	lstfree_redir(t_redir **lst);
 //utils list
 t_cmd	*lst_new(char *comand);
 t_cmd	*lst_last(t_cmd **lst);
+int		lst_size_env(t_env **lst);
 int		lst_size(t_cmd *lst);
 void	lst_add_back(t_cmd **first, t_cmd *new_el);
 t_env	*lst_new_env(char *name, char *content);
@@ -121,15 +122,13 @@ char	*get_line(void);
 
 //path
 int		search_path(t_all *all);
-void	fork_function(t_all *all, char *new_path);
+void	execve_path(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
 
 // pipes
-void	pipes(t_all *all);
+void	minishell_starts(t_all *all);
 
 //print functions
 void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
 void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
-
-
 #endif

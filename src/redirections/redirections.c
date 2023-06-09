@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/06 14:25:56 by clballes         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:37:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../inc/heredoc.h"
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
+#include "../inc/redirections.h"
 
 int	write_err(t_all *all, int j)
 {
@@ -75,7 +76,7 @@ int	redir_output(t_all *all, int type)
 		return 1;
 	}
 	//cuando hay mas d un nodo ejecutar comadno al final
-	if (all->node->redir->next == NULL)
+	if (all->node->redir->next == NULL  /*&& lst_size_redir(&all->node->redir)!= 1*/) //&& lst_size de t_redir es != 1)
 		exec_cmd(all, all->node);
 	// if (dup2(stdout_copy, STDOUT_FILENO) == -1) esto lo hemos de hacer si no es forkabloe TODO
 	// {

@@ -92,7 +92,6 @@ typedef struct s_all
     char 	**env;
     char 	**env_array;
     char 	*all_line;
-    char 	minishell;
 	int		exit;
 	int		env_i; //flag para minishell dentro de minishell VA FUERA
 	int		cd; //para saber si nos movemos

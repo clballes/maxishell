@@ -20,24 +20,10 @@ void	change_env(t_all *all)
 	temp = all->list_env;
 	while (temp)
 	{
-		if (all->minishell > 48)
-		{
-			if (ft_strncmp(temp->name, "SHLVL", ft_strlen(temp->name)) == 0)
-			{
-				printf("el minishell temp es %s\n", temp->content);
-				// temp->content = &all->minishell;
-				printf("el minishell es %d\n", all->minishell);
-				printf("el minishell es %s\n", temp->content);
-				break ;
-			}
-		}
-		else
-		{
-			if (ft_strncmp(temp->name, "PWD", ft_strlen(temp->name)) == 0)
-				temp->content = all->list_env->new_cd;
-			if (ft_strncmp(temp->name, "OLDPWD", ft_strlen(temp->name)) == 0)
-				temp->content = all->list_env->current_cd;
-		}
+		if (ft_strncmp(temp->name, "PWD", ft_strlen(temp->name)) == 0)
+			temp->content = all->list_env->new_cd;
+		if (ft_strncmp(temp->name, "OLDPWD", ft_strlen(temp->name)) == 0)
+			temp->content = all->list_env->current_cd;
 		temp = temp->next;
 	}
 }
@@ -83,7 +69,12 @@ int	exec_cd(t_all *all)
 		if (chdir(all->node->args[1]) == -1)
 			error_msg(all);
 		else
+		{
+			printf("holaaaa\n");
 			all->cd = 1;
+			printf("el all cd en el else es; %d\n", all->cd);
+
+		}
 	}
 	else
 	{
@@ -94,7 +85,10 @@ int	exec_cd(t_all *all)
 			write(2, "\n", 1);
 		}
 		else
+		{
+			printf("holaaaa 2\n");
 			all->cd = 1;
+		}
 	}
 	all->list_env->new_cd = getcwd(NULL, 0);
 	change_env(all);

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 15:38:12 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:53:38 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 
 int	is_not_forkable(char *str)
 {
-	if (ft_strncmp(str, "echo", 5) == 0|| ft_strncmp(str, "cd", 3) == 0\
+	if ((ft_strncmp(str, "echo", 5) == 0|| ft_strncmp(str, "cd", 3) == 0\
 		|| ft_strncmp(str, "pwd", 4) == 0 || ft_strncmp(str, "export", 7) == 0 \
 			|| ft_strncmp(str, "unset", 6) == 0 || ft_strncmp(str, "env", 4) == 0\
-				|| ft_strncmp(str, "exit", 5) == 0)
-	
+				|| ft_strncmp(str, "exit", 5)== 0) )
 	{
+		printf("entro\n");
 			return(1);
 	}
 	return(0);

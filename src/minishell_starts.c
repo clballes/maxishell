@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 16:15:39 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:12:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../inc/redirections.h"
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
+void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes);
 
 int	is_not_forkable(char *str)
 {
@@ -57,9 +58,20 @@ void	multiple_commands(t_all *all)
 	pipes.fd_temp = dup(STDIN_FILENO);
 	while (temp)
 	{
+		i++;
+		execute_node(temp, all, pipes);
+		temp = temp->next;
+	}
+	// printf("soy el padre\n");
+	while (i--)
+		waitpid(-1, NULL, 0);
+}
+
+void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes)
+{
+		// t_pipe pipes;
 		
 		pipe(pipes.fd);
-		i++;
 		//si falla pipe hay que liberar todo
 		temp->pid = fork();// TODO solo se forkea en determinados casos
 		if (temp->pid == -1)
@@ -69,20 +81,14 @@ void	multiple_commands(t_all *all)
 		}
 		if (temp->pid == 0)
 		{ 
-			all->node = temp;
-			set_fd_for_pipes_child( all, &pipes, temp);
-	
+			all->node = temp;//por que???????
+			set_fd_for_pipes_child(all, &pipes, temp);
 			// printf("entro en el hijo\n");
 			exit (0);
 		}
 		set_fd_for_pipes_father( temp, &pipes);
-		temp = temp->next;
-	}
-	// printf("soy el padre\n");
-	while (i--)
-		waitpid(-1, NULL, 0);
-	
 }
+
 void	minishell_starts(t_all *all)
 {
 	
@@ -90,13 +96,8 @@ void	minishell_starts(t_all *all)
 	temp = all->node;
 	
 	if(!temp->next && is_not_forkable(temp->cmd))
-	{
 		single_command(all, temp);
-	}
 	else
-	{
-		
 		multiple_commands(all);
-	}
 }
 

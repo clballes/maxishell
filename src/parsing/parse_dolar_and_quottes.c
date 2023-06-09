@@ -78,7 +78,7 @@ int	final_tokens_in_nodes(t_all *all)
 		clean_tokens(all, all->node);
 		all->node->cmd = all->node->args[0];
 		all->node->n_args = double_array_len(all->node->args);
-		printf("cmd:%s\n",all->node->cmd);
+		// printf("cmd:%s\n",all->node->cmd);
 		all->node = all->node->next;
 	}
 	

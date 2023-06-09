@@ -105,7 +105,7 @@ void create_list_pipes(char *all_line, t_all *all)
 			free_lists_and_line(all);	
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		temp = create_redir_list(temp, all);
-		printf("line despues de redir clean = %s\n", temp->line);
+		// printf("line despues de redir clean = %s\n", temp->line);
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;

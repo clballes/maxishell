@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 19:09:05 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:22:11 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	minishell_starts(t_all *all)
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
+			
 		 	redir_loop(all->node, all);
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		 	{
@@ -123,7 +124,8 @@ void	minishell_starts(t_all *all)
 		 		// return 1;
      		}
 		 }
-		 exec_cmd(all, temp);
+		else
+		  exec_cmd(all, temp);
 	}
 	else
 	{

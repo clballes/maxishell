@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:47:05 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 12:26:34 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:36:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_cmd	*create_redir_list(t_cmd *node, t_all *all)
 			redir_type(node->line, all));
 		if (temp == NULL)
 			free_lists_and_line(all);
+		// manage_quottes(temp->file_name);
+		// printf("file_name es %s\n",temp->file_name);
 		lst_add_back_redir(&node->redir, temp);
 		free(node->line);
 		node->line = clean_line_redir(node->line, all);
@@ -67,6 +69,7 @@ char	*clean_line_redir(char *line, t_all *all)
 		{
 			before = ft_substr(line, 0, i);
 			new_line = join_line_without_redir(line + i, before);
+			new_line = ft_strtrim_free_s1(new_line, " ");
 			break ;
 		}
 		i++;
@@ -75,3 +78,11 @@ char	*clean_line_redir(char *line, t_all *all)
 		return (new_line);
 	return (line);
 }
+
+// void clean_file_name(char *str)
+// {
+	
+	
+// 	 manage_quottes(str);
+	
+// }

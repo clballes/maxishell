@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **env)
 		{
 			free(all->all_line);
 			// system("leaks minishell");
-			exit(0);
+			// exit(0);
 			continue;
 		}
 		add_history(all->all_line);

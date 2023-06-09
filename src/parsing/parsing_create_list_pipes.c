@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 12:25:59 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:17:18 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void create_list_pipes(char *all_line, t_all *all)
 			free_lists_and_line(all);	
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		temp = create_redir_list(temp, all);
+		
 		// printf("line despues de redir clean = %s\n", temp->line);
 		lst_add_back(&all->node, temp);
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);

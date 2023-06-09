@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:37:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 13:32:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:24:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	lst_size_redir(t_redir **lst)
 		temp = temp->next;
 		i++;
 	}
+	printf("i = %d\n", i);
 	return(i);
 }

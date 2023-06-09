@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 17:25:00 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:31:26 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,13 @@ int	redir_output(t_all *all, int type)
 		return (1);
 	}
 	//cuando hay mas d un nodo ejecutar comadno al final
-	if (all->node->redir->next == NULL  /*&& lst_size_redir(&all->node->redir)!= 1*/) //&& lst_size de t_redir es != 1)
-		exec_cmd(all, all->node);
+	// printf("cuantos nodos tiene la lista redir =%d\n",lst_size_redir(&all->node->redir));
+	if (all->node->redir->next == NULL /* && lst_size_redir(&all->node->redir)!= 1*/) //&& lst_size de t_redir es != 1)
+		{
+			
+			exec_cmd(all, all->node);
+			
+		}
 	// if (dup2(stdout_copy, STDOUT_FILENO) == -1) esto lo hemos de hacer si no es forkabloe TODO
 	// {
 	//	 perror("dup2");

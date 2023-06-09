@@ -29,7 +29,8 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(REDIR_DIR)redirections_list_utils \
 				$(REDIR_DIR)utils_redirections \
 				$(REDIR_DIR)redirections \
-				init
+				init \
+				set_pipes
 
 
 SRC_FILES	+= $(INTERACTIVE_DIR)signal 

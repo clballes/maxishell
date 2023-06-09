@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 18:38:27 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:09:05 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	minishell_starts(t_all *all)
 	}
 	else
 	{
+		
 		 //creamos los pipes en funcion a los nodos que tenemos
 		 pipes.fd_temp = dup(STDIN_FILENO);
 		 while (temp)

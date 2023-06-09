@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/08 10:34:10 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:00:41 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	free_lists_and_line(t_all *all);
 
 // pipes
 void	minishell_starts(t_all *all);
+int		set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
+int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 
 //print functions
 void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);

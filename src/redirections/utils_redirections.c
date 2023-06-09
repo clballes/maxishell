@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 12:37:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/08 12:15:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:32:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	lst_add_back_redir(t_redir **first, t_redir *new_el)
 		temp = lst_last_redir(first);
 		temp->next = new_el;
 	}
+}
+
+int	lst_size_redir(t_redir **lst)
+{
+	int i;
+	t_redir *temp;
+	
+	i = 0;
+	temp = *lst;
+	while(temp)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return(i);
 }

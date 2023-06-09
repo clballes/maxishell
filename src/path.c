@@ -44,7 +44,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 
 void	execve_path(t_all *all, char *new_path)
 {
-	if (execve(new_path, &all->node->args[0], all->env) != 0) //passarle el all->env char** que ha creado alba
+	if (execve(new_path, &all->node->args[0], all->env_array) != 0) //passarle el all->env char** que ha creado alba
 	{
 		ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
 		write(2, "\n", 1);

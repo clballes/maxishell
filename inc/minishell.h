@@ -90,9 +90,11 @@ typedef struct s_all
     t_cmd 	*node;
 	t_env	*list_env;
     char 	**env;
+    char 	**env_array;
     char 	*all_line;
+    char 	minishell;
 	int		exit;
-	char	minishell; //flag para minishell dentro de minishell VA FUERA
+	int		env_i; //flag para minishell dentro de minishell VA FUERA
 	int		cd; //para saber si nos movemos
 	int		absolute; //to kno if its a absolute path 
 	int		bar; // esta es la cd //

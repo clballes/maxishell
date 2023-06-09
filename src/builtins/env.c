@@ -12,6 +12,7 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
+char	**list_to_double_pointer(t_env **list);
 
 void	env_list(t_all *all)
 {
@@ -26,12 +27,12 @@ void	env_list(t_all *all)
 	while (all->env[i])
 	{
 		cont_name = ft_split(all->env[i], '=');
-		if (ft_strncmp(cont_name[0], "SHLVL", ft_strlen(cont_name[0])) == 0)
+		if (ft_strncmp(cont_name[0], "SHLVL", ft_strlen(cont_name[0])) == 0 && all->env_i == 0)
 		{
 			shl_level = ft_atoi(cont_name[1]);
 			shl_level++;
 			free(cont_name[1]);
-			cont_name[1] = ft_itoa(shl_level);
+			cont_name[1] = ft_itoa(shl_level); //poosible leak pero no no da leak
 		}
 		temp = lst_new_env(cont_name[0], cont_name[1]);
 		lst_add_back_env(&all->list_env, temp);
@@ -41,6 +42,7 @@ void	env_list(t_all *all)
 		temp = temp->next;
 		i++;
 	}
+	all->env_array = list_to_double_pointer(&all->list_env);
 }
 
 void	exec_env(t_all *all)

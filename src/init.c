@@ -16,7 +16,7 @@ void	init_env_i(t_all *all)
 {
 	char	pwd[1024];
 
- 	// all->minishell = all->minishell - 1;
+	all->env_i = 1;
 	all->env = ft_calloc(4 + 1, sizeof(char *));
 	all->env[0] = getcwd(pwd, sizeof(pwd));
 	all->env[3] = ft_strjoin("OLDPWD=", all->env[0], 0, 0);
@@ -25,7 +25,7 @@ void	init_env_i(t_all *all)
 	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0);
 	all->env[4] = NULL;
 	env_list(all);
-	// free_arr(all->env);
+	free_arr(all->env);
 }
 
 void	init_struct(t_all *all)
@@ -35,8 +35,8 @@ void	init_struct(t_all *all)
 	all->exit = 0;
 	all->bar = 0;
 	all->cd = 0;
+	all->env_i = 0;
 	all->absolute = 0;
-	// all->minishell = 50;
 	if (all->env[0] != NULL)
 		env_list(all);
 	else

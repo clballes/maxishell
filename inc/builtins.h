@@ -39,5 +39,6 @@ char	*extract_var_name(char *arg);
 //path
 char	*path_direction(t_all *all, char *direction);
 void	change_env(t_all *all);
+int     lst_size_env(t_env **lst);
 
 #endif

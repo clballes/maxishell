@@ -21,6 +21,8 @@ int	write_err(t_all *all, int j)
 	all->exit = 1;
 	if (j == 1)
 		ft_putstrshell_fd("minishell: &: Permission denied", 2, all, 2);
+	else if (j ==3)
+		
 	else
 		ft_putstrshell_fd("minishell: &: Is a directory", 2, all, 2);
 	write(2, "\n", 1);
@@ -92,6 +94,8 @@ int	redir_output(t_all *all, int type)
 int	redir_input(t_all *all)
 {
 	int fd;
+		printf("AAAAAAAAAA\n");
+
 	fd = open(all->node->redir->file_name, O_RDONLY);
 	if (fd == -1)
 	{
@@ -106,9 +110,9 @@ int	redir_input(t_all *all)
 	}
 	
 	// Read input from the redirected standard input
-	char buffer[256];
-	fgets(buffer, sizeof(buffer), stdin);
-	printf("Input: %s", buffer);
+	// char buffer[256];
+	// fgets(buffer, sizeof(buffer), stdin);
+	// printf("Input: %s", buffer);
 	
 	// Close the input file
 	close(fd);
@@ -122,11 +126,16 @@ int	redir_loop(t_cmd *node, t_all *all)
 	access = 0;
 	while (node->redir)
 	{
+		printf("el redir type es %d\n", node->redir->type);
 		access = access_path(node->redir->file_name, all);
+		printf("el redir type es %d\n", access);
 		if (access != 1)
 		{
+			if (access == 2 && node->redir->type == INPUT)
+				write_err(all, 3);
 			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
+				printf("entres?\n");
 				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
 				redir_output(all, 0);
 			}
@@ -135,7 +144,10 @@ int	redir_loop(t_cmd *node, t_all *all)
 				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND)
 					redir_output(all, all->node->redir->type);
 				if (node->redir->type == INPUT)
+				{
+					printf("entru\n");
 					redir_input(all);
+				}
 				if (node->redir->type == HEREDOC)
 					printf("hola5");
 			}

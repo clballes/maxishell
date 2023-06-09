@@ -106,8 +106,8 @@ int main(int argc, char **argv, char **env)
 		if (all->all_line[0] == '\0')
 		{
 			free(all->all_line);
-			system("leaks minishell");
-			exit(0);
+		// 	system("leaks minishell");
+		// 	exit(0);
 			continue;
 		}
 		add_history(all->all_line);

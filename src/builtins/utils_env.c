@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:50:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/08 15:00:35 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:44:26 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ t_env	*lst_new_env(char *name, char *content)
 	}
 	new->name = name;
 	new->content = content;
+	if (!name)
+		new->name = ft_strdup("");
+	if (!content)
+		new->content = ft_strdup("");
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);

@@ -91,22 +91,23 @@ int	redir_output(t_all *all, int type)
 
 int	redir_input(t_all *all)
 {
-	int fd;
+	int	fd;
 
-    fd = open(all->node->redir->file_name, O_RDONLY);
-    if (fd == -1) {
-        printf("Failed to open the input file\n");
-        return 1;
-    }
+	fd = open(all->node->redir->file_name, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Failed to open the input file\n");
+		return (1);
+	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2");
 		return (1);
 	}
 	exec_cmd(all, all->node);
-    // Close the input file
-    close(fd);
-    return (0);
+	// Close the input file
+	close(fd);
+	return (0);
 }
 
 int	redir_loop(t_cmd *node, t_all *all)
@@ -123,7 +124,7 @@ int	redir_loop(t_cmd *node, t_all *all)
 				write_err(all, 3);
 			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
-				open(node->redir->file_name, O_WRONLY | O_CREAT , 0644);
+				open(node->redir->file_name, O_WRONLY | O_CREAT, 0644);
 				redir_output(all, 0);
 			}
 			else

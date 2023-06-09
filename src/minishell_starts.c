@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 17:12:54 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:30:09 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../inc/redirections.h"
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
-void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes);
+// void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes);
 
 int	is_not_forkable(char *str)
 {
@@ -24,80 +24,138 @@ int	is_not_forkable(char *str)
 			|| ft_strncmp(str, "unset", 6) == 0 || ft_strncmp(str, "env", 4) == 0\
 				|| ft_strncmp(str, "exit", 5)== 0) )
 	{
-		printf("entro\n");
+		// printf("entro\n");
 			return(1);
 	}
 	return(0);
 }
 
 
-void	single_command(t_all *all, t_cmd *temp)
-{
-	int	stdout_copy;
-	if (temp->redir)
-		{
-			stdout_copy = dup(STDOUT_FILENO);
-			redir_loop(all->node, all);
-			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
-			{
-		 		perror("dup2");
-		 		// return 1;
-    		}
-		}
-		exec_cmd(all, temp);
-}
+// void	single_command(t_all *all, t_cmd *temp)
+// {
+// 	int	stdout_copy;
+// 	if (temp->redir)
+// 		{
+// 			stdout_copy = dup(STDOUT_FILENO);
+// 			redir_loop(all->node, all);
+// 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
+// 			{
+// 		 		perror("dup2");
+// 		 		// return 1;
+//     		}
+// 		}
+// 		exec_cmd(all, temp);
+// }
 
-void	multiple_commands(t_all *all)
+// void	multiple_commands(t_all *all)
+// {
+// 	int i;
+// 	t_pipe pipes;
+// 	t_cmd *temp;
+// 	temp = all->node;
+
+// 	i = 0;
+// 	pipes.fd_temp = dup(STDIN_FILENO);
+// 	while (temp)
+// 	{
+// 		i++;
+// 		execute_node(temp, all, pipes);
+// 		temp = temp->next;
+// 	}
+// 	// printf("soy el padre\n");
+// 	while (i--)
+// 		waitpid(-1, NULL, 0);
+// }
+
+// void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes)
+// {
+// 		// t_pipe pipes;
+		
+// 		pipe(pipes.fd);
+// 		//si falla pipe hay que liberar todo
+// 		temp->pid = fork();// TODO solo se forkea en determinados casos
+// 		if (temp->pid == -1)
+// 		{
+// 			printf("ERROR EN EL FORK\n");
+// 			return ;
+// 		}
+// 		if (temp->pid == 0)
+// 		{ 
+// 			all->node = temp;//por que???????
+// 			set_fd_for_pipes_child(all, &pipes, temp);
+// 			// printf("entro en el hijo\n");
+// 			exit (0);
+// 		}
+// 		set_fd_for_pipes_father( temp, &pipes);
+// }
+
+// void	minishell_starts(t_all *all)
+// {
+	
+// 	t_cmd *temp;
+// 	temp = all->node;
+	
+// 	if(!temp->next && is_not_forkable(temp->cmd))
+// 		single_command(all, temp);
+// 	else
+// 		multiple_commands(all);
+// }
+
+
+void	minishell_starts(t_all *all)
 {
 	int i;
 	t_pipe pipes;
 	t_cmd *temp;
 	temp = all->node;
-
+	int	stdout_copy;
 	i = 0;
-	pipes.fd_temp = dup(STDIN_FILENO);
-	while (temp)
-	{
-		i++;
-		execute_node(temp, all, pipes);
-		temp = temp->next;
-	}
-	// printf("soy el padre\n");
-	while (i--)
-		waitpid(-1, NULL, 0);
-}
-
-void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes)
-{
-		// t_pipe pipes;
-		
-		pipe(pipes.fd);
-		//si falla pipe hay que liberar todo
-		temp->pid = fork();// TODO solo se forkea en determinados casos
-		if (temp->pid == -1)
-		{
-			printf("ERROR EN EL FORK\n");
-			return ;
-		}
-		if (temp->pid == 0)
-		{ 
-			all->node = temp;//por que???????
-			set_fd_for_pipes_child(all, &pipes, temp);
-			// printf("entro en el hijo\n");
-			exit (0);
-		}
-		set_fd_for_pipes_father( temp, &pipes);
-}
-
-void	minishell_starts(t_all *all)
-{
-	
-	t_cmd *temp;
-	temp = all->node;
-	
 	if(!temp->next && is_not_forkable(temp->cmd))
-		single_command(all, temp);
+	{
+	
+		if (temp->redir)
+		{
+			stdout_copy = dup(STDOUT_FILENO);
+		 	redir_loop(all->node, all);
+			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
+		 	{
+		 		perror("dup2");
+		 		// return 1;
+     		}
+		 }
+		 exec_cmd(all, temp);
+	}
 	else
-		multiple_commands(all);
+	{
+		 //creamos los pipes en funcion a los nodos que tenemos
+		 pipes.fd_temp = dup(STDIN_FILENO);
+		 while (temp)
+		 {
+			
+		 	pipe(pipes.fd);
+		 	i++;
+		 	//si falla pipe hay que liberar todo
+		 	temp->pid = fork();// TODO solo se forkea en determinados casos
+		 	if (temp->pid == -1)
+		 	{
+		 		printf("ERROR EN EL FORK\n");
+		 		return ;
+		 	}
+		 	if (temp->pid == 0)
+		 	{ 
+				all->node = temp;
+		 		set_fd_for_pipes_child( all, &pipes, temp);
+		
+		 		// printf("entro en el hijo\n");
+		 		exit (0);
+		 	}
+		 	set_fd_for_pipes_father( temp, &pipes);
+		 	temp = temp->next;
+		 }
+		 // printf("soy el padre\n");
+		 while (i--)
+		 	waitpid(-1, NULL, 0);
+	
+	}
 }
 

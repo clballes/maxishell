@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 11:51:54 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 20:33:22 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:20:13 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ char	*file_name(char *line, t_all *all)
 	char	*file_name;
 
 	i = -1;
-	all->quotes.has_quote = 0;
 	while (line[++i] != '\0')
 	{
-		all->quotes.has_quote = is_in_quottes(line, all, i);
-		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
+		if ((line[i] == '>' || line[i] == '<') && !is_in_quottes(line, all, i))
 		{	
 			i++;
 			if ((line[i] == '>' || line[i] == '<') && line[i] != '\0')
@@ -75,8 +73,9 @@ char	*file_name(char *line, t_all *all)
 			while (ft_is_space(line[i]) && line[i] != '\0')
 				i++;
 			start = i;
-			while (!ft_is_space(line[i]) && line[i] != '\0' \
-				&& line[i] != '<' && line[i] != '>')
+			while ((!ft_is_space(line[i]) && line[i] != '\0' \
+				&& line[i] != '<' && line[i] != '>' ) || (ft_is_space(line[i]) && \
+					is_in_quottes(line, all, i)) )
 				i++;
 			file_name = ft_substr(line, start, i - start);
 			return (file_name);

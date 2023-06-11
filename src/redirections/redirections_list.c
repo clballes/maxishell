@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:47:05 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 20:36:44 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:38:22 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*join_line_without_redir(char *line, char *before)
 		line++;
 	while (ft_is_space(*line))
 		line++;
-	while (!ft_is_space(*line) && *line != '\0' && *line != '<' && *line != '>')
+	while ((!ft_is_space(*line) && *line != '\0' && *line != '<' && *line != '>') /*|| (ft_is_space(*line) && is_in_quottes(line, all, i))*/)
 		line++;
 	new_line = ft_strjoin(before, ft_strdup(line), 1, 1);
 	return (new_line);
@@ -79,10 +79,3 @@ char	*clean_line_redir(char *line, t_all *all)
 	return (line);
 }
 
-// void clean_file_name(char *str)
-// {
-	
-	
-// 	 manage_quottes(str);
-	
-// }

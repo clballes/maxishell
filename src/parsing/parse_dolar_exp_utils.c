@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/11 20:07:28 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:28:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char	*expand_dolar(char *str, t_all *all)
 				after = manage_dolar_number(str + j);
 			else if (is_valid_char(str[j + 1]))
 				after = manage_dolar_env(str + j, all);
-			// else if( str[j + 1] >= '\''  || str[j + 1] >= '\"' )
-			// 	after = ft_strdup(str + j + 1);
+			else if(( str[j + 1] == '\''  || str[j + 1] == '\"' ) && !is_in_quottes(str, all, j))
+			 	after = ft_strdup(str + j + 1);
 			else
 			{
 				free (before);

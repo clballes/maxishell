@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/11 20:14:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:29:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	clean_tokens(t_all *all, t_cmd *node)
 		splitted = ft_split_tokens(result, ' ', all);
 		free(result);
 		result = join_tokens(splitted);
-		printf("result:%s\n", result);
 		result = manage_quottes(result);
 		free(node->args[i]);
 		node->args[i] = result;

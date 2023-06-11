@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:47:05 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/11 17:38:22 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:49:30 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,45 @@ t_cmd	*create_redir_list(t_cmd *node, t_all *all)
 	return (node);
 }
 
-char	*join_line_without_redir(char *line, char *before)
+// char	*join_line_without_redir(char *line, char *before)
+// {		
+// 	char	*new_line;
+
+// 	new_line = NULL;
+// 	line++;
+// 	if (*line == '>' || *line == '<')
+// 		line++;
+// 	while (ft_is_space(*line))
+// 		line++;
+// 	while ((!ft_is_space(*line) && *line != '\0' && *line != '<' && *line != '>') /*|| (ft_is_space(*line) && is_in_quottes(line, all, i))*/)
+// 		line++;
+// 	new_line = ft_strjoin(before, ft_strdup(line), 1, 1);
+// 	return (new_line);
+// }
+
+
+
+char	*join_line_without_redir(char *line, char *before, t_all *all)
 {		
 	char	*new_line;
+	int i;
 
+	i = 0;
 	new_line = NULL;
-	line++;
-	if (*line == '>' || *line == '<')
-		line++;
-	while (ft_is_space(*line))
-		line++;
-	while ((!ft_is_space(*line) && *line != '\0' && *line != '<' && *line != '>') /*|| (ft_is_space(*line) && is_in_quottes(line, all, i))*/)
-		line++;
-	new_line = ft_strjoin(before, ft_strdup(line), 1, 1);
+	i++;
+	if (line[i] == '>' || line[i] == '<')
+		i++;
+	while (ft_is_space(line[i]))
+		i++;
+	while ((!ft_is_space(line[i]) && line[i] != '\0' && line[i] != '<' && \
+		line[i] != '>') || (ft_is_space(line[i]) && is_in_quottes(line, all, i)))
+		i++;
+	new_line = ft_strjoin(before, ft_strdup(line + i), 1, 1);
+	// printf("new_line is %s\n",new_line);
 	return (new_line);
 }
+
+
 
 char	*clean_line_redir(char *line, t_all *all)
 {
@@ -68,7 +92,7 @@ char	*clean_line_redir(char *line, t_all *all)
 		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
 		{
 			before = ft_substr(line, 0, i);
-			new_line = join_line_without_redir(line + i, before);
+			new_line = join_line_without_redir(line + i, before, all);
 			new_line = ft_strtrim_free_s1(new_line, " ");
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:14:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/26 10:47:59 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 19:28:15 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static char	**ft_extract_token(char *s, char c, char **result, t_all *all)
 		i++;
 	}
 	result[n_word] = NULL;
+	
 	return (result);
 }
 
@@ -104,6 +105,7 @@ char	**ft_split_tokens(char *s, char c, t_all *all)
 	result = malloc(sizeof(char *) * (ft_count_words(s, c, all) + 1));
 	if (!result)
 		return (NULL);
+	
 	result = ft_extract_token(s, c, result, all);
 	return (result);
 }

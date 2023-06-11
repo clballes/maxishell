@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/05/23 13:37:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/11 20:07:28 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,17 @@ char	*manage_dolar_env(char *str, t_all *all)
 char	*manage_dolar_number(char *str)
 {	
 	char	*after;
-
+	
 	after = str + 2;
 	return (ft_strdup(after));
 }
+
+// char *manage_quote_after_dolar(char *str)
+// {
+// 	char	*after;
+	
+// }
+
 
 char	*expand_dolar(char *str, t_all *all)
 {
@@ -59,25 +66,31 @@ char	*expand_dolar(char *str, t_all *all)
 
 	j = -1;
 	after = NULL;
+	// before = NULL;
 	while (str[++j] != '\0')
 	{
+		
 		quo = type_of_quottes(str, all, j);
 		if (str[j] == '$' && (!is_in_quottes(str, all, j) || quo == '\"'))
 		{
+			
 			before = ft_substr(str, 0, j);//if before == NULL liberamos listenv listcmd y all_line
+			
 			if (str[j + 1] == '?')
 				after = manage_dolar_exit(str + j, all);
 			else if (str[j + 1] >= '0' && str[j + 1] <= '9')
 				after = manage_dolar_number(str + j);
 			else if (is_valid_char(str[j + 1]))
 				after = manage_dolar_env(str + j, all);
+			// else if( str[j + 1] >= '\''  || str[j + 1] >= '\"' )
+			// 	after = ft_strdup(str + j + 1);
 			else
 			{
 				free (before);
 				continue ;
 			}
 			free(str);
-			str = ft_strjoin(before, after, 1, 1);
+			str = ft_strjoin(before, after,1, 1);
 			if (str[j] == '$')
 				j--;
 		}

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 19:31:26 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:17:23 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	access_path(char *filename, t_all *all)
 int	redir_output(t_all *all, int type)
 {
 	int	fd;
-	int	stdout_copy;
+	// int	stdout_copy;
 
 	fd = 0;
-	stdout_copy = dup(STDOUT_FILENO);
+	// stdout_copy = dup(STDOUT_FILENO);
 	if (type == 0 || type == OUTPUT_TRUNCATED)
 		fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
 	else if (type == OUTPUT_APPEND)

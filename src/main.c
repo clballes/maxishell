@@ -22,7 +22,7 @@
 
 // Lee la linea del promps si algo falla sale y sino la devuelve para
 //  empezar a analizarla
-char *get_line(void)
+char *get_line(t_all *all)
 {
 	char *line;
 	const char *prompt;
@@ -33,10 +33,10 @@ char *get_line(void)
 	{
 		if (isatty(STDIN_FILENO))
 			write(2, "exit\n", 6);
-		exit(0);
+		exit(all->exit);
 	}
 	// if (!line)
-	// 	exit(0); //funcion de error
+	// 	exit(all->exit); //funcion de error
 	return (line);
 }
 
@@ -64,8 +64,10 @@ void	other_cmd(t_all *all)
 		all->exit = 0; //comprobar que sea este el num salida
 	else
 	{
+		all->exit = 127;
 		ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
 		write(2, "\n", 1);
+		// printf("salida despues del mensaje de salida : %d\n", all->exit);
 		// exit(0); PREGUNTAR!!!!!!!!!!!!!!!!!!!
 	}
 }
@@ -103,7 +105,7 @@ int main(int argc, char **argv, char **env)
 	init_struct(all);//init podria allocar all y el env  para quitarnos lineas
 	while (1)
 	{
-		all->all_line = get_line();
+		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
 		{
 			free(all->all_line);
@@ -116,6 +118,7 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			minishell_starts(all);
+			// printf("num slida final %d\n",all->exit);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

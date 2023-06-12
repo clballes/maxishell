@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 16:00:41 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:25:50 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_pipe
 typedef struct s_all
 {
 	t_quo 	quotes;
+	int		status;
     t_cmd 	*node;
 	t_env	*list_env;
     char 	**env;
@@ -119,7 +120,7 @@ t_env	*lst_last_env(t_env *lst);
 void	init_struct(t_all *all);
 void	env_list(t_all *all);
 char	*ft_strjoin_path(char const *s1, char const *s2);
-char	*get_line(void);
+char	*get_line(t_all *all);
 
 //path
 int		search_path(t_all *all);

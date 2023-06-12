@@ -6,9 +6,18 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/12 15:32:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:18:53 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+
+
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
@@ -106,17 +115,20 @@ void	minishell_starts(t_all *all)
 	int i;
 	t_pipe pipes;
 	t_cmd *temp;
+	int	pid_temp;
+	
 	temp = all->node;
 	int	stdout_copy;
 	i = 0;
 	if(!temp->next && is_not_forkable(temp->cmd))
 	{
-	
+		
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
 			
 		 	redir_loop(all->node, all);
+			//caso raro 
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		 	{
 		 		perror("dup2");
@@ -149,14 +161,22 @@ void	minishell_starts(t_all *all)
 				all->node = temp;
 		 		set_fd_for_pipes_child( all, &pipes, temp);
 		 		// printf("entro en el hijo\n");
-		 		exit (0);
+		 		exit (all->exit); //tiene que ser 0???
 		 	}
 		 	set_fd_for_pipes_father( temp, &pipes);
 		 	temp = temp->next;
 		 }
 		//  printf("soy el padre\n");
 		 while (i--)
-		 	waitpid(-1, NULL, 0);
+		 	pid_temp = waitpid(-1, &all->status, 0);
+		if(WIFEXITED(all->status) && pid_temp ==  lst_last(&all->node)->pid)
+		{
+			all->exit = WEXITSTATUS(all->status);
+            // printf("Código de error del proceso hijo: %d\n", all->exit);
+		}
+		
+		// printf("despues de todos los redireccionamientos: %d\n", all->exit);
+		// printf("despues de todos los redireccionamientos: %d\n", &all->exit);
 	
 	}
 }

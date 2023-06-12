@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:59:41 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 16:02:03 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:17:37 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 	if (temp->redir)
 	{
 		redir_loop(all->node, all);
-		return 0;
+		return (0);
 	}
 	exec_cmd(all, temp);
 	return(0);

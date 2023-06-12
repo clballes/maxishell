@@ -66,6 +66,7 @@ void	other_cmd(t_all *all)
 	{
 		ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
 		write(2, "\n", 1);
+		// exit(0); PREGUNTAR!!!!!!!!!!!!!!!!!!!
 	}
 }
 

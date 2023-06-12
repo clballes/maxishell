@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 19:22:11 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:32:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	is_not_forkable(char *str)
 			|| ft_strncmp(str, "unset", 6) == 0 || ft_strncmp(str, "env", 4) == 0\
 				|| ft_strncmp(str, "exit", 5)== 0) )
 	{
-		// printf("entro\n");
 			return(1);
 	}
 	return(0);
@@ -125,11 +124,12 @@ void	minishell_starts(t_all *all)
      		}
 		 }
 		else
-		  exec_cmd(all, temp);
+		  {
+			exec_cmd(all, temp);
+		  }
 	}
 	else
 	{
-		
 		 //creamos los pipes en funcion a los nodos que tenemos
 		 pipes.fd_temp = dup(STDIN_FILENO);
 		 while (temp)
@@ -148,14 +148,13 @@ void	minishell_starts(t_all *all)
 		 	{ 
 				all->node = temp;
 		 		set_fd_for_pipes_child( all, &pipes, temp);
-		
 		 		// printf("entro en el hijo\n");
 		 		exit (0);
 		 	}
 		 	set_fd_for_pipes_father( temp, &pipes);
 		 	temp = temp->next;
 		 }
-		 // printf("soy el padre\n");
+		//  printf("soy el padre\n");
 		 while (i--)
 		 	waitpid(-1, NULL, 0);
 	

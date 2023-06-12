@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/12 19:17:23 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:46:06 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,20 @@ int	redir_output(t_all *all, int type)
 		perror("open");
 		return (1);
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		perror("dup2");
-		return (1);
-	}
+	// if (dup2(fd, STDOUT_FILENO) == -1)
+	// {
+	// 	perror("dup2");
+	// 	return (1);
+	// }
 	//cuando hay mas d un nodo ejecutar comadno al final
 	// printf("cuantos nodos tiene la lista redir =%d\n",lst_size_redir(&all->node->redir));
-	if (all->node->redir->next == NULL /* && lst_size_redir(&all->node->redir)!= 1*/) //&& lst_size de t_redir es != 1)
+	if (all->node->redir->next == NULL ) //&& lst_size de t_redir es != 1)
 		{
-			
+			if (dup2(fd, STDOUT_FILENO) == -1)
+			{
+				perror("dup2");
+				return (1);
+			}
 			exec_cmd(all, all->node);
 			
 		}

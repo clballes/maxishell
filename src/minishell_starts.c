@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/12 19:18:53 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/12 20:42:18 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	minishell_starts(t_all *all)
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
-			
+		
 		 	redir_loop(all->node, all);
 			//caso raro 
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 

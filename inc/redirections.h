@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:52:20 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 13:36:18 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:45:11 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			identify_redir(char a, char b);
 int			redir_type(char *line, t_all *all);
 char		*file_name(char *line, t_all *all);
 int			number_of_redirs(char *line, t_all *all);
-int		access_path(char *filename, t_all *all); //li passem el filename
+int			access_path(char *filename, t_all *all, int *type); //li passem el filename
 int			redir_output(t_all *all, int type);
-int			redir_loop(t_cmd *node, t_all *all);
+int			redir_loop(t_cmd *node, t_all *all );
 #endif

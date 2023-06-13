@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:28:57 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/09 17:37:56 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:18:39 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_env_i(t_all *all)
 	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0);
 	all->env[4] = NULL;
 	env_list(all);
-	printf("EEEE\n");
 	free_arr(all->env);
 }
 

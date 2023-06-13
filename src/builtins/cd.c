@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:49:53 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/08 11:48:15 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:21:31 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	exec_cd(t_all *all)
 			error_msg(all);
 		else
 		{
-			printf("holaaaa\n");
+			// printf("holaaaa\n");
 			all->cd = 1;
-			printf("el all cd en el else es; %d\n", all->cd);
+			// printf("el all cd en el else es; %d\n", all->cd);
 
 		}
 	}
@@ -86,7 +86,7 @@ int	exec_cd(t_all *all)
 		}
 		else
 		{
-			printf("holaaaa 2\n");
+			// printf("holaaaa 2\n");
 			all->cd = 1;
 		}
 	}

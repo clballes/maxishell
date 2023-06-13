@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:35:30 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 17:46:41 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:21:45 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_env(t_all *all)
 		if (temp->print == 1)
 		{
 
-			printf("el all cd es %d\n", all->cd);
+			// printf("el all cd es %d\n", all->cd);
 			if (ft_strncmp("OLDPWD",
 					temp->name, ft_strlen(temp->name)) == 0 && (all->cd == 0))
 			{

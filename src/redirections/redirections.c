@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/12 20:46:06 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:24:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	write_err(t_all *all, int j)
 	exit(all->exit);
 }
 
-int	access_path(char *filename, t_all *all)
+int	access_path(char *filename, t_all *all, int *type)
 {
 	struct stat	info;
-
-	if (stat(filename, &info) == 0)
+	
+	if (stat(filename, &info) == 0 && *type != HEREDOC)
 	{
 		if (S_ISREG(info.st_mode))
 		{
@@ -46,7 +46,7 @@ int	access_path(char *filename, t_all *all)
 		else
 			write_err(all, 0); // is a directory
 	}
-	else
+	else if (*type != HEREDOC)
 	{
 		if (all->node->redir->type == INPUT) // file not existent so not doing anytign in input redirection
 			write_err(all, 2);
@@ -128,7 +128,8 @@ int	redir_loop(t_cmd *node, t_all *all)
 	access = 0;
 	while (node->redir)
 	{
-		access = access_path(node->redir->file_name, all);
+		access = access_path(node->redir->file_name, all, &node->redir->type);
+		// printf("access:%d\n", access);
 		if (access != 1)
 		{
 			if (access == 2 && node->redir->type == INPUT)
@@ -145,7 +146,8 @@ int	redir_loop(t_cmd *node, t_all *all)
 				if (node->redir->type == INPUT)
 					redir_input(all);
 				if (node->redir->type == HEREDOC)
-					printf("hola5");
+					printf("hola5\n");
+					// heredoc(all, node->redir->file_name);
 			}
 		}
 		// else

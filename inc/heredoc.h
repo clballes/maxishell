@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 11:45:01 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/24 11:45:02 by clballes         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:32:43 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEREDOC_H
 # define HEREDOC_H
 
-void	heredoc(t_all *all);
+void	heredoc(t_all *all, char *delimitator);
 
 #endif

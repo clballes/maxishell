@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:52:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/12 13:52:40 by clballes         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:22:01 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	signal_handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		printf("holaaaa\n");
+		// printf("holaaaa\n");
 		printf("\n");
 		write(STDOUT_FILENO, "exit\n",5);
 		rl_on_new_line();

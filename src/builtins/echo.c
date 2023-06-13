@@ -35,7 +35,6 @@ void	exec_echo(t_cmd *builtins)
 
 	i = 1;
 	printline = TRUE;
-	printf("los args son: %s\n", builtins->args[i]);
 	while (builtins->args[i] && check_n(builtins->args[i]))
 	{
 		printline = FALSE;

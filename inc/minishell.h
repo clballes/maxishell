@@ -28,6 +28,9 @@
 # define READ	0
 # define WRITE	1
 
+
+# define TRUE	1 // >
+# define FALSE	0 // >
 //Redirecciones
 # define OUTPUT_TRUNCATED	1 // >
 # define OUTPUT_APPEND		2 // >>

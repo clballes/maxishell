@@ -73,6 +73,7 @@ void	clean_file_name(t_all *all, t_redir **redir)
 	char	*result;
 	char	**splitted;
 	t_redir	*temp;
+
 	i = 0;
 	result = NULL;
 	temp = *redir;

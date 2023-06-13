@@ -73,9 +73,8 @@ char	*expand_dolar(char *str, t_all *all)
 		quo = type_of_quottes(str, all, j);
 		if (str[j] == '$' && (!is_in_quottes(str, all, j) || quo == '\"'))
 		{
-			
 			before = ft_substr(str, 0, j);//if before == NULL liberamos listenv listcmd y all_line
-			
+			// all->dollar = 1;
 			if (str[j + 1] == '?')
 				after = manage_dolar_exit(str + j, all);
 			else if (str[j + 1] >= '0' && str[j + 1] <= '9')

@@ -25,7 +25,6 @@ void	init_env_i(t_all *all)
 	all->env[2] = ft_strjoin("_=", "/usr/bin/env", 0, 0);
 	all->env[4] = NULL;
 	env_list(all);
-	printf("EEEE\n");
 	free_arr(all->env);
 }
 
@@ -38,6 +37,7 @@ void	init_struct(t_all *all)
 	all->cd = 0;
 	all->env_i = 0;
 	all->absolute = 0;
+	// all->dollar = 0;
 	if (all->env[0] != NULL)
 		env_list(all);
 	else

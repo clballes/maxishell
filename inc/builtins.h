@@ -27,7 +27,7 @@ void	exec_export(t_all *all);
 void	sort_list(t_env **list_env);
 void	print_list(t_all *all);
 int		ft_prohibited(char c, int j, int flag, int concat);
-int     check_arg(t_all *all, char *arg);
+int     check_arg(t_all *all, char *arg, int j);
 void	change_var_list(char *content, t_env *temp);
 char	*extract_var_value(char *arg);
 char	*extract_var_name(char *arg);

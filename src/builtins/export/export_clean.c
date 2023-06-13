@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-int	check_arg(t_all *all, char *arg)
+int	check_arg(t_all *all, char *arg, int j)
 {
 	int	i;
 
@@ -28,7 +28,10 @@ int	check_arg(t_all *all, char *arg)
 		if (ft_prohibited(arg[i], i, all->node->equal,
 				all->list_env->concatenate) == 1)
 		{
-			printf("bash: export: %s: not a valid identifier\n", arg);
+			all->exit = 1;
+			ft_putstrshell_fd("bash: export: `&': not a valid identifier",
+				2, all, j);
+			write(2, "\n", 1);
 			return (1);
 		}
 		else
@@ -44,8 +47,8 @@ int	ft_prohibited(char c, int index, int equal, int concat)
 	else if ((index == 0) && (!(ft_isalpha(c))))
 		return (1);
 	else if ((index != 0) && (equal == 0)
-		&& (concat == 0) && ((c >= 34 && c <= 47)
-			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 96)
+		&& (concat == 0) && ((c >= 32 && c <= 47)
+			|| (c >= 58 && c <= 64) || (c >= 91 && c <= 94)
 			|| (c >= 123 && c <= 126)))
 		return (1);
 	else if ((equal == 1) && (index != 0) && (concat == 1))

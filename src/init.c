@@ -37,7 +37,6 @@ void	init_struct(t_all *all)
 	all->cd = 0;
 	all->env_i = 0;
 	all->absolute = 0;
-	// all->dollar = 0;
 	if (all->env[0] != NULL)
 		env_list(all);
 	else

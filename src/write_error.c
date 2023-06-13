@@ -20,7 +20,7 @@ void	ft_putcharshell_fd(char c, int fd, t_all *all, int j)
 	i = 0;
 	if (c == '&')
 	{
-		if (j == 2)
+		if (j == -1)
 		{
 			while (all->node->redir->file_name[i])
 				write(fd, &all->node->redir->file_name[i++], 1);

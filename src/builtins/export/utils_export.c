@@ -75,17 +75,24 @@ void	print_list(t_all *all)
 	while (temp)
 	{
 		if ((ft_strncmp(temp->name, "_", ft_strlen(temp->name)) == 0)
-			&& (ft_strncmp(temp->content, "/usr/bin/env", ft_strlen(temp->content)) == 0))
+			&& (ft_strncmp(temp->content, \
+			"/usr/bin/env", ft_strlen(temp->content)) == 0))
 		{
 			if (temp->next == NULL)
 				break ;
 			temp = temp->next;
 		}
-		if (temp->print == 0 || (all->cd == 0 && (ft_strncmp(temp->name, "OLDPWD",
+		if (temp->print == 0 || (all->cd == 0
+				&& (ft_strncmp(temp->name, "OLDPWD",
 						ft_strlen(temp->name)) == 0)))
 			printf("declare -x %s\n", temp->name);
 		else
-			printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+		{
+			if (temp->content == NULL)
+				printf("declare -x %s=\"\"\n", temp->name);
+			else
+				printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+		}
 		temp = temp->next;
 	}
 }

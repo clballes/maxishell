@@ -6,13 +6,15 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/11 20:29:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:01:01 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 #include "../inc/minishell.h"
 #include "../inc/redirections.h"
+
+int	double_array_len(char **array);
 
 char	*join_tokens(char **splitted)
 {
@@ -37,21 +39,24 @@ void	clean_tokens(t_all *all, t_cmd *node)
 {
 	int		i;
 	char	*result;
-	char	**splitted;
-
+	// char	**splitted;
+	// char	**new;
+	(void)all;
 	i = 0;
 	result = NULL;
 	while (node->args[i])
 	{
-		result = expand_dolar(ft_strdup(node->args[i]), all);
-		splitted = ft_split_tokens(result, ' ', all);
-		free(result);
-		result = join_tokens(splitted);
-		result = manage_quottes(result);
-		free(node->args[i]);
-		node->args[i] = result;
+	
+		result = manage_quottes(ft_strdup(node->args[i]));
+
+		free(node->args[i]);//comment
+		node->args[i] = result;//comment
+		
 		i++;
 	}
+	
+	// free_arr(node->args);
+	// node->args = new;
 }
 
 int	double_array_len(char **array)
@@ -59,9 +64,8 @@ int	double_array_len(char **array)
 	int i;
 	
 	i = 0;
-	while (array[i]!= NULL)
+	while (array[i] != NULL)
 	{
-
 		i++;
 	}
 	return(i);
@@ -71,20 +75,16 @@ void	clean_file_name(t_all *all, t_redir **redir)
 {
 	int		i;
 	char	*result;
-	char	**splitted;
-	t_redir	*temp;
 
+	t_redir	*temp;
+	(void)all;
 	i = 0;
 	result = NULL;
 	temp = *redir;
 	while (temp)
 	{
-		result = expand_dolar(ft_strdup(temp->file_name), all);
-		splitted = ft_split_tokens(result, ' ', all);
-		free(result);
-		result = join_tokens(splitted);
-		free_arr(splitted); 
-		result = manage_quottes(result);
+	
+		result = manage_quottes(ft_strdup(temp->file_name));
 		free(temp->file_name);
 		temp->file_name = result;
 		temp = temp->next;

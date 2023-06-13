@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:26:39 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/13 16:18:14 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:49:16 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@
 // 	return (NULL);
 // }
 
-//check line for heredoc
-// void	heredoc(t_all *all, char *delimitator, int *fd)
+// check line for heredoc
+// void	heredoc(t_all *all, char *delimitator, int *fd_old)
 // {
+// 	(void)fd_old;
 // 	(void)all;
 // 	// printf("delimitator is : %s\n", delimitator);
 // 	int	fd[2];
@@ -65,6 +66,7 @@
 // 			break ;	
 // 		free(line);
 // 	}
+// 	free(line);
 // 	close(fd[1]);
 // 	exec_cmd(all, all->node);
 	

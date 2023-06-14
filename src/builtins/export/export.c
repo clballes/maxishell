@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:22:09 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/26 10:05:45 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:01:15 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	exec_export(t_all *all)
 	i = 0;
 	j = 1;
 	i = all->node->n_args;
+	all->exit = 0;
 	if (i == 1)
 	{
 		sort_list(&all->list_env);

@@ -35,13 +35,11 @@ char *get_line(t_all *all)
 			write(2, "exit\n", 6);
 		exit(all->exit);
 	}
-	// if (!line)
-	// 	exit(all->exit); //funcion de error
 	return (line);
 }
 
 
-void	other_cmd(t_all *all)
+void	other_cmd(t_all *all, t_cmd *node)
 {
 	int	i;
 
@@ -60,7 +58,7 @@ void	other_cmd(t_all *all)
 		execve_path(all, all->node->args[0]);
 		all->absolute = 0;
 	}
-	else if (search_path(all) == 0)
+	else if (search_path(all, node) == 0 )
 		all->exit = 0; //comprobar que sea este el num salida
 	else
 	{
@@ -72,6 +70,7 @@ void	other_cmd(t_all *all)
 
 void exec_cmd(t_all *all, t_cmd *node)
 {
+	
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
 		exec_echo(node);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
@@ -85,9 +84,9 @@ void exec_cmd(t_all *all, t_cmd *node)
 	else if (ft_strncmp(all->node->cmd, "env", 4) == 0)
 		exec_env(all);
 	else if (ft_strncmp(all->node->cmd, "exit", 5) == 0)
-		exec_exit(all);
+		exec_exit(all, node);
 	else
-		other_cmd(all);
+		other_cmd(all, node);
 }
 
 int main(int argc, char **argv, char **env)
@@ -116,7 +115,7 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			minishell_starts(all);
-			// printf("num slida final %d\n",all->exit);
+
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

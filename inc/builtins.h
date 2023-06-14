@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:53:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/04/26 12:53:22 by clballes         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:04:16 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exec_echo(t_cmd *builtins);
 void	exec_env(t_all *all);
 int		exec_pwd(t_all *all);
 int		exec_cd(t_all *all);
-void	exec_exit(t_all *all);
+void	exec_exit(t_all *all, t_cmd *node);
 void	swap(t_env **temp);
 void	exec_unset(t_all *all);
 void	error_msg(t_all *all); //free malloc perq faig un join

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:21:56 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/08 11:40:01 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:12:52 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	digit_max_min(int c, char *arg)
 
 int	check_num_args(t_all *all)
 {
-	// lst_last(&all->node)->n_args
 	if (all->node->n_args > 2)
 	{
 		print_err("bash: exit: too many arguments", all);
@@ -80,12 +79,13 @@ int	check_digit_args(char **args, t_all *all)
 	return (1);
 }
 
-void	exec_exit(t_all *all)
+void	exec_exit(t_all *all, t_cmd *node)
 {
-	// printf("num args %d\n", lst_last(&all->node)->n_args);
+	if (node->empty_string)
+		print_err("bash: exit: &: numeric argument required", all);
 	if (all->node->n_args == 1)
 		exit(all->exit);
-	else if (check_digit_args(all->node->args, all) == 1)
+	else if (check_digit_args(all->node->args, all) == 1 && !node->empty_string)
 	{
 		if (check_num_args(all) == 0)
 		{
@@ -99,7 +99,7 @@ void	exec_exit(t_all *all)
 			return ;
 		}
 	}
-	else //unsigned int y luego a int
+	else
 	{
 		all->exit = 255;
 		exit(all->exit);

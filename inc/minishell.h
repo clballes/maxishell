@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/12 19:25:50 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:48:19 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_redir
 
 typedef struct s_cmd 
 {
+	int			empty_string;
 	int			n_redir;
     char		*cmd;
     char		**args;
@@ -126,7 +127,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2);
 char	*get_line(t_all *all);
 
 //path
-int		search_path(t_all *all);
+int		search_path(t_all *all, t_cmd *node);
 void	execve_path(t_all *all, char *new_path);
 void	free_lists_and_line(t_all *all);
 

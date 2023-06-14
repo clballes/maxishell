@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/13 13:27:01 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:21:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 
 int	is_not_forkable(char *str)
 {
+
 	if ((ft_strncmp(str, "echo", 5) == 0|| ft_strncmp(str, "cd", 3) == 0\
 		|| ft_strncmp(str, "pwd", 4) == 0 || ft_strncmp(str, "export", 7) == 0 \
 			|| ft_strncmp(str, "unset", 6) == 0 || ft_strncmp(str, "env", 4) == 0\
 				|| ft_strncmp(str, "exit", 5)== 0) )
 	{
+	
 			return(1);
 	}
+
 	return(0);
 }
 
@@ -120,15 +123,13 @@ void	minishell_starts(t_all *all)
 	temp = all->node;
 	int	stdout_copy;
 	i = 0;
+
 	if(!temp->next && is_not_forkable(temp->cmd))
 	{
-		
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
-		
 		 	redir_loop(all->node, all);
-			//caso raro 
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		 	{
 		 		perror("dup2");
@@ -142,7 +143,9 @@ void	minishell_starts(t_all *all)
 	}
 	else
 	{
+	 
 		 //creamos los pipes en funcion a los nodos que tenemos
+		
 		 pipes.fd_temp = dup(STDIN_FILENO);
 		 while (temp)
 		 {
@@ -172,12 +175,7 @@ void	minishell_starts(t_all *all)
 		if(WIFEXITED(all->status) && pid_temp ==  lst_last(&all->node)->pid)
 		{
 			all->exit = WEXITSTATUS(all->status);
-            // printf("Código de error del proceso hijo: %d\n", all->exit);
 		}
-		
-		// printf("despues de todos los redireccionamientos: %d\n", all->exit);
-		// printf("despues de todos los redireccionamientos: %d\n", &all->exit);
-	
 	}
 }
 

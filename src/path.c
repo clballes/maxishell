@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:47:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/30 11:01:58 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:44:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strjoin_path(char const *s1, char const *s2)
 
 void	execve_path(t_all *all, char *new_path)
 {
-	if (execve(new_path, &all->node->args[0], all->env_array) != 0) //passarle el all->env char** que ha creado alba
+	if (execve(new_path, &all->node->args[0], all->env_array) != 0)
 	{
 		ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
 		write(2, "\n", 1);
@@ -64,16 +64,18 @@ char	*path_direction(t_all *all, char *direction)
 			return (temp->content);
 		temp = temp->next;
 	}
-	return (NULL); //exit que ha fallat
+	return (NULL); 
 }
 
-int	search_path(t_all *all)
+int	search_path(t_all *all, t_cmd *node)
 {
 	char	*res;
 	char	**split_path;
 	int		i;
 	char	*new_path;
 
+	if(node->empty_string)
+		return(1);
 	i = 0;
 	res = path_direction(all, "PATH");
 	if (res == NULL)
@@ -81,7 +83,7 @@ int	search_path(t_all *all)
 	split_path = ft_split(res, ':'); //mallocs
 	while (split_path[i])
 	{
-		new_path = ft_strjoin_path(split_path[i], all->node->args[0]); //join modificat em passo de lineas
+		new_path = ft_strjoin_path(split_path[i], all->node->args[0]);
 		if (access(new_path, F_OK | R_OK) == 0)
 		{
 			execve_path(all, new_path);

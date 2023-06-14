@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 10:59:47 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/13 20:01:01 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:58:36 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ void	clean_tokens(t_all *all, t_cmd *node)
 	result = NULL;
 	while (node->args[i])
 	{
-	
 		result = manage_quottes(ft_strdup(node->args[i]));
-
-		free(node->args[i]);//comment
-		node->args[i] = result;//comment
-		
+		free(node->args[i]);
+		node->args[i] = result;
+		if(ft_strncmp(node->args[0], "", 2) == 0 || ft_strncmp(node->args[1], "", 2) == 0)
+		{
+			all->node->empty_string = 1;
+		}
 		i++;
 	}
 	
-	// free_arr(node->args);
-	// node->args = new;
+
 }
 
 int	double_array_len(char **array)

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 11:17:56 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/01 19:20:33 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:06:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ static char	is_redi_opp(char c)
 }
 
 
-int syntax_invalid_after_redir(char c, char redi, char redi_opp)
+int syntax_invalid_after_redir(char c, char redi, char redi_opp, t_all *all)
 {
 	if(c == redi)
 		printf("minishell: syntax error near unexpected token `%c'\n", redi);
 	else if(c == '\0')
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 	else if(c == '|')
-		printf("minishell: syntax error near unexpected token `|'\n");
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 	else if(c == redi_opp && redi == '>')
 		printf("minishell: syntax error near unexpected token `%c'\n", redi_opp);
 	else
 		return(0);
+	all->exit = 2;
 	return(1);
 }
 
@@ -65,7 +66,7 @@ int	syntax_redir_ok(char *line, t_all *all)
 				i++;
 			while (ft_is_space(line[i]))
 				i++;
-			if (syntax_invalid_after_redir(line[i], redi, redi_opp) != 0)
+			if (syntax_invalid_after_redir(line[i], redi, redi_opp, all) != 0)
 				return(1);
 		}
 	}

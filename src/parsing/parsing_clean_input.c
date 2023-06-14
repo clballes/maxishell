@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/01 18:03:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:12:43 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,15 @@ int	syntax_pipes_ok(char *line, t_all *all)
 {
 	int i;
 
-	i = 0;
-	while (line[i] )
+	i = -1;
+	while (line[++i] )
 	{
+		if(line[0] == '|')
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",2);
+			all->exit = 2;
+			return(1);
+		}
 		if(line[i] == '|' && !is_in_quottes(line, all, i))
 		{
 			i++;
@@ -81,13 +87,12 @@ int	syntax_pipes_ok(char *line, t_all *all)
 		}
 		if(line[i] == '\0')
 		{
-			printf("> syntax error: Please write something after '|'\n");
+			ft_putstr_fd("> syntax error: Please write something after '|'\n",2);
+			all->exit = 2;
 			return(1);
 		}
-		i++;
 	}
 	return (0);
-	
 } 
 
 // limpia la linea y analiza si es correcta

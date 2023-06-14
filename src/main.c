@@ -115,8 +115,9 @@ int main(int argc, char **argv, char **env)
 		{
 			create_list_pipes(all->all_line,all);
 			minishell_starts(all);
-
+			
 		}
+		
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
 	}

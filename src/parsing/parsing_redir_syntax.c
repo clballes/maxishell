@@ -32,8 +32,10 @@ static char	is_redi_opp(char c)
 
 int syntax_invalid_after_redir(char c, char redi, char redi_opp, t_all *all)
 {
-	if(c == redi)
-		printf("minishell: syntax error near unexpected token `%c'\n", redi);
+	if(c == '<')
+		ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
+	else if(c == '>')
+		ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
 	else if(c == '\0')
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 	else if(c == '|')

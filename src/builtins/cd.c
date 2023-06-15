@@ -35,7 +35,12 @@ void	write_error_cd(t_all *all, char *new_cd, int i)
     if (i == 1)
 		ft_putstrshell_fd("bash: cd: &: Not a directory", 2, all, 1);
     if (i == 2)
-        ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
+	{
+		if ((ft_strlen(all->node->args[1])) > 255)
+        	ft_putstrshell_fd("bash: cd: &: File name too long", 2, all, 1);
+		else
+        	ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
+	}
 	write(2, "\n", 1);
     free(new_cd);
     all->exit = 1;

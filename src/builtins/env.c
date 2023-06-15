@@ -42,6 +42,7 @@ void	env_list(t_all *all)
 		temp = temp->next;
 		i++;
 	}
+	
 	all->env_array = list_to_double_pointer(&all->list_env);
 }
 

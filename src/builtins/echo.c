@@ -28,13 +28,14 @@ int	check_n(char *arg)
 	return (FALSE);
 }
 
-void	exec_echo(t_cmd *builtins)
+void	exec_echo(t_cmd *builtins, t_all *all)
 {
 	int	i;
 	int	printline;
 
 	i = 1;
 	printline = TRUE;
+	all->exit = 0;
 	while (builtins->args[i] && check_n(builtins->args[i]))
 	{
 		printline = FALSE;

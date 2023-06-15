@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-void	exec_echo(t_cmd *builtins);
+void	exec_echo(t_cmd *builtins, t_all *all);
 void	exec_env(t_all *all);
 int		exec_pwd(t_all *all);
 int		exec_cd(t_all *all);

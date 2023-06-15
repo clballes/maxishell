@@ -72,7 +72,7 @@ void exec_cmd(t_all *all, t_cmd *node)
 {
 	
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
-		exec_echo(node);
+		exec_echo(node, all);
 	else if (ft_strncmp(all->node->cmd, "cd", 3) == 0)
 		exec_cd(all);
 	else if (ft_strncmp(all->node->cmd, "pwd", 4) == 0)
@@ -114,10 +114,10 @@ int main(int argc, char **argv, char **env)
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line,all);
-			minishell_starts(all);
-			
+			minishell_starts(all);	
+			// system("leaks minishell");
+			// exit(0);
 		}
-		
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
 	}

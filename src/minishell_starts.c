@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/14 18:21:17 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:16:43 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,14 @@ void	minishell_starts(t_all *all)
 	temp = all->node;
 	int	stdout_copy;
 	i = 0;
-
+	
 	if(!temp->next && is_not_forkable(temp->cmd))
 	{
+	
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
-		 	redir_loop(all->node, all);
+		 	redir_loop(all->node, all, &pipes);
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		 	{
 		 		perror("dup2");
@@ -162,6 +163,7 @@ void	minishell_starts(t_all *all)
 		 	if (temp->pid == 0)
 		 	{ 
 				all->node = temp;
+				
 		 		set_fd_for_pipes_child( all, &pipes, temp);
 		 		// printf("entro en el hijo\n");
 		 		exit (all->exit); //tiene que ser 0???

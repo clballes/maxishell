@@ -3,7 +3,7 @@ MAKE = make --no-print-directory
 CC = gcc
 LIBFT_DIR = libft
 CFLAGS = -Wall -Wextra -Werror -g
-INC_DIR = inc
+INC_DIR = inc -I/Users/albagarc/.brew/opt/readline/include/readline/
 OBJ_DIR = obj/
 SRC_DIR = src/
 BUILTINS_DIR = builtins/
@@ -39,10 +39,7 @@ SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
 
-RL_DIR := ${HOME}/.brew/opt/readline/
 
-RL_LIB = -L$(RL_DIR)lib
-RL_INCDIR = -I$(RL_DIR)include/readline
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)
@@ -51,7 +48,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)export/
 		mkdir -p $(OBJ_DIR)$(PARSING_DIR) 
 		mkdir -p $(OBJ_DIR)$(REDIR_DIR)
-		$(CC)   -c $(CFLAGS) -MMD -I $(INC_DIR)  $< -o $@
+		$(CC)   -c $(CFLAGS) -MMD -I $(INC_DIR) -I/Users/$(USER)/.brew/opt/readline/include $< -o $@
 
 all: makelibft
 	 @$(MAKE) $(NAME)
@@ -62,11 +59,11 @@ makelibft:
 bonus:
 		@$(MAKE) all
 
--include $(DEPS)
 $(NAME) : $(LIBFT_DIR)/libft.a $(OBJ) Makefile
 		make -sC $(LIBFT_DIR)
-		$(CC) $(CFLAGS)  $(FSANITIZE) $(OBJ) -o $(NAME) $(RL_INCDIR) $(RL_LIB) -lreadline -lhistory $(LIBFT_DIR)/libft.a
+		$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT_DIR)/libft.a -lreadline -lhistory -L/Users/$(USER)/.brew/opt/readline/lib  
 
+-include $(DEPS)
 clean:
 		$(RM) -r $(OBJ_DIR) $(DEPS)
 		$(RM) $(LIBFT_DIR)/libft.a

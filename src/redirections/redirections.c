@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 13:21:10 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:35:16 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	redir_input(t_all *all)
 	return (0);
 }
 
-int	redir_loop(t_cmd *node, t_all *all, t_pipe *pipes)
+int	redir_loop(t_cmd *node, t_all *all)
 {
 	int	access;
 
@@ -145,8 +145,6 @@ int	redir_loop(t_cmd *node, t_all *all, t_pipe *pipes)
 					redir_output(all, all->node->redir->type);
 				if (node->redir->type == INPUT)
 					redir_input(all);
-				if (node->redir->type == HEREDOC)
-					heredoc(all, node->redir->file_name, &pipes->fd_temp);
 			}
 		}
 		// else

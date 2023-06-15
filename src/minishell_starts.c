@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 13:16:43 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:11:01 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-
-
-
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 #include "../inc/redirections.h"
+#include "../inc/heredoc.h"
+
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
+int	is_there_heredoc(t_redir **redir);
 // void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes);
 
 int	is_not_forkable(char *str)
@@ -123,14 +122,18 @@ void	minishell_starts(t_all *all)
 	temp = all->node;
 	int	stdout_copy;
 	i = 0;
-	
 	if(!temp->next && is_not_forkable(temp->cmd))
 	{
-	
+		 pipes.fd_temp = dup(STDIN_FILENO);
+		
+		if(is_there_heredoc(&temp->redir))
+		{
+			heredoc(all, temp->redir->file_name, &pipes.fd_temp);
+		}
 		if (temp->redir)
 		{
 			stdout_copy = dup(STDOUT_FILENO);
-		 	redir_loop(all->node, all, &pipes);
+		 	redir_loop(all->node, all);
 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		 	{
 		 		perror("dup2");
@@ -138,18 +141,21 @@ void	minishell_starts(t_all *all)
      		}
 		 }
 		else
-		  {
 			exec_cmd(all, temp);
-		  }
 	}
 	else
 	{
-	 
+		 	
 		 //creamos los pipes en funcion a los nodos que tenemos
-		
 		 pipes.fd_temp = dup(STDIN_FILENO);
 		 while (temp)
 		 {
+			if(is_there_heredoc(&temp->redir))
+			{
+			
+				heredoc(all, temp->redir->file_name, &pipes.fd_temp);
+	
+			}
 			
 		 	pipe(pipes.fd);
 		 	i++;
@@ -162,13 +168,13 @@ void	minishell_starts(t_all *all)
 		 	}
 		 	if (temp->pid == 0)
 		 	{ 
-				all->node = temp;
 				
-		 		set_fd_for_pipes_child( all, &pipes, temp);
+				all->node = temp;	
+		 		set_fd_for_pipes_child(all, &pipes, temp);
 		 		// printf("entro en el hijo\n");
-		 		exit (all->exit); //tiene que ser 0???
+		 		exit (all->exit); 
 		 	}
-		 	set_fd_for_pipes_father( temp, &pipes);
+		 	set_fd_for_pipes_father(temp, &pipes);
 		 	temp = temp->next;
 		 }
 		//  printf("soy el padre\n");
@@ -181,3 +187,16 @@ void	minishell_starts(t_all *all)
 	}
 }
 
+int	is_there_heredoc(t_redir **redir)
+{
+	t_redir *temp;
+
+	temp = *redir;
+	while(temp)
+	{
+		if(temp->type == 4)
+			return(1);
+		temp = temp->next;
+	}
+	return(0);
+}

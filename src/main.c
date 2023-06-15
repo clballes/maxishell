@@ -42,7 +42,7 @@ char *get_line(t_all *all)
 void	other_cmd(t_all *all, t_cmd *node)
 {
 	int	i;
-
+	
 	i = -1;
 	while (all->node->args[0][i++])
 	{

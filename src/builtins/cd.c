@@ -28,33 +28,82 @@ void	change_env(t_all *all)
 	}
 }
 
-void	error_msg(t_all *all) //free malloc perq faig un join
+void	write_error_cd(t_all *all, char *new_cd, int i)
 {
-	struct stat	path_stat;
-	char		*new_cd;
+	if (i == 0)
+		ft_putstrshell_fd("bash: cd: &: Permission denied", 2, all, 1);
+    if (i == 1)
+		ft_putstrshell_fd("bash: cd: &: Not a directory", 2, all, 1);
+    if (i == 2)
+        ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
+	write(2, "\n", 1);
+    free(new_cd);
+    all->exit = 1;
+}
 
-	if (all->node->args[1][0] != '/')
-		new_cd = ft_strjoin_path(all->list_env->current_cd, \
-				all->node->args[1]);
-	else
-		new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1], 0, 0);
-	if (stat(new_cd, &path_stat) == 0)
-	{
-		if (S_ISREG(path_stat.st_mode))
+int    error_msg(t_all *all, char *new_cd)
+{
+    struct stat path_stat;
+
+    if (stat(new_cd, &path_stat) == 0)
+    {
+        if (S_ISDIR(path_stat.st_mode) && (access(new_cd, F_OK | R_OK | W_OK) != 0))
 		{
-			ft_putstrshell_fd("bash: cd: &: Not a directory", 2, all, 1); //aqui passa algo
-			write(2, "\n", 1);
-			free(new_cd);
-			all->exit = 1;
+			write_error_cd(all, new_cd, 0);
+			return (1);
 		}
-	}
-	else
+		else if (!S_ISDIR(path_stat.st_mode))
+		{
+			write_error_cd(all, new_cd, 1);
+			return (1);
+		}
+    }
+    else
 	{
-		ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
-		write(2, "\n", 1);
-		free(new_cd);
-		all->exit = 1;
+		write_error_cd(all, new_cd, 2);
+		return (1);	
 	}
+	return (0);
+}
+
+void	create_path(t_all *all)
+{
+    char	**split_dir;
+	char	*new_cd;
+	int		i;
+
+	i = 0;
+	split_dir = NULL;
+	if (all->node->args[1][0] != '/')
+    {
+        if (ft_strrchr(all->node->args[1], '/') != 0)
+		{
+			// new_cd = ft_strjoin(all->list_env->current_cd, "/", 0, 0);
+			// new_cd = ft_strjoin(ft_strdup(new_cd), split_dir[i], 1, 0);
+            split_dir = ft_split(all->node->args[1], '/');
+			new_cd = ft_strjoin_path(all->list_env->current_cd, \
+				split_dir[i]);
+			while (split_dir[i])
+			{
+				if (error_msg(all, new_cd) == 0)
+				{
+					free(split_dir[i]);
+					i++;
+					new_cd = ft_strjoin_path(new_cd, split_dir[i]);
+					// new_cd = ft_strjoin(ft_strdup(new_cd), "/", 1, 0);
+					// new_cd = ft_strjoin(ft_strdup(new_cd), split_dir[i], 1, 1);
+				}
+				else
+					return ;
+			}
+		}
+		else
+			new_cd = ft_strjoin_path(all->list_env->current_cd, \
+				all->node->args[1]);
+	}
+    else
+        new_cd = ft_strjoin(all->list_env->current_cd, all->node->args[1], 0, 0);
+	error_msg(all, new_cd);
 }
 
 int	exec_cd(t_all *all)
@@ -62,19 +111,18 @@ int	exec_cd(t_all *all)
 	if (all->node->args[1] && all->node->args[1][0] == 47
 			&& all->node->args[1][1] == 47
 			&& (ft_strlen(all->node->args[1]) == 2))
-		all->bar = 1;
+		{
+			all->bar = 1;
+		}
 	all->list_env->current_cd = getcwd(NULL, 0);
 	if (all->node->args[1])
 	{
 		if (chdir(all->node->args[1]) == -1)
-			error_msg(all);
-		else
 		{
-			// printf("holaaaa\n");
-			all->cd = 1;
-			// printf("el all cd en el else es; %d\n", all->cd);
-
+			create_path(all);
 		}
+		else
+			all->cd = 1;
 	}
 	else
 	{
@@ -85,10 +133,7 @@ int	exec_cd(t_all *all)
 			write(2, "\n", 1);
 		}
 		else
-		{
-			// printf("holaaaa 2\n");
 			all->cd = 1;
-		}
 	}
 	all->list_env->new_cd = getcwd(NULL, 0);
 	change_env(all);

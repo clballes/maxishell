@@ -20,7 +20,7 @@ int		exec_cd(t_all *all);
 void	exec_exit(t_all *all, t_cmd *node);
 void	swap(t_env **temp);
 void	exec_unset(t_all *all);
-void	error_msg(t_all *all); //free malloc perq faig un join
+int		error_msg(t_all *all, char *new_cd); //free malloc perq faig un join
 
 //export funtions
 void	exec_export(t_all *all);

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 17:11:01 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:01:18 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,26 @@ int	is_not_forkable(char *str)
 // 		multiple_commands(all);
 // }
 
-
+void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
+{
+	int	stdout_copy;
+	
+	pipes->fd_temp = dup(STDIN_FILENO);
+	if(is_there_heredoc(&temp->redir))
+		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
+	if (temp->redir)
+	{
+		stdout_copy = dup(STDOUT_FILENO);
+		redir_loop(all->node, all);
+		if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
+		{
+			perror("dup2");
+			// return 1;
+		}
+	}
+	else
+		exec_cmd(all, temp);
+}
 void	minishell_starts(t_all *all)
 {
 	int i;
@@ -120,29 +139,10 @@ void	minishell_starts(t_all *all)
 	int	pid_temp;
 	
 	temp = all->node;
-	int	stdout_copy;
+	// int	stdout_copy;
 	i = 0;
 	if(!temp->next && is_not_forkable(temp->cmd))
-	{
-		 pipes.fd_temp = dup(STDIN_FILENO);
-		
-		if(is_there_heredoc(&temp->redir))
-		{
-			heredoc(all, temp->redir->file_name, &pipes.fd_temp);
-		}
-		if (temp->redir)
-		{
-			stdout_copy = dup(STDOUT_FILENO);
-		 	redir_loop(all->node, all);
-			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
-		 	{
-		 		perror("dup2");
-		 		// return 1;
-     		}
-		 }
-		else
-			exec_cmd(all, temp);
-	}
+		single_command_no_fork(all, temp, &pipes);
 	else
 	{
 		 	

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:59:41 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/13 16:20:05 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:11:54 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,21 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 		close(pipes->fd[WRITE]);
 		close(pipes->fd[READ]);
 	}
-	if (temp->redir)
-	{
-		redir_loop(all->node, all);
-		return (0);
-	}
-	// printf("temp->cmd = %s\n", temp->cmd);
+	//heredoce es antes de redireccionar padre hijo porque el resultado del heredoc ser redirecciona al hijo
+	// printf("type %d\n",temp->redir->type);
+	
+		if (temp->redir )
+		{
+			if(!(lst_size_redir(&temp->redir) == 1 && temp->redir->type == HEREDOC))
+			{
+		
+			redir_loop(all->node, all);
+			return (0);
+			}
+		}
+		
+	
+	// // printf("temp->cmd = %s\n", temp->cmd);
 	exec_cmd(all, temp);
 	return(0);
 }

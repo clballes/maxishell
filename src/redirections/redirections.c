@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/13 20:49:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:35:16 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,6 @@ int	redir_loop(t_cmd *node, t_all *all)
 					redir_output(all, all->node->redir->type);
 				if (node->redir->type == INPUT)
 					redir_input(all);
-				if (node->redir->type == HEREDOC)
-					printf("hola5\n");
-					// heredoc(all, node->redir->file_name);
 			}
 		}
 		// else

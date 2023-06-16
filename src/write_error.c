@@ -13,36 +13,23 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-void	ft_putcharshell_fd(char c, int fd, t_all *all, int j)
+void	write_dyn_err(char *message, char *var)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	if (c == '&')
+	j = 0;
+	while (message[i])
 	{
-		if (j == -1)
+		if (message[i] == '&')
 		{
-			while (all->node->redir->file_name[i])
-				write(fd, &all->node->redir->file_name[i++], 1);
+			while(var[j])
+				write(2, &var[j++], 1);
+			i++;
 		}
 		else
-		{
-			while (all->node->args[j][i])
-				write(fd, &all->node->args[j][i++], 1);
-		}
+			write(2, &message[i++], 1);
 	}
-	else
-		write(fd, &c, 1);
-}
-
-void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		ft_putcharshell_fd(s[i], fd, all, j);
-		i++;
-	}
+	write(2, "\n", 1);
 }

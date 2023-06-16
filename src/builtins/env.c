@@ -12,7 +12,6 @@
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
-char	**list_to_double_pointer(t_env **list);
 
 void	env_list(t_all *all)
 {
@@ -29,7 +28,18 @@ void	env_list(t_all *all)
 		cont_name = ft_split(all->env[i], '=');
 		if (ft_strncmp(cont_name[0], "SHLVL", ft_strlen(cont_name[0])) == 0 && all->env_i == 0)
 		{
-			shl_level = ft_atoi(cont_name[1]);
+			int new_shlvl = ft_atoi(cont_name[1]);
+			if (new_shlvl < 0)
+				shl_level = -1;
+			else if (new_shlvl > 999)
+			{
+				new_shlvl++;
+				char *var = ft_itoa(new_shlvl);
+				write_dyn_err("bash: warning: shell level (&) too high, resetting to 1", var);
+				shl_level = 0;
+			}
+			else
+				shl_level = ft_atoi(cont_name[1]);
 			shl_level++;
 			free(cont_name[1]);
 			cont_name[1] = ft_itoa(shl_level); //poosible leak pero no no da leak

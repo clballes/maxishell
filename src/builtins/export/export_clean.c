@@ -29,9 +29,7 @@ int	check_arg(t_all *all, char *arg, int j)
 				all->list_env->concatenate) == 1)
 		{
 			all->exit = 1;
-			ft_putstrshell_fd("bash: export: `&': not a valid identifier",
-				2, all, j);
-			write(2, "\n", 1);
+			write_dyn_err("bash: export: `&': not a valid identifier", all->node->args[j]);
 			return (1);
 		}
 		else

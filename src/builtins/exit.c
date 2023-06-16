@@ -16,8 +16,7 @@
 void	print_err(char *print, t_all *all)
 {
 	ft_putendl_fd("exit", 2);
-	ft_putstrshell_fd(print, 2, all, 1);
-	write(2, "\n", 1);
+	write_dyn_err(print, all->node->args[1]);
 }
 
 int	digit_max_min(int c, char *arg)

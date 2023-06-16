@@ -46,9 +46,7 @@ void	execve_path(t_all *all, char *new_path)
 {
 	if (execve(new_path, &all->node->args[0], all->env_array) != 0)
 	{
-		ft_putstrshell_fd("bash: &: No such file or directory", 2, all, 0);
-		write(2, "\n", 1);
-		// all->exit = 1
+		write_dyn_err("bash: &: No such file or directory", all->node->args[0]);
 		exit(all->exit);
 	}
 }

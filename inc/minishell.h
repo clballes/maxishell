@@ -137,6 +137,7 @@ int		set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 
 //print functions
-void	ft_putcharshell_fd(char c, int fd, t_all *all, int j);
-void	ft_putstrshell_fd(char *s, int fd, t_all *all, int j);
+char	**list_to_double_pointer(t_env **list);
+void	write_dyn_err(char *message, char *var);
+
 #endif

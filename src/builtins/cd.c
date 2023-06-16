@@ -31,17 +31,16 @@ void	change_env(t_all *all)
 void	write_error_cd(t_all *all, char *new_cd, int i)
 {
 	if (i == 0)
-		ft_putstrshell_fd("bash: cd: &: Permission denied", 2, all, 1);
+		write_dyn_err("bash: cd: &: Permission denied", all->node->args[1]);		
     if (i == 1)
-		ft_putstrshell_fd("bash: cd: &: Not a directory", 2, all, 1);
+		write_dyn_err("bash: cd: &: Not a directory", all->node->args[1]);
     if (i == 2)
 	{
 		if ((ft_strlen(all->node->args[1])) > 255)
-        	ft_putstrshell_fd("bash: cd: &: File name too long", 2, all, 1);
+			write_dyn_err("bash: cd: &: File name too long", all->node->args[1]);
 		else
-        	ft_putstrshell_fd("bash: cd: &: No such file or directory", 2, all, 1);
+			write_dyn_err("bash: cd: &: No such file or directory", all->node->args[1]);
 	}
-	write(2, "\n", 1);
     free(new_cd);
     all->exit = 1;
 }
@@ -134,8 +133,7 @@ int	exec_cd(t_all *all)
 		if (chdir(path_direction(all, "HOME")) == -1)
 		{
 			all->exit = 1;
-			ft_putstrshell_fd("bash: cd: HOME not set", 2, all, 1);
-			write(2, "\n", 1);
+			write_dyn_err("bash: cd: HOME not set", NULL);
 		}
 		else
 			all->cd = 1;

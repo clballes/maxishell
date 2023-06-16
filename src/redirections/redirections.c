@@ -21,12 +21,11 @@ int	write_err(t_all *all, int j)
 {
 	all->exit = 1;
 	if (j == 1)
-		ft_putstrshell_fd("minishell: &: Permission denied", 2, all, -1);
+		write_dyn_err("minishell: &: Permission denied", &all->node->redir->file_name[0]);
 	else if (j == 2)
-		ft_putstrshell_fd("minishell: &: No such file or directory", 2, all, -1);
+		write_dyn_err("minishell: &: No such file or directory", &all->node->redir->file_name[0]);
 	else
-		ft_putstrshell_fd("minishell: &: Is a directory", 2, all, -1);
-	write(2, "\n", 1);
+		write_dyn_err("minishell: &: Is a directory", &all->node->redir->file_name[0]);
 	exit(all->exit);
 }
 

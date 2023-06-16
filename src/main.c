@@ -63,8 +63,7 @@ void	other_cmd(t_all *all, t_cmd *node)
 	else
 	{
 		all->exit = 127;
-		ft_putstrshell_fd("minishell: &: command not found", 2, all, 0);
-		write(2, "\n", 1);
+		write_dyn_err("minishell: &: command not found", all->node->args[0]);
 	}
 }
 

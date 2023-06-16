@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 18:01:18 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:43:59 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,76 +41,6 @@ int	is_not_forkable(char *str)
 }
 
 
-// void	single_command(t_all *all, t_cmd *temp)
-// {
-// 	int	stdout_copy;
-// 	if (temp->redir)
-// 		{
-// 			stdout_copy = dup(STDOUT_FILENO);
-// 			redir_loop(all->node, all);
-// 			if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
-// 			{
-// 		 		perror("dup2");
-// 		 		// return 1;
-//     		}
-// 		}
-// 		exec_cmd(all, temp);
-// }
-
-// void	multiple_commands(t_all *all)
-// {
-// 	int i;
-// 	t_pipe pipes;
-// 	t_cmd *temp;
-// 	temp = all->node;
-
-// 	i = 0;
-// 	pipes.fd_temp = dup(STDIN_FILENO);
-// 	while (temp)
-// 	{
-// 		i++;
-// 		execute_node(temp, all, pipes);
-// 		temp = temp->next;
-// 	}
-// 	// printf("soy el padre\n");
-// 	while (i--)
-// 		waitpid(-1, NULL, 0);
-// }
-
-// void	execute_node(t_cmd *temp, t_all *all, t_pipe pipes)
-// {
-// 		// t_pipe pipes;
-		
-// 		pipe(pipes.fd);
-// 		//si falla pipe hay que liberar todo
-// 		temp->pid = fork();// TODO solo se forkea en determinados casos
-// 		if (temp->pid == -1)
-// 		{
-// 			printf("ERROR EN EL FORK\n");
-// 			return ;
-// 		}
-// 		if (temp->pid == 0)
-// 		{ 
-// 			all->node = temp;//por que???????
-// 			set_fd_for_pipes_child(all, &pipes, temp);
-// 			// printf("entro en el hijo\n");
-// 			exit (0);
-// 		}
-// 		set_fd_for_pipes_father( temp, &pipes);
-// }
-
-// void	minishell_starts(t_all *all)
-// {
-	
-// 	t_cmd *temp;
-// 	temp = all->node;
-	
-// 	if(!temp->next && is_not_forkable(temp->cmd))
-// 		single_command(all, temp);
-// 	else
-// 		multiple_commands(all);
-// }
-
 void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 {
 	int	stdout_copy;
@@ -133,6 +63,29 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 		exec_cmd(all, temp);
 	}
 }
+
+void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
+{
+	if(is_there_heredoc(&temp->redir))
+		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
+	pipe(pipes->fd);
+	
+	//si falla pipe hay que liberar todo
+	temp->pid = fork();
+	if (temp->pid == -1)
+	{
+		printf("ERROR EN EL FORK\n");
+		return ;
+	}
+	if (temp->pid == 0)
+	{ 
+		all->node = temp;	
+		set_fd_for_pipes_child(all, pipes, temp);
+		exit (all->exit); 
+	}
+	set_fd_for_pipes_father(temp, pipes);
+}
+
 void	minishell_starts(t_all *all)
 {
 	int i;
@@ -141,49 +94,22 @@ void	minishell_starts(t_all *all)
 	int	pid_temp;
 	
 	temp = all->node;
-	// int	stdout_copy;
 	i = 0;
 	if(!temp->next && is_not_forkable(temp->cmd))
 		single_command_no_fork(all, temp, &pipes);
 	else
-	{	//creamos los pipes en funcion a los nodos que tenemos
+	{
 		pipes.fd_temp = dup(STDIN_FILENO);
 		while (temp)
-		 {
-			if(is_there_heredoc(&temp->redir))
-			{
-			
-				heredoc(all, temp->redir->file_name, &pipes.fd_temp);
-	
-			}
-			
-		 	pipe(pipes.fd);
-		 	i++;
-		 	//si falla pipe hay que liberar todo
-		 	temp->pid = fork();// TODO solo se forkea en determinados casos
-		 	if (temp->pid == -1)
-		 	{
-		 		printf("ERROR EN EL FORK\n");
-		 		return ;
-		 	}
-		 	if (temp->pid == 0)
-		 	{ 
-				
-				all->node = temp;	
-		 		set_fd_for_pipes_child(all, &pipes, temp);
-		 		// printf("entro en el hijo\n");
-		 		exit (all->exit); 
-		 	}
-		 	set_fd_for_pipes_father(temp, &pipes);
-		 	temp = temp->next;
-		 }
-		//  printf("soy el padre\n");
-		 while (i--)
-		 	pid_temp = waitpid(-1, &all->status, 0);
-		if(WIFEXITED(all->status) && pid_temp ==  lst_last(&all->node)->pid)
 		{
-			all->exit = WEXITSTATUS(all->status);
+			i++;
+			multi_command_or_fork(temp, &pipes, all);
+			temp = temp->next;
 		}
+		while (i--)
+			pid_temp = waitpid(-1, &all->status, 0);
+		if(WIFEXITED(all->status) && pid_temp ==  lst_last(&all->node)->pid)
+			all->exit = WEXITSTATUS(all->status);
 	}
 }
 

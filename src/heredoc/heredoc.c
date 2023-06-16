@@ -13,35 +13,6 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
-//child heredoc
-// char	*child_heredoc()
-// {
-// 	char *line;
-// 	char *prompt;
-// 	prompt = "> ";
-// 	line = readline(prompt);
-// 	if (!line)
-// 	{
-// 		if (isatty(STDIN_FILENO))
-// 			write(2, "exit\n", 6);
-// 		exit(0);
-// 	}
-// 	return (line);
-// }
-
-// //fork heredoc
-// char	*fork_heredoc()
-// {
-// 	pid_t pid;
-
-// 	pid = fork();
-// 	if (pid < 0)
-// 		printf("ERROR EN EL FORK DE HEREDOCC\n");
-// 	if (pid == 0)
-// 		child_heredoc();
-// 	return (NULL);
-// }
-
 // check line for heredoc
 void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 {

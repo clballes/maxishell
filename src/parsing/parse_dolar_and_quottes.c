@@ -83,7 +83,6 @@ void	clean_file_name(t_all *all, t_redir **redir)
 	temp = *redir;
 	while (temp)
 	{
-	
 		result = manage_quottes(ft_strdup(temp->file_name));
 		free(temp->file_name);
 		temp->file_name = result;
@@ -106,7 +105,6 @@ int	final_tokens_in_nodes(t_all *all)
 		all->node->n_args = double_array_len(all->node->args);
 		all->node = all->node->next;
 	}
-	
 	all->node = first_node;
 	return (0);
 }

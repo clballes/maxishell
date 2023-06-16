@@ -102,8 +102,8 @@ void create_list_pipes(char *all_line, t_all *all)
 		else
 			temp = lst_new(content_list(all_line, false, all));
 		if (temp == NULL)
-			free_lists_and_line(all);	
-		temp->line = expand_dolar(ft_strdup(temp->line), all);
+			free_lists_and_line(all);
+		temp->line = expand_dolar(temp->line, all);
 		temp->line = ft_strtrim_free_s1(temp->line, " ");
 		temp = create_redir_list(temp, all);
 		temp->empty_string = 0;
@@ -111,6 +111,5 @@ void create_list_pipes(char *all_line, t_all *all)
 		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
 	}
-
 	final_tokens_in_nodes(all);
 }

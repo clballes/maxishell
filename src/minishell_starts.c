@@ -121,7 +121,7 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 	if (temp->redir)
 	{
 		stdout_copy = dup(STDOUT_FILENO);
-		redir_loop(all->node, all);
+		redir_loop(&all->node, all);
 		if (dup2(stdout_copy, STDOUT_FILENO) == -1) 
 		{
 			perror("dup2");
@@ -129,7 +129,9 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 		}
 	}
 	else
+	{
 		exec_cmd(all, temp);
+	}
 }
 void	minishell_starts(t_all *all)
 {
@@ -144,11 +146,9 @@ void	minishell_starts(t_all *all)
 	if(!temp->next && is_not_forkable(temp->cmd))
 		single_command_no_fork(all, temp, &pipes);
 	else
-	{
-		 	
-		 //creamos los pipes en funcion a los nodos que tenemos
-		 pipes.fd_temp = dup(STDIN_FILENO);
-		 while (temp)
+	{	//creamos los pipes en funcion a los nodos que tenemos
+		pipes.fd_temp = dup(STDIN_FILENO);
+		while (temp)
 		 {
 			if(is_there_heredoc(&temp->redir))
 			{

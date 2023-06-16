@@ -54,56 +54,40 @@ int	access_path(char *filename, t_all *all, int *type)
 	return (0);
 }
 
-int	redir_output(t_all *all, int type)
+int	redir_output(t_all *all, t_redir *temp, int type)
 {
 	int	fd;
-	// int	stdout_copy;
 
 	fd = 0;
-	// stdout_copy = dup(STDOUT_FILENO);
 	if (type == 0 || type == OUTPUT_TRUNCATED)
-		fd = open(all->node->redir->file_name, O_WRONLY | O_TRUNC, 0644);
+		fd = open(temp->file_name, O_WRONLY | O_TRUNC, 0644);
 	else if (type == OUTPUT_APPEND)
-		fd = open(all->node->redir->file_name, O_WRONLY | O_APPEND, 0644);
+		fd = open(temp->file_name, O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("open");
 		return (1);
 	}
-	// if (dup2(fd, STDOUT_FILENO) == -1)
-	// {
-	// 	perror("dup2");
-	// 	return (1);
-	// }
 	//cuando hay mas d un nodo ejecutar comadno al final
-	// printf("cuantos nodos tiene la lista redir =%d\n",lst_size_redir(&all->node->redir));
-	if (all->node->redir->next == NULL ) //&& lst_size de t_redir es != 1)
+	// printf("cuantos nodos tiene la lista redir =%d\n",lst_size_redir(&all->node));
+	if (temp->next == NULL ) //&& lst_size de t_redir es != 1)
+	{
+		if (dup2(fd, STDOUT_FILENO) == -1)
 		{
-			if (dup2(fd, STDOUT_FILENO) == -1)
-			{
-				perror("dup2");
-				return (1);
-			}
-			exec_cmd(all, all->node);
-			
+			perror("dup2");
+			return (1);
 		}
-	// if (dup2(stdout_copy, STDOUT_FILENO) == -1) esto lo hemos de hacer si no es forkabloe TODO
-	// {
-	//	 perror("dup2");
-	//	 return 1;
-    // }
-    // if (close(fd) == -1) {
-    //     perror("close");
-    //     return 1;
-    // }
+		exec_cmd(all, all->node);
+		
+	}
 	return (0);
 }
 
-int	redir_input(t_all *all)
+int	redir_input(t_all *all, t_redir *temp)
 {
 	int	fd;
 
-	fd = open(all->node->redir->file_name, O_RDONLY);
+	fd = open(temp->file_name, O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Failed to open the input file\n");
@@ -120,36 +104,34 @@ int	redir_input(t_all *all)
 	return (0);
 }
 
-int	redir_loop(t_cmd *node, t_all *all)
+int	redir_loop(t_cmd **node, t_all *all)
 {
 	int	access;
+	t_redir *temp;
 
+	temp = (*node)->redir;
 	access = 0;
-	while (node->redir)
+	while (temp)
 	{
-		access = access_path(node->redir->file_name, all, &node->redir->type);
-		// printf("access:%d\n", access);
+		access = access_path(temp->file_name, all, &temp->type);
 		if (access != 1)
 		{
-			if (access == 2 && node->redir->type == INPUT)
+			if (access == 2 && temp->type == INPUT)
 				write_err(all, 3);
-			if (access == 2 && (node->redir->type != INPUT || node->redir->type != HEREDOC)) // fer el open idiferent de que sigui
+			if (access == 2 && (temp->type != INPUT || temp->type != HEREDOC)) // fer el open idiferent de que sigui
 			{
-				open(node->redir->file_name, O_WRONLY | O_CREAT, 0644);
-				redir_output(all, 0);
+				open(temp->file_name, O_WRONLY | O_CREAT, 0644);
+				redir_output(all, temp, 0);
 			}
 			else
 			{
-				if (node->redir->type == OUTPUT_TRUNCATED || node->redir->type == OUTPUT_APPEND)
-					redir_output(all, all->node->redir->type);
-				if (node->redir->type == INPUT)
-					redir_input(all);
+				if (temp->type == OUTPUT_TRUNCATED || temp->type == OUTPUT_APPEND)
+					redir_output(all, temp, temp->type);
+				if (temp->type == INPUT)
+					redir_input(all, temp);
 			}
 		}
-		// else
-		// 	liberar todo
-		// 	salir del bucle
-		node->redir = node->redir->next;
+		temp = temp->next;
 	}
 	return (0);
 }

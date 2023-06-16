@@ -23,6 +23,6 @@ int			redir_type(char *line, t_all *all);
 char		*file_name(char *line, t_all *all);
 int			number_of_redirs(char *line, t_all *all);
 int			access_path(char *filename, t_all *all, int *type); //li passem el filename
-int			redir_output(t_all *all, int type);
-int			redir_loop(t_cmd *node, t_all *all);
+int			redir_output(t_all *all, t_redir *temp, int type);
+int			redir_loop(t_cmd **node, t_all *all);
 #endif

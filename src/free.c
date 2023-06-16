@@ -39,12 +39,11 @@ void	lstfree_redir(t_redir **lst)
 {
 	t_redir	*temp;
 
-
 		temp = *lst;
-		while (temp != NULL)
+		while (temp)
 		{
-			if(temp->file_name != NULL)
-				free(temp->file_name);
+			// if(temp->file_name != NULL)
+			free(temp->file_name);
 			free (temp);
 			temp = temp->next;
 		}

@@ -51,12 +51,10 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 			if(!(lst_size_redir(&temp->redir) == 1 && temp->redir->type == HEREDOC))
 			{
 		
-			redir_loop(all->node, all);
+			redir_loop(&all->node, all);
 			return (0);
 			}
 		}
-		
-	
 	// // printf("temp->cmd = %s\n", temp->cmd);
 	exec_cmd(all, temp);
 	return(0);

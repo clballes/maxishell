@@ -36,6 +36,7 @@ t_cmd	*create_redir_list(t_cmd *node, t_all *all)
 		node->line = clean_line_redir(node->line, all);
 		node->n_redir--;
 	}
+
 	return (node);
 }
 

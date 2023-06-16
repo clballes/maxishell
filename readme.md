@@ -47,9 +47,6 @@ caacter esecial no hay q hacer nada
 
 ## Shlvl test
 ### Clara
-371
-373
-374
 375
 376
 

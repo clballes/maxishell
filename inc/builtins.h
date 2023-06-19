@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:53:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/14 16:04:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:24:49 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ char	*extract_var_name(char *arg);
 char	*path_direction(t_all *all, char *direction);
 void	change_env(t_all *all);
 int     lst_size_env(t_env **lst);
+
+char	*ft_strtrim_free_s1(char *s1, char const *set);
 
 #endif

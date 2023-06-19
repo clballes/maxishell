@@ -6,12 +6,14 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/14 19:12:43 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:17:03 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
+
+int second_pipe_in_a_row(char *line, t_all *all);
 
 //Esta funcion comprueba si hay comillas abiertas y manda un error si es que hay
 int	have_open_close_quotes(char *line, t_all *all)
@@ -84,12 +86,12 @@ int	syntax_pipes_ok(char *line, t_all *all)
 			i++;
 			while(ft_is_space(line[i]))
 				i++;
+			if(second_pipe_in_a_row(line + i, all))
+				return(1);
 		}
-		if(line[i] == '\0'/* || line[i] == '|'*/)
+		if(line[i] == '\0')
 		{
-			// if(line[i] == '|')
-			// 	ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",2);
-			// else
+			
 				ft_putstr_fd("> syntax error: Please write something after '|'\n",2);
 			all->exit = 2;
 			return(1);
@@ -97,6 +99,25 @@ int	syntax_pipes_ok(char *line, t_all *all)
 	}
 	return (0);
 } 
+
+
+int second_pipe_in_a_row(char *line, t_all *all)
+{
+	int i;
+
+	i = 0;
+	while(ft_is_space(line[i]))
+		i++;
+	if(line[i] == '|')
+	{
+		ft_putstr_fd("syntax error near unexpected token `|'\n",2);
+		all->exit = 2;
+		return(1);
+	}
+	return(0);
+	
+}
+
 
 // limpia la linea y analiza si es correcta
 int	valid_clean_line(char *all_line, t_all *all)

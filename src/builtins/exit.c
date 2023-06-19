@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:21:56 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/14 16:12:52 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:54:49 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,24 @@ int	check_digit_args(char **args, t_all *all)
 		{
 			if (args[i][j] == '-' || args[i][j] == '+')
 				j++;
-			if (digit_max_min(args[i][j], args[i]) == 1)
+			if(args[i][j] == ' ')
 			{
-				if (i > 1)
+				j++;
+				// if(args[i][j]== '\0')
+				// 	break ;
+			}
+				//hay que tener en cuenta los espacios
+			if (digit_max_min(args[i][j], args[i]) == 1 )
+			{
+				// if(args[i][j]== '\0')
+				// 	break;
+				if (i > 1 /*|| args[i][j]== '\0'*/)
 					return (1);
 				else
 					print_err("bash: exit: &: numeric argument required", all);
 				return (0);
 			}
-			else
+			else 
 				j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/19 11:17:03 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:50:04 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ int	syntax_pipes_ok(char *line, t_all *all)
 		}
 		if(line[i] == '\0')
 		{
-			
-				ft_putstr_fd("> syntax error: Please write something after '|'\n",2);
+			ft_putstr_fd("> syntax error: Please write something after '|'\n",2);
 			all->exit = 2;
 			return(1);
 		}
@@ -100,7 +99,7 @@ int	syntax_pipes_ok(char *line, t_all *all)
 	return (0);
 } 
 
-
+//Busca si hay un segundo pipe seguido despues de otro pipe
 int second_pipe_in_a_row(char *line, t_all *all)
 {
 	int i;

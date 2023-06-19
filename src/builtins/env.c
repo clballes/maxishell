@@ -63,12 +63,8 @@ void	exec_env(t_all *all)
 	temp = all->list_env;
 	while (temp)
 	{
-	
-
 		if (temp->print == 1)
 		{
-
-			// printf("el all cd es %d\n", all->cd);
 			if (ft_strncmp("OLDPWD",
 					temp->name, ft_strlen(temp->name)) == 0 && (all->cd == 0))
 			{

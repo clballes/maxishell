@@ -100,11 +100,13 @@ int main(int argc, char **argv, char **env)
 	init_struct(all);//init podria allocar all y el env  para quitarnos lineas
 	while (1)
 	{
+		init_signal(3);
+		set_term(all);
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
 		{
-			free(all->all_line);
 			// system("leaks minishell");
+			// break ;
 			// exit(0);
 			continue;
 		}
@@ -116,6 +118,9 @@ int main(int argc, char **argv, char **env)
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
+		// init_signal(1);
 	}
+	//liberar todo lo de la init strcut
+	//liberar el all
 	return (0);
 }

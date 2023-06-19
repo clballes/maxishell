@@ -23,6 +23,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <termios.h>
+#include "signal.h"
 
 //fd pipes
 # define READ	0
@@ -139,5 +141,6 @@ int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 //print functions
 char	**list_to_double_pointer(t_env **list);
 void	write_dyn_err(char *message, char *var);
-
+void	set_term(t_all *all);
+void	init_signal(int mode);
 #endif

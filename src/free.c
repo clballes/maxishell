@@ -59,6 +59,8 @@ void	lstfree_env(t_env **lst)
 		temp = *lst;
 		while (temp != NULL)
 		{
+			free(temp->name);
+			free(temp->content);
 			free (temp);
 			temp = temp->next;
 		}

@@ -40,11 +40,10 @@ int	is_not_forkable(char *str)
 	return(0);
 }
 
-
 void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 {
 	int	stdout_copy;
-	
+
 	pipes->fd_temp = dup(STDIN_FILENO);
 	if(is_there_heredoc(&temp->redir))
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
@@ -66,10 +65,9 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 
 void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 {
-	if(is_there_heredoc(&temp->redir))
+	if (is_there_heredoc(&temp->redir))
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 	pipe(pipes->fd);
-	
 	//si falla pipe hay que liberar todo
 	temp->pid = fork();
 	if (temp->pid == -1)
@@ -83,6 +81,7 @@ void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 		set_fd_for_pipes_child(all, pipes, temp);
 		exit (all->exit); 
 	}
+	init_signal(1);
 	set_fd_for_pipes_father(temp, pipes);
 }
 
@@ -107,9 +106,29 @@ void	minishell_starts(t_all *all)
 			temp = temp->next;
 		}
 		while (i--)
+		{
 			pid_temp = waitpid(-1, &all->status, 0);
-		if(WIFEXITED(all->status) && pid_temp ==  lst_last(&all->node)->pid)
-			all->exit = WEXITSTATUS(all->status);
+			if ((WIFEXITED(all->status) || WIFSIGNALED(all->status)) && pid_temp ==  lst_last(&all->node)->pid)
+				all->exit = WEXITSTATUS(all->status);
+			if (WIFSIGNALED(all->status))
+			{
+				if (all->n_pipes)
+					all->exit = 0;
+				if (all->status == 2)
+				{
+					ft_putendl_fd("^C", STDOUT_FILENO);
+					if (!all->n_pipes)
+						all->exit = 130;
+				}
+				else if (all->status == 3 && !all->n_pipes)
+				{
+					ft_putendl_fd("^\\Quit: 3", STDOUT_FILENO);
+					all->exit = 131;
+				}
+				else if (all->status == 3 && all->n_pipes)
+					ft_putstr_fd("^\\", STDOUT_FILENO);
+			}
+		}
 	}
 }
 

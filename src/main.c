@@ -101,7 +101,7 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		init_signal(3);
-		set_term(all);
+		// set_term(all);
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
 		{
@@ -118,7 +118,7 @@ int main(int argc, char **argv, char **env)
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
-		// init_signal(1);
+		init_signal(1);
 	}
 	//liberar todo lo de la init strcut
 	//liberar el all

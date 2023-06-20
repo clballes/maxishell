@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/11 19:28:59 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:32:43 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ void	free_lists_and_line(t_all *all)
 {
 	lstfree_cmd(&all->node);
 	lstfree_env(&all->list_env);
-	free(all->all_line);	
+	free(all->all_line);
+	exit(all->exit);	
 }

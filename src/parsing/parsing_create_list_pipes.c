@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/14 18:29:51 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:44:46 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void create_list_pipes(char *all_line, t_all *all)
 {
 	int		i;
 	t_cmd	*temp;
+	
 
 	i = 0;
 	all->n_pipes = number_of_pipes(all_line, all);

@@ -6,14 +6,14 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:39:37 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/19 12:50:04 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:43:32 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 
-int second_pipe_in_a_row(char *line, t_all *all);
+int	second_pipe_in_a_row(char *line, t_all *all);
 
 //Esta funcion comprueba si hay comillas abiertas y manda un error si es que hay
 int	have_open_close_quotes(char *line, t_all *all)
@@ -70,51 +70,50 @@ void	clean_spaces_line(char *all_line, t_all *all)
 //tira error si despues del pipe no hay nada 
 int	syntax_pipes_ok(char *line, t_all *all)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while (line[++i] )
+	while (line[++i])
 	{
-		if(line[0] == '|')
+		if (line[0] == '|')
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n",2);
+			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 			all->exit = 2;
 			return(1);
 		}
-		if(line[i] == '|' && !is_in_quottes(line, all, i))
+		if (line[i] == '|' && !is_in_quottes(line, all, i))
 		{
 			i++;
 			while(ft_is_space(line[i]))
 				i++;
 			if(second_pipe_in_a_row(line + i, all))
-				return(1);
+				return (1);
 		}
-		if(line[i] == '\0')
+		if (line[i] == '\0')
 		{
-			ft_putstr_fd("> syntax error: Please write something after '|'\n",2);
+			ft_putstr_fd("> syntax error: Please write something after '|'\n", 2);
 			all->exit = 2;
-			return(1);
+			return (1);
 		}
 	}
 	return (0);
 } 
 
 //Busca si hay un segundo pipe seguido despues de otro pipe
-int second_pipe_in_a_row(char *line, t_all *all)
+int	second_pipe_in_a_row(char *line, t_all *all)
 {
 	int i;
 
 	i = 0;
-	while(ft_is_space(line[i]))
+	while (ft_is_space(line[i]))
 		i++;
-	if(line[i] == '|')
+	if (line[i] == '|')
 	{
 		ft_putstr_fd("syntax error near unexpected token `|'\n",2);
 		all->exit = 2;
 		return(1);
 	}
 	return(0);
-	
 }
 
 
@@ -124,9 +123,9 @@ int	valid_clean_line(char *all_line, t_all *all)
 	if (have_open_close_quotes(all_line, all) != 0)
 		return (1);
 	if (syntax_redir_ok(all_line, all) != 0)
-		return(1);
+		return (1);
 	if (syntax_pipes_ok(all_line, all) != 0)
-		return(1);
+		return (1);
 	clean_spaces_line(all->all_line, all);
 	return (0);
 }

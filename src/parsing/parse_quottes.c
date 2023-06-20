@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 12:28:11 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/11 20:26:02 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:40:50 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ char	*quottes_processed(char *str, char quo, int j)
 	char	*result;
 	char	*aux;
 	char	*before;
-	
-	// if(j != 0 && str[j - 1] == '$')
-	// 	i = 1;
+
 	before = ft_substr(str, 0, j);
 	aux = extract_in_quottes(str + j, quo);
 	result = ft_strjoin(before, aux, 1, 1);

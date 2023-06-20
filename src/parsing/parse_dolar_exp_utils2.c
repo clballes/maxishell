@@ -6,82 +6,47 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:15:13 by albagarc          #+#    #+#             */
-/*   Updated: 2023/05/23 13:43:06 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:40:17 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 #include "../inc/minishell.h"
 
-// Nos devuelve la longitud de la variable a buscar en el env
-// Ej:$USER nos devuelve 4
-// cuenta solo los valores validos para una variable que son letras
-// barra baja _
-// numeros si no estan en la primera posicion
-int	dolar_exp_len(char *token)
+int	is_valid_char(char c)
 {
-	int	i;
-
-	i = 0;
-	while (token[i])
-	{	
-		if ((token[i] >= 'a' && token[i] <= 'z') \
-			|| (token[i] >= 'A' && token[i] <= 'Z') \
-			|| token[i] == '_' || (token[i] >= '0' && token[i] <= '9'))
-			i++;
-		else
-			break ;
-	}
-	return (i);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' )
+		return (1);
+	return (0);
 }
 
-// char puntero en el que si tenemos $USER guardamos USER;
-char	*dolar_search_value(char *token)
+char	*manage_dolar_exit(char *str, t_all *all)
 {
-	int		len;
-	char	*search_env;
-	int		i;
+	char	*after;
 
-	i = 0;
-	len = dolar_exp_len(token);
-	search_env = ft_calloc(len + 1, sizeof(char)); // FREEEEE y proteccion
-	if (!search_env)
-		return (NULL);
-	while (len)
-	{
-		search_env[i] = token[i];
-		len--;
-		i++;
-	}
-	search_env[dolar_exp_len(token)] = '\0';
-	return (search_env);
+	after = NULL;
+	after = ft_strjoin(ft_itoa(all->exit), str + 2, 1, 0);
+	return (after);
 }
 
-char	*search_in_env(t_env *env, char *search_value)
-{
-	t_env	*first_node; // guardamos aqui el primer elemento de la lista
-	first_node = env;
-	while (env && ft_strlen(search_value)) // recorremos la lista
-	{	
-		if (ft_strncmp(env->name, search_value, \
-			ft_strlen(search_value) + 1) == 0)
-		{
-			return (ft_strdup(env->content));
-		}
-		env = env->next;
-	}
-	env = first_node;
-	return (ft_strdup(""));
-}
-
-int	len_search_value(char *str)
+char	*manage_dolar_env(char *str, t_all *all)
 {
 	char	*search_value;
-	int		variable_len;
+	char	*expanded_value;
+	char	*after;
 
-	variable_len = 0;
-	search_value = dolar_search_value(str + 1);
-	variable_len = ft_strlen(search_value);
+	search_value = dolar_search_value(str + 1, all);
+	expanded_value = search_in_env(all->list_env, search_value);
+	after = ft_strjoin(expanded_value, \
+		str + len_search_value(str, all) + 1, 1, 0);
 	free(search_value);
-	return (variable_len);
+	return (after);
+}
+
+char	*manage_dolar_number(char *str)
+{	
+	char	*after;
+
+	after = str + 2;
+	return (ft_strdup(after));
 }

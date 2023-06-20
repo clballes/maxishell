@@ -6,90 +6,65 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:38:31 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/11 20:28:07 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:39:40 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parsing.h"
 #include "../inc/minishell.h"
 
-int	is_valid_char(char c)
+int	expand_conditions(char *str, t_all *all, int j)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_' )
+	if (str[j + 1] == '?' || (str[j + 1] >= '0' && str[j + 1] <= '9') || \
+	is_valid_char(str[j + 1]))
+	{
+		return (1);
+	}
+	if ((str[j + 1] == '\'' || str[j + 1] == '\"') && \
+		!is_in_quottes(str, all, j))
 		return (1);
 	return (0);
 }
 
-char	*manage_dolar_exit(char *str, t_all *all)
+char	*dolar_special_meaning(char *str, t_all *all, char *full_str, int j)
 {
 	char	*after;
 
 	after = NULL;
-	after = ft_strjoin(ft_itoa(all->exit), str + 2, 1, 0);
+	if (str[1] == '?')
+		after = manage_dolar_exit(str, all);
+	else if (str[1] >= '0' && str[1] <= '9')
+		after = manage_dolar_number(str);
+	else if (is_valid_char(str[1]))
+		after = manage_dolar_env(str, all);
+	else if ((str[1] == '\'' || str[1] == '\"') && \
+		!is_in_quottes(full_str, all, j))
+		after = ft_strdup(full_str + j + 1);
 	return (after);
 }
-
-char	*manage_dolar_env(char *str, t_all *all)
-{
-	char	*search_value;
-	char	*expanded_value;
-	char	*after;
-
-	search_value = dolar_search_value(str + 1);
-	expanded_value = search_in_env(all->list_env, search_value);
-	after = ft_strjoin(expanded_value, str + len_search_value(str) + 1, 1, 0);
-	free(search_value);
-	return (after);
-}
-
-char	*manage_dolar_number(char *str)
-{	
-	char	*after;
-	
-	after = str + 2;
-	return (ft_strdup(after));
-}
-
-// char *manage_quote_after_dolar(char *str)
-// {
-// 	char	*after;
-	
-// }
-
 
 char	*expand_dolar(char *str, t_all *all)
 {
 	char	*before;
 	char	*after;
 	int		j;
-	char	quo;
 
 	j = -1;
-	after = NULL;
-	// before = NULL;
 	while (str[++j] != '\0')
-	{
-		
-		quo = type_of_quottes(str, all, j);
-		if (str[j] == '$' && (!is_in_quottes(str, all, j) || quo == '\"'))
+	{	
+		if (str[j] == '$' && (!is_in_quottes(str, all, j) || \
+			type_of_quottes(str, all, j) == '\"'))
 		{
-			before = ft_substr(str, 0, j);//if before == NULL liberamos listenv listcmd y all_line
-			// all->dollar = 1;
-			if (str[j + 1] == '?')
-				after = manage_dolar_exit(str + j, all);
-			else if (str[j + 1] >= '0' && str[j + 1] <= '9')
-				after = manage_dolar_number(str + j);
-			else if (is_valid_char(str[j + 1]))
-				after = manage_dolar_env(str + j, all);
-			else if(( str[j + 1] == '\''  || str[j + 1] == '\"' ) && !is_in_quottes(str, all, j))
-			 	after = ft_strdup(str + j + 1);
+			before = ft_substr(str, 0, j);
+			if (expand_conditions(str, all, j))
+				after = dolar_special_meaning(str + j, all, str, j);
 			else
 			{
-				free (before);
+				free(before);
 				continue ;
 			}
 			free(str);
-			str = ft_strjoin(before, after,1, 1);
+			str = ft_strjoin(before, after, 1, 1);
 			if (str[j] == '$')
 				j--;
 		}

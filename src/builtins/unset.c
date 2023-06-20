@@ -20,11 +20,13 @@ void	exec_unset(t_all *all)
 	temp = all->list_env;
 	while (temp)
 	{
-		if (all->node->args[1] == NULL) //si nomes tinc larg de unset que faig
+		if (all->node->args[1] == NULL)
 			return ;
 		if (ft_strncmp(all->node->args[1],
 				temp->name, ft_strlen(temp->name)) == 0)
 		{
+			free(temp->name);
+			free(temp->content);
 			temp->previous->next = temp->next;
 			free(temp);
 			return ;

@@ -55,3 +55,8 @@ caacter esecial no hay q hacer nada
 ### Alba
 conveniente que no de seg fault
 
+# Leaks Builtins & Normi
+exit
+env
+pwd
+export

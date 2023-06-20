@@ -105,8 +105,8 @@ int main(int argc, char **argv, char **env)
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
 		{
-			// system("leaks minishell");
-			// break ;
+			system("leaks minishell");
+			break ;
 			// exit(0);
 			continue;
 		}

@@ -6,15 +6,13 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:01:35 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/20 14:44:46 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:58:28 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/parsing.h"
 #include "../inc/redirections.h"
-
-
 
 // Esta funcion me extrae el comando que separan los pipes dependiendo 
 // si es el ultimo o no
@@ -25,7 +23,7 @@ char	*save_line_depends_on_position(char *line, int start, int i)
 	if (line[i + 1] == '\0')
 		line_to_return = ft_substr(line, start, i + 1 - start);
 	else
-		line_to_return = ft_substr(line, start, i - start); //TODO cada substring hace MALLOC HAY QUE HACER FREE
+		line_to_return = ft_substr(line, start, i - start);
 	return (line_to_return);
 }
 
@@ -65,13 +63,14 @@ char	*content_list(char *line, bool init, t_all *all)
 	}
 	return (line_split_by_pipes);
 }
+
 // Cuenta los pipes reales que hay, si hay pipes entre comillas no lo cuenta.
 // Con el numero de pipes sabremos el numero de t_cmd que necesitamos para
 // el malloc.
-int number_of_pipes(char *line, t_all *all)
+int	number_of_pipes(char *line, t_all *all)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -88,18 +87,18 @@ int number_of_pipes(char *line, t_all *all)
 	return (count);
 }
 
-void create_list_pipes(char *all_line, t_all *all)
+void	create_list_pipes(char *all_line, t_all *all)
 {
 	int		i;
 	t_cmd	*temp;
-	
+	t_cmd	*last;
 
 	i = 0;
 	all->n_pipes = number_of_pipes(all_line, all);
-	while (i < (all->n_pipes + 1))									//solo tenemos demomento la linea all_line malloc
+	while (i < (all->n_pipes + 1))
 	{
 		if (i == 0)
-			temp = lst_new(content_list(all_line, true, all));		//si temp es null entonces liberas todo
+			temp = lst_new(content_list(all_line, true, all));
 		else
 			temp = lst_new(content_list(all_line, false, all));
 		if (temp == NULL)
@@ -109,7 +108,8 @@ void create_list_pipes(char *all_line, t_all *all)
 		temp = create_redir_list(temp, all);
 		temp->empty_string = 0;
 		lst_add_back(&all->node, temp);
-		lst_last(&all->node)->args = ft_split_tokens(temp->line, ' ', all);
+		last = lst_last(&all->node);
+		last->args = ft_split_tokens(temp->line, ' ', all);
 		i++;
 	}
 	final_tokens_in_nodes(all);

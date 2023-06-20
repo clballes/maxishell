@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:57:30 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/20 18:35:45 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:05:09 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ int		is_valid_char(char c);
 char	*manage_dolar_exit(char *str, t_all *all);
 char	*manage_dolar_env(char *str, t_all *all);
 char	*manage_dolar_number(char *str);
-
+int		syntax_pipes_ok(char *line, t_all *all);
 #endif

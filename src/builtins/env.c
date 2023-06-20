@@ -79,6 +79,26 @@ void	exec_env(t_all *all)
 	}
 }
 
+void	change_env(t_all *all)
+{
+	t_env	*temp;
+
+	temp = all->list_env;
+	while (temp)
+	{
+		if (ft_strncmp(temp->name, "PWD", ft_strlen(temp->name)) == 0)
+		{
+			free(temp->content);
+			temp->content = all->list_env->new_cd;
+		}
+		if (ft_strncmp(temp->name, "OLDPWD", ft_strlen(temp->name)) == 0)
+		{
+			free(temp->content);
+			temp->content = all->list_env->current_cd;
+		}
+		temp = temp->next;
+	}
+}
 
 char	**list_to_double_pointer(t_env **list)
 {

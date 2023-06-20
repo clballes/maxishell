@@ -105,8 +105,8 @@ int main(int argc, char **argv, char **env)
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
 		{
-			// system("leaks minishell");
-			// break ;
+			system("leaks minishell");
+			break ;
 			// exit(0);
 			continue;
 		}
@@ -118,6 +118,8 @@ int main(int argc, char **argv, char **env)
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
+		// free_arr(all->env_array); //free array
+		// lstfree_env(&all->list_env);
 		init_signal(1);
 	}
 	//liberar todo lo de la init strcut

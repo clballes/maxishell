@@ -53,7 +53,6 @@ void	lstfree_redir(t_redir **lst)
 void	lstfree_env(t_env **lst)
 {
 	t_env	*temp;
-
 	while (*lst != NULL)
 	{
 		temp = *lst;

@@ -30,21 +30,17 @@ static void	handle_signals(int sig)
 	}
 }
 
-void	set_term(t_all *all)
-{
-	struct termios	term;
+// void	set_term(t_all *all)
+// {
+// 	struct termios	term;
+// 	(void)all;
 
-	// all->exit = 1; salida del exit 
-	if (tcgetattr(STDIN_FILENO, &term) != 0)
-	{
-		free_lists_and_line(all);
-	}
-	term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
-	{
-		free_lists_and_line(all);
-	}
-}
+// 	if (tcgetattr(STDIN_FILENO, &term) != 0)
+// 		free_lists_and_line(all);
+// 	term.c_lflag &= ~ECHOCTL;
+// 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
+// 		free_lists_and_line(all);
+// }
 
 
 // static void	handle_signals_heredoc(int sig)

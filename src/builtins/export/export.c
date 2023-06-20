@@ -66,7 +66,7 @@ void	add_new(t_all *all, char *arg)
 	else
 		all->list_env->temporal->print = 1;
 	all->env_array = list_to_double_pointer(&all->list_env);
-	sort_list(&all->list_env);
+	sort_list(&all->list_env);	
 }
 
 void	exec_export(t_all *all)

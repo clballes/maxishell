@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 14:44:09 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:35:41 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@
 # define TRUE	1 // >
 # define FALSE	0 // >
 //Redirecciones
-# define OUTPUT_TRUNCATED	1 // >
-# define OUTPUT_APPEND		2 // >>
+# define OUT_TRUNCATED	1 // >
+# define OUT_APPEND		2 // >>
 # define INPUT				3 // <
 # define HEREDOC			4 // <<
 
 typedef struct s_redir 
 {
     char			*file_name;// nombre del archivo 
-	int				type; 		//tipo de redireccion OUTPUT_APPEND, OUTPUT_TRUNCATED, INPUT, HEREDOC		
+	int				type; 		//tipo de redireccion OUT_APPEND, OUT_TRUNCATED, INPUT, HEREDOC		
     struct s_redir 	*next;
 }   t_redir;
 
@@ -53,6 +53,7 @@ typedef struct s_cmd
     char		*cmd;
     char		**args;
     char		*line;
+	int			keep_quottes;
     int			n_args;
 	int			flag;
 	int			equal; //para saber si hay iguales dentr del export
@@ -143,4 +144,8 @@ char	**list_to_double_pointer(t_env **list, t_all *all);
 void	write_dyn_err(char *message, char *var);
 void	set_term(void);
 void	init_signal(int mode);
+
+//heredoc
+int	is_there_heredoc(t_redir **redir);
+
 #endif

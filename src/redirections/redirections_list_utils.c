@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 11:51:54 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/11 17:20:13 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:21:05 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	identify_redir(char a, char b)
 	if (a == '>')
 	{
 		if (a == b)
-			redir = OUTPUT_APPEND;
+			redir = OUT_APPEND;
 		else
-			redir = OUTPUT_TRUNCATED;
+			redir = OUT_TRUNCATED;
 	}
 	if (a == '<')
 	{
@@ -74,8 +74,8 @@ char	*file_name(char *line, t_all *all)
 				i++;
 			start = i;
 			while ((!ft_is_space(line[i]) && line[i] != '\0' \
-				&& line[i] != '<' && line[i] != '>' ) || (ft_is_space(line[i]) && \
-					is_in_quottes(line, all, i)) )
+				&& line[i] != '<' && line[i] != '>' ) || (ft_is_space(line[i]) \
+					&& is_in_quottes(line, all, i)))
 				i++;
 			file_name = ft_substr(line, start, i - start);
 			return (file_name);

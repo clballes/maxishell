@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:45:47 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/20 18:32:43 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:49:14 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@ void	lstfree_redir(t_redir **lst);
 void	lstfree_cmd(t_cmd **lst)
 {
 	t_cmd	*temp;
+
 	temp = *lst;
 	while (temp != NULL)
 	{
-		// if(temp->args != NULL)
+		if (temp->args != NULL)
 			free_arr(temp->args);
-		// if(temp->line)
+		if (temp->line)
 			free(temp->line);
-		// if(temp->redir)
+		if (temp->redir)
 			lstfree_redir(&temp->redir);
-		// if(temp->cmd)
-			// free(temp->cmd);
-		free (temp);
+		free(temp);
 		temp = temp->next;
 	}
 	*lst = NULL;
@@ -39,20 +38,20 @@ void	lstfree_redir(t_redir **lst)
 {
 	t_redir	*temp;
 
-		temp = *lst;
-		while (temp)
-		{
-			// if(temp->file_name != NULL)
-			free(temp->file_name);
-			free (temp);
-			temp = temp->next;
-		}
-		*lst = NULL;
+	temp = *lst;
+	while (temp)
+	{
+		free(temp->file_name);
+		free (temp);
+		temp = temp->next;
+	}
+	*lst = NULL;
 }
 
 void	lstfree_env(t_env **lst)
 {
 	t_env	*temp;
+
 	while (*lst != NULL)
 	{
 		temp = *lst;
@@ -89,5 +88,5 @@ void	free_lists_and_line(t_all *all)
 	lstfree_cmd(&all->node);
 	lstfree_env(&all->list_env);
 	free(all->all_line);
-	exit(all->exit);	
+	exit(all->exit);
 }

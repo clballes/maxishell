@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 11:49:47 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:51:24 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +37,6 @@ char *get_line(t_all *all)
 	return (line);
 }
 
-
 void	other_cmd(t_all *all, t_cmd *node)
 {
 	int	i;
@@ -49,7 +47,7 @@ void	other_cmd(t_all *all, t_cmd *node)
 		if (all->node->args[0][i] == '/')
 		{
 			all->absolute = 1;
-			break;
+			break ;
 		}
 	}
 	i = 0;
@@ -67,7 +65,7 @@ void	other_cmd(t_all *all, t_cmd *node)
 	}
 }
 
-void exec_cmd(t_all *all, t_cmd *node)
+void	exec_cmd(t_all *all, t_cmd *node)
 {
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
 		exec_echo(node, all);
@@ -87,9 +85,9 @@ void exec_cmd(t_all *all, t_cmd *node)
 		other_cmd(all, node);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_all *all;
+	t_all	*all;
 
 	(void)argc;
 	(void)argv;
@@ -108,13 +106,13 @@ int main(int argc, char **argv, char **env)
 			// system("leaks minishell");
 			// break ;
 			// exit(0);
-			continue;
+			continue ;
 		}
 		add_history(all->all_line);
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
-			create_list_pipes(all->all_line,all);
-			minishell_starts(all);	
+			create_list_pipes(all->all_line, all);
+			minishell_starts(all);
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui

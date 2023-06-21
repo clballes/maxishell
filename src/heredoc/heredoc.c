@@ -6,13 +6,28 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:26:39 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 17:11:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:35:07 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+
+
+int	is_there_heredoc(t_redir **redir)
+{
+	t_redir *temp;
+
+	temp = *redir;
+	while(temp)
+	{
+		if(temp->type == 4)
+			return(1);
+		temp = temp->next;
+	}
+	return(0);
+}
 // check line for heredoc
 void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 {

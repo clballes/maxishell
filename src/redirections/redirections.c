@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 12:49:33 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:16:15 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,42 @@ int	write_err(t_all *all, int j)
 {
 	all->exit = 1;
 	if (j == 1)
-		write_dyn_err("minishell: &: Permission denied", &all->node->redir->file_name[0]);
+		write_dyn_err \
+			("msh: &: Permission denied", &all->node->redir->file_name[0]);
 	else if (j == 2)
-		write_dyn_err("minishell: &: No such file or directory", &all->node->redir->file_name[0]);
+		write_dyn_err \
+			("msh: &: No such file or directory", \
+				&all->node->redir->file_name[0]);
 	else
-		write_dyn_err("minishell: &: Is a directory", &all->node->redir->file_name[0]);
+		write_dyn_err \
+			("msh: &: Is a directory", &all->node->redir->file_name[0]);
 	exit(all->exit);
 }
 
+// si existe y tenemos acceso, haremos el open
+// file we dont have permision
+// is a directory
 int	access_path(char *filename, t_all *all, int *type)
 {
 	struct stat	info;
-	
+
 	if (stat(filename, &info) == 0 && *type != HEREDOC)
 	{
 		if (S_ISREG(info.st_mode))
 		{
 			if (access(filename, W_OK) == 0)
-				return (0); // si existe y tenemos acceso, haremos el open
+				return (0);
 			else
-				write_err(all, 1); // file we dont have permision
+				write_err(all, 1);
 		}
 		else
-			write_err(all, 0); // is a directory
+			write_err(all, 0);
 	}
 	else if (*type != HEREDOC)
 	{
-		if (all->node->redir->type == INPUT) // file not existent so not doing anytign in input redirection
+		if (all->node->redir->type == INPUT)
 			write_err(all, 2);
-		return (2);// necesitamos crear el fichero
+		return (2);
 	}
 	return (0);
 }
@@ -59,18 +66,16 @@ int	redir_output(t_all *all, t_redir *temp, int type)
 	int	fd;
 
 	fd = 0;
-	if (type == 0 || type == OUTPUT_TRUNCATED)
+	if (type == 0 || type == OUT_TRUNCATED)
 		fd = open(temp->file_name, O_WRONLY | O_TRUNC, 0644);
-	else if (type == OUTPUT_APPEND)
+	else if (type == OUT_APPEND)
 		fd = open(temp->file_name, O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("open");
 		return (1);
 	}
-	//cuando hay mas d un nodo ejecutar comadno al final
-	// printf("cuantos nodos tiene la lista redir =%d\n",lst_size_redir(&all->node));
-	if (temp->next == NULL ) //&& lst_size de t_redir es != 1)
+	if (temp->next == NULL)
 	{
 		if (dup2(fd, STDOUT_FILENO) == -1)
 		{
@@ -78,7 +83,6 @@ int	redir_output(t_all *all, t_redir *temp, int type)
 			return (1);
 		}
 		exec_cmd(all, all->node);
-		
 	}
 	return (0);
 }
@@ -100,15 +104,14 @@ int	redir_input(t_all *all, t_redir *temp)
 	}
 	if (temp->next == NULL )
 		exec_cmd(all, all->node);
-	// Close the input file
 	close(fd);
 	return (0);
 }
 
-int	redir_loop(t_cmd **node, t_all *all)
+void	redir_loop(t_cmd **node, t_all *all)
 {
-	int	access;
-	t_redir *temp;
+	int		access;
+	t_redir	*temp;
 
 	temp = (*node)->redir;
 	access = 0;
@@ -119,14 +122,14 @@ int	redir_loop(t_cmd **node, t_all *all)
 		{
 			if (access == 2 && temp->type == INPUT)
 				write_err(all, 3);
-			if (access == 2 && (temp->type != INPUT || temp->type != HEREDOC)) // fer el open idiferent de que sigui
+			if (access == 2 && (temp->type != INPUT || temp->type != HEREDOC))
 			{
 				open(temp->file_name, O_WRONLY | O_CREAT, 0644);
 				redir_output(all, temp, 0);
 			}
 			else
 			{
-				if (temp->type == OUTPUT_TRUNCATED || temp->type == OUTPUT_APPEND)
+				if (temp->type == OUT_TRUNCATED || temp->type == OUT_APPEND)
 					redir_output(all, temp, temp->type);
 				if (temp->type == INPUT)
 					redir_input(all, temp);
@@ -134,5 +137,4 @@ int	redir_loop(t_cmd **node, t_all *all)
 		}
 		temp = temp->next;
 	}
-	return (0);
 }

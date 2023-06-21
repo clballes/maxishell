@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:10:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 16:37:09 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:27:08 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 int	set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 int	is_there_heredoc(t_redir **redir);
-
 
 int	is_not_forkable(char *str)
 {

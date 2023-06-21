@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:47:16 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/14 18:52:13 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:18:44 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*path_direction(t_all *all, char *direction)
 			return (temp->content);
 		temp = temp->next;
 	}
-	return (NULL); 
+	return (NULL);
 }
 
 int	search_path(t_all *all, t_cmd *node)
@@ -72,8 +72,8 @@ int	search_path(t_all *all, t_cmd *node)
 	int		i;
 	char	*new_path;
 
-	if(node->empty_string)
-		return(1);
+	if (node->empty_string)
+		return (1);
 	i = 0;
 	res = path_direction(all, "PATH");
 	if (res == NULL)

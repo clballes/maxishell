@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 16:35:41 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:21:47 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 # define OUT_TRUNCATED	1 // >
 # define OUT_APPEND		2 // >>
 # define INPUT				3 // <
-# define HEREDOC			4 // <<
+# define HDOC			4 // <<
 
 typedef struct s_redir 
 {
     char			*file_name;// nombre del archivo 
-	int				type; 		//tipo de redireccion OUT_APPEND, OUT_TRUNCATED, INPUT, HEREDOC		
+	int				type; 		//tipo de redireccion OUT_APPEND, OUT_TRUNCATED, INPUT, HDOC		
     struct s_redir 	*next;
 }   t_redir;
 

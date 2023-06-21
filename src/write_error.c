@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   write_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clballes <clballes@student.42barcel>       +#+  +:+       +#+        */
+/*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:21:56 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/02 10:41:26 by clballes         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:23:58 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	write_dyn_err(char *message, char *var)
 	{
 		if (message[i] == '&')
 		{
-			while(var[j])
+			while (var[j])
 				write(2, &var[j++], 1);
 			i++;
 		}

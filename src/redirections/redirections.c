@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 15:16:15 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:21:29 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	access_path(char *filename, t_all *all, int *type)
 {
 	struct stat	info;
 
-	if (stat(filename, &info) == 0 && *type != HEREDOC)
+	if (stat(filename, &info) == 0 && *type != HDOC)
 	{
 		if (S_ISREG(info.st_mode))
 		{
@@ -52,7 +52,7 @@ int	access_path(char *filename, t_all *all, int *type)
 		else
 			write_err(all, 0);
 	}
-	else if (*type != HEREDOC)
+	else if (*type != HDOC)
 	{
 		if (all->node->redir->type == INPUT)
 			write_err(all, 2);
@@ -122,7 +122,7 @@ void	redir_loop(t_cmd **node, t_all *all)
 		{
 			if (access == 2 && temp->type == INPUT)
 				write_err(all, 3);
-			if (access == 2 && (temp->type != INPUT || temp->type != HEREDOC))
+			if (access == 2 && (temp->type != INPUT || temp->type != HDOC))
 			{
 				open(temp->file_name, O_WRONLY | O_CREAT, 0644);
 				redir_output(all, temp, 0);

@@ -139,7 +139,7 @@ int		set_fd_for_pipes_father(t_cmd *node, t_pipe *pipes);
 int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 
 //print functions
-char	**list_to_double_pointer(t_env **list);
+char	**list_to_double_pointer(t_env **list, t_all *all);
 void	write_dyn_err(char *message, char *var);
 // void	set_term(t_all *all);
 void	init_signal(int mode);

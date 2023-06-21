@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 16:35:16 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:49:33 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int	redir_input(t_all *all, t_redir *temp)
 		perror("dup2");
 		return (1);
 	}
-	exec_cmd(all, all->node);
+	if (temp->next == NULL )
+		exec_cmd(all, all->node);
 	// Close the input file
 	close(fd);
 	return (0);

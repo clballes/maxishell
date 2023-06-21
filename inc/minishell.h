@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:06:12 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/15 15:23:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:21:50 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,6 @@ int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 //print functions
 char	**list_to_double_pointer(t_env **list, t_all *all);
 void	write_dyn_err(char *message, char *var);
-// void	set_term(t_all *all);
+void	set_term(t_all *all);
 void	init_signal(int mode);
 #endif

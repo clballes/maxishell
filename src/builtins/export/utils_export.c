@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:23:05 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 19:11:20 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:01:55 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	change_var_list(char *content, t_env *temp)
 {
 	t_env	*new;
 
+	if(content == NULL)
+		content = ft_strdup("");
 	new = temp;
 	new->content = content;
 }

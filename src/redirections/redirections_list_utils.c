@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 11:51:54 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/21 18:21:34 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/22 13:09:22 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	number_of_redirs(char *line, t_all *all)
 	n_redir = 0;
 	while (line[i])
 	{
+		all->quotes.has_quote = is_in_quottes(line, all, i);
 		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
 		{
 			n_redir++;

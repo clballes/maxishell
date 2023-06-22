@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:35:30 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/13 16:21:45 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:32:02 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*shlvl(char *cont_name)
 
 	shl_level = 1;
 	new_shlvl = ft_atoi(cont_name);
-
 	if (new_shlvl < 0)
 		shl_level = -1;
 	else if (new_shlvl > 999)
@@ -130,10 +129,10 @@ char	**list_to_double_pointer(t_env **list, t_all *all)
 	int		i;
 
 	i = lst_size_env(list);
-	all->env_array = ft_calloc(i + 1 ,sizeof(char *));
+	all->env_array = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	temp = *list;
-	while(temp)
+	while (temp)
 	{
 		aux = ft_strjoin(temp->name, "=", 0, 0);
 		result = ft_strjoin(aux, temp->content, 1, 0);
@@ -142,5 +141,5 @@ char	**list_to_double_pointer(t_env **list, t_all *all)
 		temp = temp->next;
 	}
 	all->env_array[i] = NULL;
-	return(all->env_array);
+	return (all->env_array);
 }

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:50:58 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/09 17:44:26 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:34:19 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ t_env	*lst_last_env(t_env *lst)
 
 int	lst_size_env(t_env **lst)
 {
-	int i;
-	t_env *temp;
-	
+	int		i;
+	t_env	*temp;
+
 	i = 0;
 	temp = *lst;
-	while(temp)
+	while (temp)
 	{
 		temp = temp->next;
 		i++;
 	}
-	return(i);
+	return (i);
 }

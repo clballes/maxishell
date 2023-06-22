@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 12:53:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/19 15:24:49 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:15:36 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,11 @@ void	change_env(t_all *all);
 int     lst_size_env(t_env **lst);
 
 char	*ft_strtrim_free_s1(char *s1, char const *set);
+
+//exit
+void	print_err(char *print, t_cmd *node);
+int		digit_max_min(int c, char *arg);
+int		check_num_args(t_cmd *node);
+int		not_space(char *args);
 
 #endif

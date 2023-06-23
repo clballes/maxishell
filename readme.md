@@ -60,10 +60,11 @@ pwd
 export
 
 ## FALTA 
-# Minishell
+# Minishell y Norminette
 - Signals HEREDOC
 - Archivo exit.c 
 	-> La funcion check_digit_args tiene mas de 25 lineas: He dejado una  comentada de menos de 25 lineas comprobar que funciona igual que la otra.
-	-> la funcion exec_exit la he dividido en: exec_exit y la de valid_arguments_exit
-- 
-# Norminette
+	-> la funcion exec_exit la he dividido en: exec_exit y la de valid_arguments_exit 
+- Reducir funciones de mas de 25 lineas en los builtins y en path.c
+JUNTAS
+- Hacer la evaluacion y ver si hay leaks haciendo muchas pruebas

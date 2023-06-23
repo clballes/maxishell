@@ -27,9 +27,9 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parse_quottes \
 				$(PARSING_DIR)parsing_redir_syntax \
 				$(PARSING_DIR)parsing_pipes_syntax \
-				$(REDIR_DIR)redirections_list \
+				$(REDIR_DIR)redirections_create_list \
 				$(REDIR_DIR)redirections_list_utils \
-				$(REDIR_DIR)utils_redirections \
+				$(REDIR_DIR)redirections_utils \
 				$(REDIR_DIR)redirections \
 				init \
 				set_pipes

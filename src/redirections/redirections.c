@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:25:54 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/21 18:21:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:27:45 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@
 #include "../inc/parsing.h"
 #include "../inc/interactive.h"
 #include "../inc/redirections.h"
-
-int	write_err(t_all *all, int j)
-{
-	all->exit = 1;
-	if (j == 1)
-		write_dyn_err \
-			("msh: &: Permission denied", &all->node->redir->file_name[0]);
-	else if (j == 2)
-		write_dyn_err \
-			("msh: &: No such file or directory", \
-				&all->node->redir->file_name[0]);
-	else
-		write_dyn_err \
-			("msh: &: Is a directory", &all->node->redir->file_name[0]);
-	exit(all->exit);
-}
 
 // si existe y tenemos acceso, haremos el open
 // file we dont have permision
@@ -108,6 +92,24 @@ int	redir_input(t_all *all, t_redir *temp)
 	return (0);
 }
 
+void	redirect(t_redir *temp, int access, t_all *all)
+{
+	if (access == 2 && temp->type == INPUT)
+		write_err(all, 3);
+	if (access == 2 && (temp->type != INPUT || temp->type != HDOC))
+	{
+		open(temp->file_name, O_WRONLY | O_CREAT, 0644);
+		redir_output(all, temp, 0);
+	}
+	else
+	{
+		if (temp->type == OUT_TRUNCATED || temp->type == OUT_APPEND)
+			redir_output(all, temp, temp->type);
+		if (temp->type == INPUT)
+			redir_input(all, temp);
+	}
+}
+
 void	redir_loop(t_cmd **node, t_all *all)
 {
 	int		access;
@@ -120,20 +122,7 @@ void	redir_loop(t_cmd **node, t_all *all)
 		access = access_path(temp->file_name, all, &temp->type);
 		if (access != 1)
 		{
-			if (access == 2 && temp->type == INPUT)
-				write_err(all, 3);
-			if (access == 2 && (temp->type != INPUT || temp->type != HDOC))
-			{
-				open(temp->file_name, O_WRONLY | O_CREAT, 0644);
-				redir_output(all, temp, 0);
-			}
-			else
-			{
-				if (temp->type == OUT_TRUNCATED || temp->type == OUT_APPEND)
-					redir_output(all, temp, temp->type);
-				if (temp->type == INPUT)
-					redir_input(all, temp);
-			}
+			redirect(temp, access, all);
 		}
 		temp = temp->next;
 	}

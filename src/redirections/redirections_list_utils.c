@@ -1,106 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_list_utils.c                          :+:      :+:    :+:   */
+/*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 11:51:54 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/22 13:09:22 by albagarc         ###   ########.fr       */
+/*   Created: 2023/06/06 12:37:30 by albagarc          #+#    #+#             */
+/*   Updated: 2023/06/21 15:22:04 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include "../inc/redirections.h"
-#include "../inc/parsing.h"
 
-int	identify_redir(char a, char b)
+t_redir	*lst_new_redir(char *file_name, int redir)
 {
-	int	redir;
+	t_redir	*new;
 
-	if (a == '>')
-	{
-		if (a == b)
-			redir = OUT_APPEND;
-		else
-			redir = OUT_TRUNCATED;
-	}
-	if (a == '<')
-	{
-		if (a == b)
-			redir = HDOC;
-		else
-			redir = INPUT;
-	}
-	return (redir);
+	new = ft_calloc(1, sizeof(t_redir));
+	if (!new)
+		return (0);
+	new->file_name = file_name;
+	new->type = redir;
+	new->next = NULL;
+	return (new);
 }
 
-int	redir_type(char *line, t_all *all)
+t_redir	*lst_last_redir(t_redir **lst)
 {
-	int	i;
-	int	redir;
+	t_redir	*temp;
 
-	i = 0;
-	redir = 0;
-	all->quotes.has_quote = 0;
-	while (line[i] != '\0')
+	temp = *lst;
+	if (temp != NULL)
 	{
-		all->quotes.has_quote = is_in_quottes(line, all, i);
-		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
-		{
-			redir = identify_redir(line[i], line[i + 1]);
-			break ;
-		}
-		i++;
+		while (temp->next != NULL)
+			temp = temp->next;
 	}
-	return (redir);
+	return (temp);
 }
 
-char	*file_name(char *line, t_all *all)
+void	lst_add_back_redir(t_redir **first, t_redir *new_el)
+{
+	t_redir	*temp;
+
+	if (*first == NULL)
+		*first = new_el;
+	else
+	{
+		temp = lst_last_redir(first);
+		temp->next = new_el;
+	}
+}
+
+int	lst_size_redir(t_redir **lst)
 {
 	int		i;
-	int		start;
-	char	*file_name;
-
-	i = -1;
-	while (line[++i] != '\0')
-	{
-		if ((line[i] == '>' || line[i] == '<') && !is_in_quottes(line, all, i))
-		{	
-			i++;
-			if ((line[i] == '>' || line[i] == '<') && line[i] != '\0')
-				i++;
-			while (ft_is_space(line[i]) && line[i] != '\0')
-				i++;
-			start = i;
-			while ((!ft_is_space(line[i]) && line[i] != '\0' \
-				&& line[i] != '<' && line[i] != '>' ) || (ft_is_space(line[i]) \
-					&& is_in_quottes(line, all, i)))
-				i++;
-			file_name = ft_substr(line, start, i - start);
-			return (file_name);
-		}
-	}
-	return (NULL);
-}
-
-int	number_of_redirs(char *line, t_all *all)
-{
-	int	i;
-	int	n_redir;
+	t_redir	*temp;
 
 	i = 0;
-	n_redir = 0;
-	while (line[i])
+	temp = *lst;
+	while (temp)
 	{
-		all->quotes.has_quote = is_in_quottes(line, all, i);
-		if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
-		{
-			n_redir++;
-			if ((line[i] == '>' || line[i] == '<') && !all->quotes.has_quote)
-				i++;
-		}
+		temp = temp->next;
 		i++;
-	}	
-	return (n_redir);
+	}
+	return (i);
 }

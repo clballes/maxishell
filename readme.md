@@ -3,10 +3,9 @@
 test 16 ~
 test 18, nos da bien error distinto si nos animamos mucho
 
-## Exit FALTA
+## Exit DONE
 ### Alba
-test 63, se queda el espacio y tira error, cuando deberia de estar sin espacios y ejecutar
-test 64
+
 
 ## Cd DONE
 test 18 ~
@@ -26,10 +25,9 @@ faltaria 204
 ## Tilde DONE
 caacter esecial no hay q hacer nada
 
-## Syntax Error 
+## Syntax Error DONE
 ### Alba
-244 - tirar error de syntax error
-245 - tirar error de syntax error
+
 
 ## Redirections 
 ### Clara
@@ -60,3 +58,12 @@ exit
 env
 pwd
 export
+
+## FALTA 
+# Minishell
+- Signals HEREDOC
+- Archivo exit.c 
+	-> La funcion check_digit_args tiene mas de 25 lineas: He dejado una  comentada de menos de 25 lineas comprobar que funciona igual que la otra.
+	-> la funcion exec_exit la he dividido en: exec_exit y la de valid_arguments_exit
+- 
+# Norminette

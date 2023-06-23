@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:21:56 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/22 16:33:11 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:26:33 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	check_digit_args(char **args, t_cmd *node)
 }
 
 //A REVISAR POR CLARA PARA SUSTITUIRLA POR LA DE ARRIBA QUE TIENE MAS DE 25 LINEAS
+
 // int	check_digit_args(char **args, t_cmd *node)
 // {
 // 	int	j;

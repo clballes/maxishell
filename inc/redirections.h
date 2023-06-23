@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:52:20 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/23 12:35:56 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:25:58 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,6 @@ int			number_of_redirs(char *line, t_all *all);
 int			access_path(char *filename, t_all *all, int *type);
 int			redir_output(t_all *all, t_redir *temp, int type);
 void		redir_loop(t_cmd **node, t_all *all);
+int			write_err(t_all *all, int j);
+
 #endif

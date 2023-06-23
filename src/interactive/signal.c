@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:52:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/22 11:31:06 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:05:48 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ static void	handle_signals(int sig)
 void	set_term(void)
 {
 	struct termios	term;
-	
+
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
-
 
 // static void	handle_signals_heredoc(int sig)
 // {

@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 13:28:57 by albagarc          #+#    #+#             */
-/*   Updated: 2023/06/21 15:49:29 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:58:05 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ void	init_env_i(t_all *all)
 	free_arr(all->env);
 }
 
-void	init_struct(t_all *all)
+t_all	*init_struct(t_all *all, char **env)
 {
+	all = ft_calloc(1, sizeof(t_all));
+	if (!all)
+		exit(0);
+	all->env = env;
 	all->quotes.has_quote = 0;
 	all->quotes.found = '\0';
 	all->exit = 0;
@@ -41,4 +45,5 @@ void	init_struct(t_all *all)
 		env_list(all);
 	else
 		init_env_i(all);
+	return (all);
 }

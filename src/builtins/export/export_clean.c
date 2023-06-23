@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:21 by clballes          #+#    #+#             */
-/*   Updated: 2023/05/19 19:44:24 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:02:52 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_arg(t_all *all, char *arg, int j)
 				all->list_env->concatenate) == 1)
 		{
 			all->exit = 1;
-			write_dyn_err("bash: export: `&': not a valid identifier", all->node->args[j]);
+			write_dyn_err("bash: export: `&': not a valid identifier", \
+			all->node->args[j]);
 			return (1);
 		}
 		else

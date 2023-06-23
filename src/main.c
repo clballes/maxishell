@@ -6,7 +6,7 @@
 /*   By: albagarc <albagarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 11:03:36 by clballes          #+#    #+#             */
-/*   Updated: 2023/06/22 17:05:03 by albagarc         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:58:27 by albagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 // Lee la linea del promps si algo falla sale y sino la devuelve para
 //  empezar a analizarla
-char *get_line(t_all *all)
+char	*get_line(t_all *all)
 {
-	char *line;
-	const char *prompt;
+	char		*line;
+	const char	*prompt;
 
 	prompt = "\x1b[0;35mBienvenid@ a Maxishell\x1b[0m: ";
 	line = readline(prompt);
@@ -40,7 +40,7 @@ char *get_line(t_all *all)
 void	other_cmd(t_all *all, t_cmd *node)
 {
 	int	i;
-	
+
 	i = -1;
 	while (all->node->args[0][i++])
 	{
@@ -51,12 +51,13 @@ void	other_cmd(t_all *all, t_cmd *node)
 		}
 	}
 	i = 0;
-	if (all->node->args[0][i] == '/' || all->absolute == 1 || all->node->args[0][i] == '.')
+	if (all->node->args[0][i] == '/' || all->absolute == 1 || \
+	all->node->args[0][i] == '.')
 	{
 		execve_path(all, all->node->args[0]);
 		all->absolute = 0;
 	}
-	else if (search_path(all, node) == 0 )
+	else if (search_path(all, node) == 0)
 		all->exit = 0; //comprobar que sea este el num salida
 	else
 	{
@@ -91,11 +92,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	all = ft_calloc(1, sizeof(t_all));
-	if (!all)
-		exit(0);
-	all->env = env;
-	init_struct(all);//init podria allocar all y el env  para quitarnos lineas
+	all = NULL;
+	all = init_struct(all, env);
 	while (1)
 	{
 		init_signal(3);
@@ -105,7 +103,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			// system("leaks minishell");
 			// break ;
-			// exit(0);
 			continue ;
 		}
 		add_history(all->all_line);
@@ -115,12 +112,9 @@ int	main(int argc, char **argv, char **env)
 			minishell_starts(all);
 		}
 		free(all->all_line);
-		lstfree_cmd(&all->node); //free cmd hay q mirar si va aqui
-		// free_arr(all->env_array); //free array
-		// lstfree_env(&all->list_env);
+		lstfree_cmd(&all->node);
 		init_signal(1);
 	}
-	//liberar todo lo de la init strcut
-	//liberar el all
+	free_lists_and_line(all);
 	return (0);
 }

@@ -13,6 +13,14 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+void	free_export(char *arg, t_env *temp, char *res)
+{
+	free(arg);
+	free(temp->content);
+	change_var_list(res, temp);
+	temp->print = 1;
+}
+
 int	ft_repeat(t_all *all, char *res, char *arg, t_env *temp)
 {
 	while (temp)
@@ -31,12 +39,7 @@ int	ft_repeat(t_all *all, char *res, char *arg, t_env *temp)
 				|| (all->list_env->concatenate == 0 && res == NULL))
 			{
 				if (all->list_env->concatenate == 0 && all->node->equal != 0)
-				{
-					free(arg);
-					free(temp->content);
-					change_var_list(res, temp);
-					temp->print = 1;
-				}
+					free_export(arg, temp, res);
 			}
 			return (1);
 		}

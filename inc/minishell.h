@@ -102,6 +102,7 @@ typedef struct s_all
 	char	**env_array;
 	char	*all_line;
 	int		exit;
+	int		ctrl_c;
 	int		env_i;
 	int		cd;
 	int		absolute;
@@ -146,7 +147,7 @@ int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 char	**list_to_double_pointer(t_env **list, t_all *all);
 void	write_dyn_err(char *message, char *var);
 void	set_term(void);
-void	init_signal(int mode);
+void	init_signal(int mode,  t_all *all);
 
 //heredoc
 int		is_there_heredoc(t_redir **redir);

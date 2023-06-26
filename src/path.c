@@ -65,6 +65,12 @@ char	*path_direction(t_all *all, char *direction)
 	return (NULL);
 }
 
+void	free_path(char *new_path, char **split_path)
+{
+	free(new_path);
+	free_arr(split_path);
+}
+
 int	search_path(t_all *all, t_cmd *node)
 {
 	char	*res;
@@ -85,13 +91,11 @@ int	search_path(t_all *all, t_cmd *node)
 		if (access(new_path, F_OK | R_OK) == 0)
 		{
 			execve_path(all, new_path);
-			free(new_path); //free del join
-			free_arr(split_path); //free del split
+			free_path(new_path, split_path);
 			return (0);
 		}
 		i++;
 	}
-	free(new_path);
-	free_arr(split_path); //free del split
+	free_path(new_path, split_path);
 	return (1);
 }

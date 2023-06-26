@@ -16,66 +16,29 @@
 
 int	check_digit_args(char **args, t_cmd *node)
 {
-	int	i;
 	int	j;
 
-	i = 1;
 	j = 0;
-	while (args[i])
+	while (args[1][j])
 	{
-		while (args[i][j])
+		if (args[1][j] == '-' || args[1][j] == '+')
+			j++;
+		while (args[1][j] == ' ' && args[1][j] != '\0' && not_space(args[1]))
 		{
-			if (args[i][j] == '-' || args[i][j] == '+')
-				j++;
-			while (args[i][j] == ' ' && args[i][j] != '\0' && not_space(args[i]))
-			{
-				j++;
-				if (args[i][j] == '\0')
-					return (1);
-			}
-			if (digit_max_min(args[i][j], args[i]) == 1)
-			{
-				if (i > 1)
-					return (1);
-				else
-					print_err("bash: exit: &: numeric argument required", node);
-				return (0);
-			}
-			else
-				j++;
+			j++;
+			if (args[1][j] == '\0')
+				return (1);
 		}
-		i++;
+		if (digit_max_min(args[1][j], args[1]) == 1)
+		{
+			print_err("bash: exit: &: numeric argument required", node);
+			return (0);
+		}
+		else
+			j++;
 	}
 	return (1);
 }
-
-//A REVISAR POR CLARA PARA SUSTITUIRLA POR LA DE ARRIBA QUE TIENE MAS DE 25 LINEAS
-
-// int	check_digit_args(char **args, t_cmd *node)
-// {
-// 	int	j;
-
-// 	j = 0;
-// 	while (args[1][j])
-// 	{
-// 		if (args[1][j] == '-' || args[1][j] == '+')
-// 			j++;
-// 		while (args[1][j] == ' ' && args[1][j] != '\0' && not_space(args[1]))
-// 		{
-// 			j++;
-// 			if (args[1][j] == '\0')
-// 				return (1);
-// 		}
-// 		if (digit_max_min(args[1][j], args[1]) == 1)
-// 		{
-// 			print_err("bash: exit: &: numeric argument required", node);
-// 			return (0);
-// 		}
-// 		else
-// 			j++;
-// 	}
-// 	return (1);
-// }
 
 static void	valid_arguments_exit(t_all *all, t_cmd *node)
 {
@@ -100,7 +63,7 @@ void	exec_exit(t_all *all, t_cmd *node)
 		print_err("bash: exit: &: numeric argument required", node);
 	if (node->n_args == 1)
 	{
-		if (isatty(STDIN_FILENO)) //si no esta redireccionado
+		if (isatty(STDIN_FILENO))
 			write(2, "exit\n", 6);
 		exit(all->exit);
 	}

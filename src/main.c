@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **env)
 	all = init_struct(all, env);
 	while (1)
 	{
-		init_signal(3);
+		init_signal(3, all);
 		set_term();
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
@@ -113,7 +113,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		free(all->all_line);
 		lstfree_cmd(&all->node);
-		init_signal(1);
+		init_signal(1, all);
 	}
 	free_lists_and_line(all);
 	return (0);

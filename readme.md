@@ -4,8 +4,7 @@ test 16 ~
 test 18, nos da bien error distinto si nos animamos mucho
 
 ## Exit DONE
-### Alba
-
+## Shlvl DONE
 
 ## Cd DONE
 test 18 ~
@@ -28,7 +27,6 @@ caacter esecial no hay q hacer nada
 ## Syntax Error DONE
 ### Alba
 
-
 ## Redirections 
 ### Clara
 ### Alba
@@ -43,28 +41,15 @@ caacter esecial no hay q hacer nada
 346 -  parsing y exit
 348 - parsing y exit
 
-## Shlvl test
-### Clara
-375
-376
 
-## PANIC MANDATORY
-### Clara
-### Alba
-conveniente que no de seg fault
-
-# Leaks Builtins & Normi
+# Leaks Builtins
 exit
 env
 pwd
 export
 
 ## FALTA 
-# Minishell y Norminette
-- Signals HEREDOC
-- Archivo exit.c 
-	-> La funcion check_digit_args tiene mas de 25 lineas: He dejado una  comentada de menos de 25 lineas comprobar que funciona igual que la otra.
-	-> la funcion exec_exit la he dividido en: exec_exit y la de valid_arguments_exit 
+- Signals HEREDOC segfault cuanfo hago C and D
 
 # *Si crees que es facil y te apetece 
 /bin/ls/algoquenoexiste

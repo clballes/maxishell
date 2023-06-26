@@ -121,9 +121,7 @@ void	redir_loop(t_cmd **node, t_all *all)
 	{
 		access = access_path(temp->file_name, all, &temp->type);
 		if (access != 1)
-		{
 			redirect(temp, access, all);
-		}
 		temp = temp->next;
 	}
 }

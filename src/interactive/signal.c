@@ -39,28 +39,39 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-// static void	handle_signals_heredoc(int sig)
-// {
-// 	if (sig == SIGQUIT)
-// 		return ;
-// 	else if (sig == SIGINT)
-// 	{
-// 		close(STDIN_FILENO);
-// 		write(STDOUT_FILENO, "> \n", 3);
-// 		g_glbl.g_ctrlc = 1;
-// 		g_glbl.g_error = 1;
-// 	}
-// }
+static void	handle_signals_heredoc(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		return ;
+	}
+	else if (sig == SIGINT)
+	{
+		close(STDIN_FILENO);
+		write(STDOUT_FILENO, "> \n", 3);
+	}
+}
 
-void	init_signal(int mode)
+void	init_signal(int mode,  t_all *all)
 {
 	struct sigaction	sa;
 
+	(void)all;
 	sa.sa_flags = SA_SIGINFO;
 	if (mode == 1)
-		sa.sa_handler = SIG_IGN; //sig ignore
-	// else if (mode == 2)
-	// 	sa.sa_handler = &handle_signals_heredoc;
+		sa.sa_handler = SIG_IGN;
+	else if (mode == 2)
+	{
+		printf("holaaa\n");
+		sa.sa_handler = &handle_signals_heredoc;
+		// printf("el sa hander es %s\n", sa);
+		if (sa.sa_handler)
+		{
+			printf("entro en el if\n");
+			all->exit = 1;
+			all->ctrl_c = 1;
+		}
+	}
 	else if (mode == 3)
 		sa.sa_handler = &handle_signals;
 	else if (mode == 0)

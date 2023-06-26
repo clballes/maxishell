@@ -69,6 +69,14 @@ void	sort_list(t_env **list_env)
 	}
 }
 
+void	print_list2(t_env *temp)
+{
+	if (temp->content == NULL)
+		printf("declare -x %s=\"\"\n", temp->name);
+	else
+		printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
+}
+
 void	print_list(t_all *all)
 {
 	t_env	*temp;
@@ -89,12 +97,7 @@ void	print_list(t_all *all)
 						ft_strlen(temp->name)) == 0)))
 			printf("declare -x %s\n", temp->name);
 		else
-		{
-			if (temp->content == NULL)
-				printf("declare -x %s=\"\"\n", temp->name);
-			else
-				printf("declare -x %s=\"%s\"\n", temp->name, temp->content);
-		}
+			print_list2(temp);
 		temp = temp->next;
 	}
 }

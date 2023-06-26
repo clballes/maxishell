@@ -36,6 +36,7 @@ t_all	*init_struct(t_all *all, char **env)
 	all->env = env;
 	all->exist = 0;
 	all->quotes.has_quote = 0;
+	all->ctrl_c = 0;
 	all->quotes.found = '\0';
 	all->exit = 0;
 	all->bar = 0;

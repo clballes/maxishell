@@ -37,7 +37,8 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	{
 		ft_putstr_fd("There was an error creating the pipe\n", 2);
 		free_lists_and_line(all);
-	}	
+	}
+	init_signal(2, all);
 	while (1)
 	{
 		line = readline("> ");
@@ -53,4 +54,9 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	dup2(fd[0], *fd_temp);
 	free(line);
 	close(fd[1]);
+	if (all->ctrl_c == 1)
+	{
+		printf("me voyyy eb el exit\n");
+ 		exit(1);
+	}
 }

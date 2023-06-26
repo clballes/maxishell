@@ -36,25 +36,17 @@ caacter esecial no hay q hacer nada
 339 - 
 340 -
 
-## Status
-### Clara
-346 -  parsing y exit
-348 - parsing y exit
-
-
-# Leaks Builtins
-exit
-env
-pwd
-export
 
 ## FALTA 
-- Signals HEREDOC segfault cuanfo hago C and D
+- Signals HEREDOC segfault cuanfo hago C and D, hay que hacer en un fork el heredoc
 
-# *Si crees que es facil y te apetece 
+# *Si crees que es facil y te apetece ES MAS COMPLICADO DE LO Q PARECE
 /bin/ls/algoquenoexiste
 en bash el mensaje es : Not a directory y la salida es 126 
 en minishell el mensaje es : No such file or directory y salimos con 0.
 
-JUNTAS
+# Leaks Builtins JUNTAS
+env
+pwd - noo hauria d tenir tampoc 
+export
 - Hacer la evaluacion y ver si hay leaks haciendo muchas pruebas

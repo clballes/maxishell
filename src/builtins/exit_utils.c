@@ -14,9 +14,10 @@
 #include "../inc/builtins.h"
 #include "../inc/parsing.h"
 
-void	print_err(char *print, t_cmd *node)
+void	print_err(char *print, t_cmd *node, int num)
 {
-	ft_putendl_fd("exit", 2);
+	if (num)
+		ft_putendl_fd("exit", 2);
 	write_dyn_err(print, node->args[1]);
 }
 
@@ -43,7 +44,7 @@ int	check_num_args(t_cmd *node)
 {
 	if (node->n_args > 2)
 	{
-		print_err("bash: exit: too many arguments", node);
+		print_err("bash: exit: too many arguments", node, 0);
 		return (1);
 	}
 	else

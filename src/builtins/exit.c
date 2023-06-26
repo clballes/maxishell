@@ -31,7 +31,7 @@ int	check_digit_args(char **args, t_cmd *node)
 		}
 		if (digit_max_min(args[1][j], args[1]) == 1)
 		{
-			print_err("bash: exit: &: numeric argument required", node);
+			print_err("bash: exit: &: numeric argument required", node, 1);
 			return (0);
 		}
 		else
@@ -60,7 +60,7 @@ static void	valid_arguments_exit(t_all *all, t_cmd *node)
 void	exec_exit(t_all *all, t_cmd *node)
 {
 	if (node->empty_string)
-		print_err("bash: exit: &: numeric argument required", node);
+		print_err("bash: exit: &: numeric argument required", node, 1);
 	if (node->n_args == 1)
 	{
 		if (isatty(STDIN_FILENO))

@@ -40,7 +40,7 @@ int		lst_size_env(t_env **lst);
 char	*ft_strtrim_free_s1(char *s1, char const *set);
 
 //exit
-void	print_err(char *print, t_cmd *node);
+void	print_err(char *print, t_cmd *node, int num);
 int		digit_max_min(int c, char *arg);
 int		check_num_args(t_cmd *node);
 int		not_space(char *args);

@@ -46,6 +46,8 @@ void	execve_path(t_all *all, char *new_path)
 {
 	if (execve(new_path, &all->node->args[0], all->env_array) != 0)
 	{
+		if (new_path[0] == '/')
+			all->exit = 127;
 		write_dyn_err("bash: &: No such file or directory", all->node->args[0]);
 		exit(all->exit);
 	}
@@ -84,7 +86,7 @@ int	search_path(t_all *all, t_cmd *node)
 	res = path_direction(all, "PATH");
 	if (res == NULL)
 		return (1);
-	split_path = ft_split(res, ':'); //mallocs
+	split_path = ft_split(res, ':');
 	while (split_path[i])
 	{
 		new_path = ft_strjoin_path(split_path[i], all->node->args[0]);

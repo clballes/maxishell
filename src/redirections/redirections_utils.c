@@ -118,5 +118,5 @@ int	write_err(t_all *all, int j)
 	else
 		write_dyn_err \
 			("msh: &: Is a directory", &all->node->redir->file_name[0]);
-	exit(all->exit);
+	return (0);
 }

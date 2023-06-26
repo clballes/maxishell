@@ -31,15 +31,15 @@ int	access_path(char *filename, t_all *all, int *type)
 			if (access(filename, W_OK) == 0)
 				return (0);
 			else
-				write_err(all, 1);
+				return (write_err(all, 1));
 		}
 		else
-			write_err(all, 0);
+			return (write_err(all, 0));
 	}
 	else if (*type != HDOC)
 	{
 		if (all->node->redir->type == INPUT)
-			write_err(all, 2);
+			return (write_err(all, 2));
 		return (2);
 	}
 	return (0);
@@ -55,10 +55,7 @@ int	redir_output(t_all *all, t_redir *temp, int type)
 	else if (type == OUT_APPEND)
 		fd = open(temp->file_name, O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-	{
-		perror("open");
 		return (1);
-	}
 	if (temp->next == NULL)
 	{
 		if (dup2(fd, STDOUT_FILENO) == -1)
@@ -77,10 +74,7 @@ int	redir_input(t_all *all, t_redir *temp)
 
 	fd = open(temp->file_name, O_RDONLY);
 	if (fd == -1)
-	{
-		printf("Failed to open the input file\n");
 		return (1);
-	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2");
@@ -95,7 +89,9 @@ int	redir_input(t_all *all, t_redir *temp)
 void	redirect(t_redir *temp, int access, t_all *all)
 {
 	if (access == 2 && temp->type == INPUT)
+	{
 		write_err(all, 3);
+	}
 	if (access == 2 && (temp->type != INPUT || temp->type != HDOC))
 	{
 		open(temp->file_name, O_WRONLY | O_CREAT, 0644);

@@ -95,6 +95,7 @@ typedef struct s_all
 {
 	t_quo	quotes;
 	int		status;
+	int		exist;
 	t_cmd	*node;
 	t_env	*list_env;
 	char	**env;

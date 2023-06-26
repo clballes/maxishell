@@ -19,10 +19,7 @@ t_env	*lst_new_env(char *name, char *content)
 
 	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
-	{
-		// lstfree_env()
 		return (0);
-	}
 	new->name = name;
 	new->content = content;
 	if (!name)

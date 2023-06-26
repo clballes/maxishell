@@ -65,7 +65,6 @@ export
 - Archivo exit.c 
 	-> La funcion check_digit_args tiene mas de 25 lineas: He dejado una  comentada de menos de 25 lineas comprobar que funciona igual que la otra.
 	-> la funcion exec_exit la he dividido en: exec_exit y la de valid_arguments_exit 
-- Reducir funciones de mas de 25 lineas en los builtins y en path.c
 
 # *Si crees que es facil y te apetece 
 /bin/ls/algoquenoexiste
@@ -74,4 +73,3 @@ en minishell el mensaje es : No such file or directory y salimos con 0.
 
 JUNTAS
 - Hacer la evaluacion y ver si hay leaks haciendo muchas pruebas
-

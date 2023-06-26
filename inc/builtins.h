@@ -45,4 +45,8 @@ int		digit_max_min(int c, char *arg);
 int		check_num_args(t_cmd *node);
 int		not_space(char *args);
 
+//shlvl
+char	*shlvl(char *cont_name);
+void	change_shlvl(t_all *all, char *cont_name);
+void	add_shlvl(t_env *temp, t_all *all);
 #endif

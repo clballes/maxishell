@@ -42,7 +42,11 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 
 	pipes->fd_temp = dup(STDIN_FILENO);
 	if (is_there_heredoc(&temp->redir))
+	{
 		heredoc_fork(temp, all, pipes);
+		if (lst_size_redir(&temp->redir)== 1)
+			exec_cmd(all, temp);
+	}
 	if (temp->redir)
 	{
 		stdout_copy = dup(STDOUT_FILENO);
@@ -54,11 +58,16 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 		}
 	}
 	else
+	{
 		exec_cmd(all, temp);
+	}
 }
 
 void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 {
+	if (is_there_heredoc(&temp->redir))
+		heredoc_fork(temp, all, pipes);
+		// heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 	if (pipe(pipes->fd) != 0)
 		free_lists_and_line(all);
 	temp->pid = fork();
@@ -69,8 +78,6 @@ void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 	}
 	if (temp->pid == 0)
 	{
-		if (is_there_heredoc(&temp->redir))
-			heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 		all->node = temp;
 		set_fd_for_pipes_child(all, pipes, temp);
 		exit (all->exit);

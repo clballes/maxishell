@@ -36,13 +36,12 @@ caacter esecial no hay q hacer nada
 339 - 
 340 -
 
-
-## FALTA 
-- Signals HEREDOC segfault cuanfo hago C and D, hay que hacer en un fork el heredoc
-- hredoc quan fem ell echo no va be echo a << ko
-- en el env -i quan faig unset PWD dona seg fault
-
 # Leaks Builtins JUNTAS
+hacer evaluacion
+falta: el unset le falta algo del _= preguntar
+posible ctrol D del heredoc
+falta heredoc echo hola << asdas -- no printa
+
 env
 pwd - noo hauria d tenir tampoc 
 export

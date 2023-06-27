@@ -49,10 +49,11 @@ static void	handle_signals_heredoc(int sig)
 	{
 		close(STDIN_FILENO);
 		write(STDOUT_FILENO, "> \n", 3);
+		g_glbl.g_ctrlc = 1;
 	}
 }
 
-void	init_signal(int mode,  t_all *all)
+void	init_signal(int mode, t_all *all)
 {
 	struct sigaction	sa;
 
@@ -61,14 +62,7 @@ void	init_signal(int mode,  t_all *all)
 	if (mode == 1)
 		sa.sa_handler = SIG_IGN;
 	else if (mode == 2)
-	{
 		sa.sa_handler = &handle_signals_heredoc;
-		if (sa.sa_handler)
-		{
-			all->exit = 1;
-			all->ctrl_c = 1;
-		}
-	}
 	else if (mode == 3)
 		sa.sa_handler = &handle_signals;
 	else if (mode == 0)

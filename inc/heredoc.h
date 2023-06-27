@@ -14,5 +14,5 @@
 # define HEREDOC_H
 
 void	heredoc(t_all *all, char *delimitator, int *fd_in);
-
+void	heredoc_fork(t_cmd *temp, t_all *all, t_pipe *pipes);
 #endif

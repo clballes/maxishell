@@ -54,8 +54,21 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	dup2(fd[0], *fd_temp);
 	free(line);
 	close(fd[1]);
-	// if (all->ctrl_c == 1)
-	// {
- 	// 	exit(1);
-	// }
+}
+
+void	heredoc_fork(t_cmd *temp, t_all *all, t_pipe *pipes)
+{
+	temp->pid = fork();
+	if (temp->pid == -1)
+	{
+		ft_putstr_fd("There was an error while creating a child with fork\n", 2);
+		free_lists_and_line(all);
+	}
+	if (temp->pid == 0)
+	{
+		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
+		exit(all->exit);
+	}
+	init_signal(1, all);
+	temp->pid = waitpid(-1, &all->status, 0);
 }

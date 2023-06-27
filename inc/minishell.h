@@ -39,6 +39,11 @@
 # define INPUT				3 // <
 # define HDOC			4 // <<
 
+typedef struct s_global
+{
+	int	g_ctrlc;
+}	t_global;
+
 typedef struct s_redir
 {
 	char			*file_name;
@@ -102,13 +107,15 @@ typedef struct s_all
 	char	**env_array;
 	char	*all_line;
 	int		exit;
-	int		ctrl_c;
 	int		env_i;
 	int		cd;
 	int		absolute;
 	int		bar;
 	int		n_pipes;
 }t_all;
+
+t_global	g_glbl;
+
 
 //line
 void	exec_cmd(t_all *all, t_cmd *temp);

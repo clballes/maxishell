@@ -42,7 +42,7 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, delimitator, ft_strlen(delimitator)) != 0)
+		if (ft_strncmp(line, delimitator, (ft_strlen(delimitator) + 1)) != 0)
 		{
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
@@ -54,9 +54,8 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	dup2(fd[0], *fd_temp);
 	free(line);
 	close(fd[1]);
-	if (all->ctrl_c == 1)
-	{
-		printf("me voyyy eb el exit\n");
- 		exit(1);
-	}
+	// if (all->ctrl_c == 1)
+	// {
+ 	// 	exit(1);
+	// }
 }

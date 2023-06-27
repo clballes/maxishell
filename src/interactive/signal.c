@@ -62,12 +62,9 @@ void	init_signal(int mode,  t_all *all)
 		sa.sa_handler = SIG_IGN;
 	else if (mode == 2)
 	{
-		printf("holaaa\n");
 		sa.sa_handler = &handle_signals_heredoc;
-		// printf("el sa hander es %s\n", sa);
 		if (sa.sa_handler)
 		{
-			printf("entro en el if\n");
 			all->exit = 1;
 			all->ctrl_c = 1;
 		}

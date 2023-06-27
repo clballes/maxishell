@@ -26,7 +26,7 @@ void	env_list(t_all *all)
 		cont_name = ft_split(all->env[i], '=');
 		if (ft_strncmp(cont_name[0], "SHLVL",
 				ft_strlen(cont_name[0])) == 0 && all->env_i == 0)
-			change_shlvl(all, cont_name[1]);
+					change_shlvl(all, cont_name[1]);
 		temp = lst_new_env(cont_name[0], cont_name[1]);
 		lst_add_back_env(&all->list_env, temp);
 		free(cont_name);
@@ -34,16 +34,16 @@ void	env_list(t_all *all)
 		temp = temp->next;
 		i++;
 	}
-	if (!all->exist)
+	if (!all->exist && all->env_i == 0)
 		add_shlvl(temp, all);
 	list_to_double_pointer(&all->list_env, all);
 }
 
-void	exec_env(t_all *all)
+void	exec_env(t_all *all, t_env **list_env)
 {
 	t_env	*temp;
 
-	temp = all->list_env;
+	temp = *list_env;
 	while (temp)
 	{
 		if (temp->print == 1)

@@ -14,9 +14,28 @@ REDIR_DIR = redirections/
 RM = rm -f
 # FSANITIZE	:= -fsanitize=address
 
-
-SRC_FILES	= main minishell_starts $(BUILTINS_DIR)shlvl $(HEREDOC_DIR)heredoc utils_minishell free $(BUILTINS_DIR)echo write_error $(BUILTINS_DIR)cd $(BUILTINS_DIR)env $(BUILTINS_DIR)env_list_utils $(BUILTINS_DIR)export/export $(BUILTINS_DIR)export/export_clean $(BUILTINS_DIR)export/utils_export $(BUILTINS_DIR)pwd $(BUILTINS_DIR)exit $(BUILTINS_DIR)exit_utils $(BUILTINS_DIR)unset path
-SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
+SRC_FILES =		main \
+				minishell_starts \
+				utils_minishell \
+				free \
+				write_error \
+				init \
+				set_pipes \
+				$(INTERACTIVE_DIR)signal \
+				$(HEREDOC_DIR)heredoc \
+				$(BUILTINS_DIR)shlvl \
+				$(BUILTINS_DIR)echo \
+				$(BUILTINS_DIR)cd \
+				$(BUILTINS_DIR)env \
+				$(BUILTINS_DIR)env_list_utils \
+				$(BUILTINS_DIR)export/export \
+				$(BUILTINS_DIR)export/export_clean \
+				$(BUILTINS_DIR)export/utils_export \
+				$(BUILTINS_DIR)pwd \
+				$(BUILTINS_DIR)exit \
+				$(BUILTINS_DIR)exit_utils \
+				$(BUILTINS_DIR)unset path \
+				$(PARSING_DIR)parsing_clean_input \
 				$(PARSING_DIR)parsing_clean_input2 \
 				$(PARSING_DIR)parsing_create_list_pipes \
 				$(PARSING_DIR)parse_and_split \
@@ -31,17 +50,10 @@ SRC_FILES	+= 	$(PARSING_DIR)parsing_clean_input \
 				$(REDIR_DIR)redirections_list_utils \
 				$(REDIR_DIR)redirections_utils \
 				$(REDIR_DIR)redirections \
-				init \
-				set_pipes
-
-
-SRC_FILES	+= $(INTERACTIVE_DIR)signal 
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 DEPS 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .d, $(SRC_FILES)))
-
-
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		mkdir -p $(OBJ_DIR)$(BUILTINS_DIR)

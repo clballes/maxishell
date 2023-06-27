@@ -86,7 +86,8 @@ void	free_arr(char **array)
 void	free_lists_and_line(t_all *all)
 {
 	lstfree_cmd(&all->node);
-	lstfree_env(&all->list_env);
+	if (!all->env_i)
+		lstfree_env(&all->list_env);
 	free(all->all_line);
 	free(all);
 	exit(all->exit);

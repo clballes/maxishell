@@ -61,6 +61,11 @@ void	exec_exit(t_all *all, t_cmd *node)
 {
 	if (node->empty_string)
 		print_err("bash: exit: &: numeric argument required", node, 1);
+	if (ft_strncmp(node->args[1], "--", 3) == 0)
+	{
+		all->exit = 0;
+		exit(all->exit);
+	}
 	if (node->n_args == 1)
 	{
 		if (isatty(STDIN_FILENO))

@@ -39,11 +39,8 @@ caacter esecial no hay q hacer nada
 
 ## FALTA 
 - Signals HEREDOC segfault cuanfo hago C and D, hay que hacer en un fork el heredoc
-
-# *Si crees que es facil y te apetece ES MAS COMPLICADO DE LO Q PARECE
-/bin/ls/algoquenoexiste
-en bash el mensaje es : Not a directory y la salida es 126 
-en minishell el mensaje es : No such file or directory y salimos con 0.
+- hredoc quan fem ell echo no va be echo a << ko
+- en el env -i quan faig unset PWD dona seg fault
 
 # Leaks Builtins JUNTAS
 env

@@ -13,22 +13,48 @@
 #include "../inc/minishell.h"
 #include "../inc/builtins.h"
 
+void	unset_if(t_env *temp, t_all *all, t_env *first)
+{
+	free(temp->name);
+	free(temp->content);
+	if (temp->previous == NULL)
+	{
+		temp->next->previous = NULL;
+		free(temp);
+		temp = temp->next;
+		all->list_env = first->next;
+	}
+	else if (temp->next == NULL)
+	{
+		temp->previous->next = NULL;
+		free(temp);
+	}
+	else
+	{
+		temp->previous->next = temp->next;
+		temp->next->previous = temp->previous;
+		free(temp);
+	}
+}
+
 void	exec_unset(t_all *all)
 {
 	t_env	*temp;
+	t_env	*first;
 
+	first = all->list_env;
 	temp = all->list_env;
 	while (temp)
 	{
 		if (all->node->args[1] == NULL)
 			return ;
-		if (ft_strncmp(all->node->args[1],
-				temp->name, ft_strlen(temp->name)) == 0)
-		{
-			free(temp->name);
-			free(temp->content);
-			temp->previous->next = temp->next;
-			free(temp);
+		// else if (ft_strncmp("_",
+		// 		temp->name, ft_strlen(temp->name + 1)) == 0)
+		// 	return;
+		else if (ft_strncmp(all->node->args[1],
+				temp->name, ft_strlen(temp->name + 1)) == 0)
+		{	
+			unset_if(temp, all, first);
 			return ;
 		}
 		else

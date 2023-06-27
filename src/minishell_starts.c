@@ -43,7 +43,6 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 	pipes->fd_temp = dup(STDIN_FILENO);
 	if (is_there_heredoc(&temp->redir))
 	{
-		printf("entres que?\n");
 		init_signal(1, all);
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 	}
@@ -58,16 +57,13 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 		}
 	}
 	else
-	{
 		exec_cmd(all, temp);
-	}
 }
 
 void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 {
 	if (is_there_heredoc(&temp->redir))
 	{
-
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 	}
 	if (pipe(pipes->fd) != 0)

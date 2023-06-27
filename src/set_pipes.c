@@ -53,6 +53,10 @@ int	set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp)
 			return (0);
 		}
 	}
+	// if (g_glbl.g_ctrlc == 1)
+	// {
+	// 	exit(1);
+	// }
 	exec_cmd(all, temp);
 	return (0);
 }

@@ -54,6 +54,10 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	dup2(fd[0], *fd_temp);
 	free(line);
 	close(fd[1]);
+	if (g_glbl.g_ctrlc == 1)
+	{
+		exit(1);
+	}
 }
 
 void	heredoc_fork(t_cmd *temp, t_all *all, t_pipe *pipes)
@@ -67,6 +71,10 @@ void	heredoc_fork(t_cmd *temp, t_all *all, t_pipe *pipes)
 	if (temp->pid == 0)
 	{
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
+		// if (g_glbl.g_ctrlc == 1)
+		// {
+		// 	exit(1);
+		// }
 		exit(all->exit);
 	}
 	init_signal(1, all);

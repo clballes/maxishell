@@ -48,6 +48,13 @@ int	ft_repeat(t_all *all, char *res, char *arg, t_env *temp)
 	return (0);
 }
 
+void	update_env(t_all *all)
+{
+	free_arr(all->env_array);
+	all->env_array = list_to_double_pointer(&all->list_env, all);
+	sort_list(&all->list_env);
+}
+
 void	add_new(t_all *all, char *arg)
 {
 	char	*name;
@@ -57,6 +64,8 @@ void	add_new(t_all *all, char *arg)
 
 	temp = all->list_env;
 	name = extract_var_name(arg);
+	if (ft_strncmp("_", name, 2) == 0)
+		return ;
 	name_value = extract_var_value(arg);
 	equal = 0;
 	if (ft_repeat(all, name_value, name, temp) == 1)
@@ -71,9 +80,7 @@ void	add_new(t_all *all, char *arg)
 		temp->print = 0;
 	else
 		temp->print = 1;
-	free_arr(all->env_array);
-	all->env_array = list_to_double_pointer(&all->list_env, all);
-	sort_list(&all->list_env);
+	update_env(all);
 }
 
 void	exec_export(t_all *all)

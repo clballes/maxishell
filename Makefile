@@ -16,6 +16,7 @@ RM = rm -f
 
 SRC_FILES =		main \
 				minishell_starts \
+				minishell_starts_utils \
 				utils_minishell \
 				free \
 				write_error \

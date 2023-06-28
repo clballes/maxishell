@@ -21,6 +21,12 @@
 
 // Lee la linea del promps si algo falla sale y sino la devuelve para
 //  empezar a analizarla
+void	free_cmd_line(t_all *all)
+{
+	free(all->all_line);
+	lstfree_cmd(&all->node);
+}
+
 char	*get_line(t_all *all)
 {
 	char		*line;
@@ -58,7 +64,7 @@ void	other_cmd(t_all *all, t_cmd *node)
 		all->absolute = 0;
 	}
 	else if (search_path(all, node) == 0)
-		all->exit = 0; //comprobar que sea este el num salida
+		all->exit = 0;
 	else
 	{
 		all->exit = 127;
@@ -96,23 +102,19 @@ int	main(int argc, char **argv, char **env)
 	all = init_struct(all, env);
 	while (1)
 	{
+		g_glbl.g_ctrlc = 0;
 		init_signal(3, all);
 		set_term();
 		all->all_line = get_line(all);
 		if (all->all_line[0] == '\0')
-		{
-			// system("leaks minishell");
-			// break ;
 			continue ;
-		}
 		add_history(all->all_line);
 		if (valid_clean_line(all->all_line, all) == 0)
 		{
 			create_list_pipes(all->all_line, all);
 			minishell_starts(all);
 		}
-		free(all->all_line);
-		lstfree_cmd(&all->node);
+		free_cmd_line(all);
 		init_signal(1, all);
 	}
 	free_lists_and_line(all);

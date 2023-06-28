@@ -48,11 +48,12 @@ void	exec_unset(t_all *all)
 	{
 		if (all->node->args[1] == NULL)
 			return ;
-		// else if (ft_strncmp("_",
-		// 		temp->name, ft_strlen(temp->name + 1)) == 0)
-		// 	return;
+		else if (ft_strncmp("_", all->node->args[1], 2) == 0)
+		{
+			return ;
+		}
 		else if (ft_strncmp(all->node->args[1],
-				temp->name, ft_strlen(temp->name + 1)) == 0)
+				temp->name, ft_strlen(all->node->args[1] + 1)) == 0)
 		{	
 			unset_if(temp, all, first);
 			return ;

@@ -43,7 +43,7 @@ int	ft_prohibited(char c, int index, int equal, int concat)
 {
 	if (c == '=' && (index != 0))
 		return (0);
-	else if ((index == 0) && (!(ft_isalpha(c))))
+	else if ((index == 0) && (!(ft_isalpha(c))) && c != 95)
 		return (1);
 	else if ((index != 0) && (equal == 0)
 		&& (concat == 0) && ((c >= 32 && c <= 47)

@@ -38,8 +38,6 @@ int	is_not_forkable(char *str)
 
 void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 {
-	int	stdout_copy;
-
 	pipes->fd_temp = dup(STDIN_FILENO);
 	if (is_there_heredoc(&temp->redir))
 	{
@@ -53,26 +51,15 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 		}
 	}
 	if (temp->redir)
-	{
-		stdout_copy = dup(STDOUT_FILENO);
-		redir_loop(&all->node, all);
-		if (dup2(stdout_copy, STDOUT_FILENO) == -1)
-		{
-			perror("dup2");
-			free_lists_and_line(all);
-		}
-	}
+		have_redirections(all);
 	else
-	{
 		exec_cmd(all, temp);
-	}
 }
 
 void	multi_command_or_fork(t_cmd *temp, t_pipe *pipes, t_all *all)
 {
 	if (is_there_heredoc(&temp->redir))
 		heredoc_fork(temp, all, pipes);
-		// heredoc(all, temp->redir->file_name, &pipes->fd_temp);
 	if (pipe(pipes->fd) != 0)
 		free_lists_and_line(all);
 	temp->pid = fork();

@@ -39,8 +39,7 @@ caacter esecial no hay q hacer nada
 # Leaks Builtins JUNTAS
 hacer evaluacion
 falta: el unset le falta algo del _= preguntar
-posible ctrol D del heredoc
-falta heredoc echo hola << asdas -- no printa
+cat e | heredoc va malament
 
 env
 pwd - noo hauria d tenir tampoc 

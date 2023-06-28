@@ -63,6 +63,7 @@ typedef struct s_cmd
 	int				flag;
 	int				equal;
 	pid_t			pid;
+	pid_t			pid_heredoc;
 	t_redir			*redir;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
@@ -116,7 +117,6 @@ typedef struct s_all
 
 t_global	g_glbl;
 
-
 //line
 void	exec_cmd(t_all *all, t_cmd *temp);
 
@@ -154,7 +154,10 @@ int		set_fd_for_pipes_child(t_all *all, t_pipe *pipes, t_cmd *temp);
 char	**list_to_double_pointer(t_env **list, t_all *all);
 void	write_dyn_err(char *message, char *var);
 void	set_term(void);
-void	init_signal(int mode,  t_all *all);
+void	init_signal(int mode, t_all *all);
+
+//redirections
+void	have_redirections(t_all *all);
 
 //heredoc
 int		is_there_heredoc(t_redir **redir);

@@ -42,6 +42,8 @@ void	heredoc(t_all *all, char *delimitator, int *fd_temp)
 	while (1)
 	{
 		line = readline("> ");
+		if (line == 0)
+			break ;
 		if (ft_strncmp(line, delimitator, (ft_strlen(delimitator) + 1)) != 0)
 		{
 			write(fd[1], line, ft_strlen(line));
@@ -71,12 +73,10 @@ void	heredoc_fork(t_cmd *temp, t_all *all, t_pipe *pipes)
 	if (temp->pid == 0)
 	{
 		heredoc(all, temp->redir->file_name, &pipes->fd_temp);
-		// if (g_glbl.g_ctrlc == 1)
-		// {
-		// 	exit(1);
-		// }
-		exit(all->exit);
+		exit(0);
 	}
 	init_signal(1, all);
 	temp->pid = waitpid(-1, &all->status, 0);
+	if (all->status)
+		g_glbl.g_ctrlc = 1;
 }

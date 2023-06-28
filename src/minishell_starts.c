@@ -44,8 +44,13 @@ void	single_command_no_fork(t_all *all, t_cmd *temp, t_pipe *pipes)
 	if (is_there_heredoc(&temp->redir))
 	{
 		heredoc_fork(temp, all, pipes);
-		if (lst_size_redir(&temp->redir)== 1)
-			exec_cmd(all, temp);
+		if (lst_size_redir(&temp->redir) == 1)
+		{
+			if (g_glbl.g_ctrlc != 1)
+				exec_cmd(all, temp);
+			else
+				return ;
+		}
 	}
 	if (temp->redir)
 	{

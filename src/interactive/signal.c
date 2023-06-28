@@ -49,7 +49,6 @@ static void	handle_signals_heredoc(int sig)
 	{
 		close(STDIN_FILENO);
 		write(STDOUT_FILENO, "> \n", 3);
-		printf("entras aqui?\n");
 		g_glbl.g_ctrlc = 1;
 	}
 }

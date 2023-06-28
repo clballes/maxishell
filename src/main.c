@@ -31,7 +31,7 @@ char	*get_line(t_all *all)
 	if (!line)
 	{
 		if (isatty(STDIN_FILENO))
-			write(2, "exit\n", 6);
+			write(2, "exit\n", 5);
 		exit(all->exit);
 	}
 	return (line);
